@@ -19,3 +19,4 @@ export const CloseOutsideMenu = (callback) => {
   
     return ref ;
 }
+export default CloseOutsideMenu

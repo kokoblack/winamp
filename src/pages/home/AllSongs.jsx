@@ -78,16 +78,17 @@ function AllSongs() {
 
   return (
     <div
-      ref={ref}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className="relative w-full bg-[image:var(--image-url)] bg-cover bg-center bg-[blue] px-[4%] pt-3 pb-4   transition-all ease-in duration-[3000]"
     >
       <section className="w-full flex justify-end items-center">
-        <MdQueueMusic
-          onClick={handleMenu}
+        <div
+          ref={ref}
           className="hidden mr-auto max-[719px]:block text-[1.5rem] "
-        />
+        >
+          <MdQueueMusic onClick={handleMenu} />
+        </div>
         <div className="flex justify-center items-center p-4 bg-light_black rounded-l-[5rem] rounded-r-[5rem] h-[2.8rem] m-4 max-laptop:px-4 max-laptop:pt-2 max-laptop:pb-3 max-laptop:h-[2.2rem] max-[479px]:px-2 max-[479px]:pb-2 max-[479px]:pt-1 ">
           <AiOutlineSearch className="text-[#C0BFBF] mt-[3%] max-laptop:text-sm max-[479px]:text-xsm " />
           <input
@@ -98,7 +99,10 @@ function AllSongs() {
         </div>
         <BiCast className="ml-[1%] text-medium  max-[479px]:ml-1 " />
         <IoMdNotificationsOutline className="ml-[2%] text-medium " />
-        <img src={pic2} className="ml-[2%] h-8 w-8 rounded-[100%] max-[479px]:w-5 max-[479px]:h-5 " />
+        <img
+          src={pic2}
+          className="ml-[2%] h-8 w-8 rounded-[100%] max-[479px]:w-5 max-[479px]:h-5 "
+        />
 
         {menu && (
           <div className="hidden absolute h-screen top-0 left-0 w-[30%] bg-gradient-to-r from-[#201c1c] to-[#171616]  max-[719px]:block z-10 box-content max-[479px]:w-[35%] max-[330px]:w-[45%] ">
@@ -142,8 +146,11 @@ function AllSongs() {
           ></div>
         ))}
       </section>
-      
-      <div style={{ display: isHover ? "block" : "none" }} className="flex justify-center items-center">
+
+      <div
+        style={{ display: isHover ? "block" : "none" }}
+        className="flex justify-center items-center"
+      >
         <BsArrowLeftCircle
           size={30}
           onClick={backward}
