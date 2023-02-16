@@ -20,8 +20,8 @@ module.exports = {
         'raleway': ['Raleway', 'sans-serif']
       },
       fontSize: {
-        xxsm: ['.5rem', '1rem'],
-        xsm: ['.625rem', '1.125rem'],
+        xxsm: ['.5rem', '.6rem'],
+        xsm: ['.625rem', '.8rem'],
         sm: ['.75rem', '1.25rem'],
         base: ['.875rem', '1.375rem'],
         medium: ['1rem', '1.5rem'],

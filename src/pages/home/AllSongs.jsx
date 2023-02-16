@@ -1,10 +1,9 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
+import axios from "axios";
 import SideNav from "./SideNav";
 import { CloseOutsideMenu } from "../../components/CloseOutsideMenu";
-import logo from "../../assets/logo.png";
+import { RefreshTokenContext } from "../../App";
 import pic2 from "../../assets/profile1.jpg";
-import pic1 from "../../assets/profile2.jpg";
-import css from "../../assets/css.jpg";
 import { Link } from "react-router-dom";
 import { AiOutlineHeart, AiOutlinePlus, AiOutlineSearch } from "react-icons/ai";
 import { IoMdNotificationsOutline } from "react-icons/io";
@@ -13,17 +12,22 @@ import { MdQueueMusic } from "react-icons/md";
 import { BiCast } from "react-icons/bi";
 
 function AllSongs() {
-  const arr = [logo, pic1, pic2, css];
-  const num = [1, 2, 3, 4];
+  const token = useContext(RefreshTokenContext);
+  const query = "browse/featured-playlists";
 
+  const [publicPlaylists, setPublicPlaylists] = useState([]);
   const [count, setCount] = useState(0);
   const [isHover, setIsHover] = useState(false);
   const [menu, setMenu] = useState(false);
   const timeoutRef = useRef(null);
 
+  const images = publicPlaylists.slice(0, 5).map((e) => e.images[0].url);
+  const namesOfPlaylists = publicPlaylists.slice(0, 5).map((e) => e.name);
+  const tracks = publicPlaylists.slice(0, 5).map((e) => e.tracks.total);
+
   const forward = () => {
     setCount((count) => count + 1);
-    if (count === arr.length - 1) {
+    if (count === images.length - 1) {
       setCount(0);
     }
   };
@@ -64,7 +68,7 @@ function AllSongs() {
     timeoutRef.current = setTimeout(
       () =>
         setCount((prevIndex) =>
-          prevIndex === arr.length - 1 ? 0 : prevIndex + 1
+          prevIndex === images.length - 1 ? 0 : prevIndex + 1
         ),
       3000
     );
@@ -74,12 +78,25 @@ function AllSongs() {
     };
   }, [count]);
 
-  // style={{ backgroundImage: `url(${arr[count]})` }}
+  useEffect(() => {
+    axios
+      .get(`https://api.spotify.com/v1/${query}`, {
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        setPublicPlaylists(res.data.playlists.items);
+      })
+      .catch((err) => console.log(err));
+  }, [token, query]);
 
   return (
     <div
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      style={{ backgroundImage: `url(${images[count]})` }}
       className="relative w-full bg-[image:var(--image-url)] bg-cover bg-center bg-[blue] px-[4%] pt-3 pb-4   transition-all ease-in duration-[3000]"
     >
       <section className="w-full flex justify-end items-center">
@@ -113,21 +130,21 @@ function AllSongs() {
 
       <section>
         <h3 className="font-nunito not-italic text-xl font-medium text-white mb-[3%] max-laptop:text-medium max-[850px]:text-base max-[479px]:text-sm max-[479px]:mb-[2%] ">
-          #1 BILLBOARD HOT 100
+          TRENDING PLAYLISTS
         </h3>
         <h1 className="font-raleway not-italic text-xxl font-black text-white max-laptop:text-[2.2rem] max-[850px]:text-[1.9rem] max-[479px]:text-nl max-[479px]:mb-2 max-[479px]:mt-5 ">
-          HAPPIER THAN EVER
+          {namesOfPlaylists[count]}
         </h1>
         <div className="flex justify-start items-center gap-8 mb-6 max-[479px]:mb-4">
           <p className="font-nunito not-italic text-medium font-medium text-white max-laptop:text-base max-[850px]:text-sm max-[479px]:text-xsm ">
-            Billie Eilish
+            Tracks
           </p>
           <p className="font-nunito not-italic text-medium font-medium text-white max-laptop:text-base max-[850px]:text-sm max-[479px]:text-xsm ">
-            3:54
+            {tracks[count]}
           </p>
         </div>
         <div className="flex gap-2 justify-start items-center">
-          <Link className="font-nunito not-italic text-medium font-semibold px-4 py-2 rounded-xl text-white bg-bright_orange mr-2 max-[850px]:text-sm max-[850px]:py-1 max-[479px]:text-xsm">
+          <Link to='/songs' className="font-nunito not-italic text-medium font-semibold px-4 py-2 rounded-xl text-white bg-bright_orange mr-2 max-[850px]:text-sm max-[850px]:py-1 max-[479px]:text-xsm">
             {" "}
             Listen Now{" "}
           </Link>
@@ -137,7 +154,7 @@ function AllSongs() {
       </section>
 
       <section className="flex gap-1 justify-center items-center my-4">
-        {num.map((e, i) => (
+        {[1,2,3,4,5].map((e, i) => (
           <div
             key={e}
             className={`w-3 h-3 bg-${
