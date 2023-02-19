@@ -14,7 +14,7 @@ const AudioPlayer = () => {
 
   return (
     <>
-      <div className=" flex justify-center items-center gap-2 bg-light_black px-[2%] py-[1%] w-screen max-[550px]:py-[2%]">
+      <div className=" flex justify-center items-center gap-2 bg-light_black px-[2%] py-[1%] w-screen max-w-[1440px] max-[550px]:py-[2%]">
         <div
           onClick={() => {
             audioReducer.dispatch({
