@@ -10,7 +10,7 @@ function Home() {
     <div className="max-w-full relative bg-dark_black">
       <section className="flex max-[719px]:block">
         <section className="basis-1/6 max-[719px]:hidden">
-          <SideNav />
+          <SideNav/>
         </section>
 
         <section className="basis-5/6 w-full">
