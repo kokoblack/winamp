@@ -15,12 +15,13 @@ function Home() {
 
         <section className="basis-5/6 w-full">
           <AllSongs />
-          <div className=" flex justify-center items-center gap-2 p-[1%] max-[1000px]:block max-[1000px]:p-[2%]">
+          <div className=" flex justify-center items-center gap-4 p-[2%] max-[1000px]:block">
             <RecentPlayed />
             <HomeArtist />
           </div>
-          <div>
+          <div className=" px-[2%] ">
             <Recommended />
+            <div className=" h-[5rem]"></div>
           </div>
         </section>
       </section>
