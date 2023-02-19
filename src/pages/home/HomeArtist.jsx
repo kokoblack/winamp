@@ -1,9 +1,8 @@
 import React from "react";
 import { BsArrowRightCircle } from "react-icons/bs";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { FreeMode, Mousewheel } from "swiper";
+import {  Mousewheel } from "swiper";
 import artist from "../../assets/profile1.jpg";
-
 import "swiper/css";
 // import "swiper/css/free-mode";
 
