@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useContext } from "react";
 import axios from "axios";
 import SideNav from "./SideNav";
 import { CloseOutsideMenu } from "../../components/CloseOutsideMenu";
-import { RefreshTokenContext } from "../../App";
+import { AppDispatchContext, RefreshTokenContext } from "../../App";
 import pic2 from "../../assets/profile1.jpg";
 import { Link } from "react-router-dom";
 import { AiOutlineHeart, AiOutlinePlus, AiOutlineSearch } from "react-icons/ai";
@@ -13,6 +13,7 @@ import { BiCast } from "react-icons/bi";
 
 function AllSongs() {
   const token = useContext(RefreshTokenContext);
+  const allsongs = useContext(AppDispatchContext);
   const query = "browse/featured-playlists";
 
   const [publicPlaylists, setPublicPlaylists] = useState([]);
@@ -24,6 +25,8 @@ function AllSongs() {
   const images = publicPlaylists.slice(0, 5).map((e) => e.images[0].url);
   const namesOfPlaylists = publicPlaylists.slice(0, 5).map((e) => e.name);
   const tracks = publicPlaylists.slice(0, 5).map((e) => e.tracks.total);
+  const description = publicPlaylists.slice(0, 5).map((e) => e.description)
+  const id = publicPlaylists.slice(0, 5).map((e) => e.id)
 
   const forward = () => {
     setCount((count) => count + 1);
@@ -61,6 +64,14 @@ function AllSongs() {
     setMenu(false);
   };
 
+  const handleLinkClick = () => {
+    allsongs.dispatch({type: 'GET_IMAGE_SRC', payload: images[count]})
+    allsongs.dispatch({type: 'GET_ID', payload: id[count]})
+    allsongs.dispatch({type: 'GET_DESCRIPTION', payload: description[count]})
+    allsongs.dispatch({type: 'GET_TRACK_TOTAL', payload: tracks[count]})
+    console.log(allsongs.state.songPlayingId)
+  }
+
   const ref = CloseOutsideMenu(handleClickOutside);
 
   useEffect(() => {
@@ -88,6 +99,7 @@ function AllSongs() {
       })
       .then((res) => {
         setPublicPlaylists(res.data.playlists.items);
+        console.log(res.data.playlists.items)
       })
       .catch((err) => console.log(err));
   }, [token, query]);
@@ -144,7 +156,11 @@ function AllSongs() {
           </p>
         </div>
         <div className="flex gap-2 justify-start items-center">
-          <Link to='/songs' className="font-nunito not-italic text-medium font-semibold px-4 py-2 rounded-xl text-white bg-bright_orange mr-2 max-[850px]:text-sm max-[850px]:py-1 max-[479px]:text-xsm">
+          <Link
+            onClick={handleLinkClick}
+            to="/songs"
+            className="font-nunito not-italic text-medium font-semibold px-4 py-2 rounded-xl text-white bg-bright_orange mr-2 max-[850px]:text-sm max-[850px]:py-1 max-[479px]:text-xsm"
+          >
             {" "}
             Listen Now{" "}
           </Link>
@@ -154,7 +170,7 @@ function AllSongs() {
       </section>
 
       <section className="flex gap-1 justify-center items-center my-4">
-        {[1,2,3,4,5].map((e, i) => (
+        {[1, 2, 3, 4, 5].map((e, i) => (
           <div
             key={e}
             className={`w-3 h-3 bg-${

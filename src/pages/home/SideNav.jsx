@@ -23,12 +23,12 @@ const SideNav = () => {
     [<MdOutlineLocalFireDepartment />, "/artists", "Artists"],
     [<FaHeadphonesAlt />, "/albums", "Saved Album"],
     [<RiHomeLine />, "/equalizer", "Equalizer"],
-    [<TfiVideoClapper />, "/favourites", "Favourites"],
+    [<AiOutlineHeart />, "/favourites", "Favourites"],
     [<TfiDownload />, "/downloads", "Download"],
   ];
 
   return (
-    <div className="pt-10 pl-[5%] h-screen bg-gradient-to-r from-[#201c1c] to-[#171616] max-[719px]:h-auto max-[719px]:pt-8">
+    <div style={{background: 'linear-gradient(182.2deg, rgba(32, 28, 28, 0.91) 0%, rgba(23, 22, 22, 0.94) 89.97%)'}} className="pt-10 pl-[5%] h-screen max-[719px]:h-auto max-[719px]:pt-8">
       <section className="flex gap-2 pl-1 items-center mb-8">
         <img src={logo} alt="logo" className="w-6 h-8 max-[850px]:w-4 max-[850px]:h-6" />
         <h3 className="font-nunito not-italic text-lg font-semibold text-white max-[850px]:text-medium max-[479px]:text-base">
