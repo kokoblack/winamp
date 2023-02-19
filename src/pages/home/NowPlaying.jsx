@@ -1,7 +1,11 @@
+import { AudioPlayer } from "../../components/import"
+
 function NowPlaying() {
+
+
     return (
-        <div>
-            NowPlaying
+        <div className=" fixed bottom-0 z-50">
+            <AudioPlayer/>
         </div>
     )
 }

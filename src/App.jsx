@@ -1,5 +1,6 @@
-import { useState, useEffect, createContext } from "react";
+import { useState, useEffect, createContext, useReducer, useRef } from "react";
 import { Routes, Route } from "react-router-dom";
+import { intialState, reducer } from "./components/reducer";
 import {
   Home,
   Albums,
@@ -16,16 +17,18 @@ import {
 } from "./pages";
 
 export const RefreshTokenContext = createContext();
+export const AppDispatchContext = createContext();
+export const AudioRefContext = createContext();
 
 function App() {
+  const audioRef = useRef();
+
   const [refreshToken, setRefreshToken] = useState("");
-  console.log(`refreshtoken: ${refreshToken}`);
+  const [state, dispatch] = useReducer(reducer, intialState);
 
   useEffect(() => {
     const hash = window.location.hash;
-    console.log(`first hash: ${hash}`);
     let token = window.localStorage.getItem("token");
-    console.log(`first token: ${token}`);
 
     if (hash) {
       token = hash
@@ -44,22 +47,26 @@ function App() {
 
   return (
     <div>
+      <AppDispatchContext.Provider value={{state, dispatch}}>
         <RefreshTokenContext.Provider value={refreshToken}>
-          <Routes>
-            <Route path="/" element={!refreshToken ? <SignIn /> : <Home />} />
-            <Route path="albums" element={<Albums />} />
-            <Route path="artists" element={<Artists />} />
-            <Route path="genres" element={<Genres />} />
-            <Route path="library" element={<Library />} />
-            <Route path="playing" element={<Playing />} />
-            <Route path="playlists" element={<Playlists />} />
-            <Route path="recommended" element={<Recommended />} />
-            <Route path="signin" element={<SignIn />} />
-            <Route path="signup" element={<SignUp />} />
-            <Route path="songs" element={<Songs />} />
-            <Route path="trending" element={<Trending />} />
-          </Routes>
+          <AudioRefContext.Provider value={audioRef}>
+            <Routes>
+              <Route path="/" element={!refreshToken ? <SignIn /> : <Home />} />
+              <Route path="albums" element={<Albums />} />
+              <Route path="artists" element={<Artists />} />
+              <Route path="genres" element={<Genres />} />
+              <Route path="library" element={<Library />} />
+              <Route path="playing" element={<Playing />} />
+              <Route path="playlists" element={<Playlists />} />
+              <Route path="recommended" element={<Recommended />} />
+              <Route path="signin" element={<SignIn />} />
+              <Route path="signup" element={<SignUp />} />
+              <Route path="songs" element={<Songs />} />
+              <Route path="trending" element={<Trending />} />
+            </Routes>
+          </AudioRefContext.Provider >
         </RefreshTokenContext.Provider>
+      </AppDispatchContext.Provider>
     </div>
   );
 }
