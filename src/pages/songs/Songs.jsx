@@ -1,18 +1,16 @@
-import { React, useEffect, useContext, useState } from "react";
-import { BsPlayCircle } from "react-icons/bs";
+import { React, useEffect, useContext } from "react";
+import { BiLeftArrowAlt, BiPlay } from "react-icons/bi";
 import NowPlaying from "../home/NowPlaying";
-import {
-  AppDispatchContext,
-  AudioRefContext,
-  RefreshTokenContext,
-} from "../../App";
-import { AiOutlinePlus } from "react-icons/ai";
+import { AppDispatchContext, RefreshTokenContext } from "../../App";
+import { AiOutlinePlus, AiOutlineHeart } from "react-icons/ai";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Songs = () => {
   const token = useContext(RefreshTokenContext);
   const songPlayingReducer = useContext(AppDispatchContext);
-  const audioRef = useContext(AudioRefContext);
+
+  const navigate = useNavigate();
 
   const id = songPlayingReducer.state.songPlayingId;
   const total = songPlayingReducer.state.songPlayingTrackTotal;
@@ -26,12 +24,32 @@ const Songs = () => {
         },
       })
       .then((res) => {
-        songPlayingReducer.dispatch({
-          type: "SONG_TRACKS_DATA",
-          payload: res.data.items,
+        const trackData = res.data.items.map((e) => {
+          return {
+            id: e.track.id,
+            name: e.track.name,
+            url: e.track.preview_url,
+            artist: e.track.artists[0].name,
+            image: e.track.album.images[0].url,
+          };
+        });
+        const jsonObject = trackData.map(JSON.stringify);
+        const uniqueSet = new Set(jsonObject);
+        const removeDuplicate = Array.from(uniqueSet).map(JSON.parse);
+
+        const uniqueData = [];
+        removeDuplicate.forEach((e) => {
+          if (e.url === null) {
+            null;
+          } else {
+            uniqueData.push(e);
+          }
         });
 
-        console.log(res.data.items);
+        songPlayingReducer.dispatch({
+          type: "SONG_TRACKS_DATA",
+          payload: uniqueData,
+        });
       })
       .catch((err) => console.log(err));
   }, [token, id, total]);
@@ -44,60 +62,80 @@ const Songs = () => {
         }}
         className=" relative w-full bg-cover bg-center bg-[blue] h-[50vh]"
       >
+        <button onClick={() => navigate(-1)} className=" mx-[2%] my-[1%]">
+          <BiLeftArrowAlt className=" text-xxl max-[550px]:text-[1.7rem] text-bright_orange" />
+        </button>
         <p className=" w-1/2 absolute bottom-[10%] left-[1%] font-nunito not-italic text-lg font-black text-white max-laptop:text-base max-[850px]:text-sm max-[479px]:text-xsm">
           {" "}
           {songPlayingReducer.state.songPlayingdescription}
         </p>
-        <button className=" absolute bottom-[-1.7vh] right-[2%] min-[1000px]:bottom-[-2.5vh] ">
-          <BsPlayCircle className=" text-xxl max-[550px]:text-[1.7rem] text-bright_orange" />
+        <button className=" absolute bottom-[-1.7vh] right-[2%] min-[1000px]:bottom-[-2.5vh] p-2 bg-bright_orange rounded-[100%]">
+          <BiPlay className=" text-[1.5rem] text-dark_black" />
         </button>
       </section>
 
       <section className=" bg-light_black">
-        {songPlayingReducer.state.songsTracks.slice(0, 15).map((songs) => (
+        {songPlayingReducer.state.songsTracks.map((songs) => (
           <div
             onClick={() => {
+              songPlayingReducer.dispatch({
+                type: "SET_TRACK_LIST_URL",
+                payload: songPlayingReducer.state.recommendation.map(
+                  (e) => e.url
+                ),
+              });
+              songPlayingReducer.dispatch({
+                type: "SET_TRACK_DATA",
+                payload: songPlayingReducer.state.songsTracks,
+              });
+              songPlayingReducer.dispatch({
+                type: "SET_PLAYER_STATE",
+                payload: !songPlayingReducer.state.updatePlayerSate,
+              });
               songPlayingReducer.dispatch({
                 type: "SET_IS_PLAYING",
                 payload: true,
               });
               songPlayingReducer.dispatch({
                 type: "GET_AUDIO_PLAYER_ARTIST",
-                payload: songs.track.artists[0].name,
+                payload: songs.artist,
               });
               songPlayingReducer.dispatch({
                 type: "GET_AUDIO_PLAYER_TITLE",
-                payload: songs.track.name,
+                payload: songs.name,
               });
               songPlayingReducer.dispatch({
                 type: "GET_AUDIO_PLAYER_AUDIO",
-                payload: songs.track.external_urls.spotify,
+                payload: songs.url,
               });
               songPlayingReducer.dispatch({
                 type: "GET_AUDIO_PLAYER_IMAGE",
-                payload: songs.track.album.images[2].url,
+                payload: songs.image,
               });
             }}
-            key={songs.track.id}
+            key={songs.id}
             className=" flex justify-center items-center gap-[3%] px-[5%] py-[1%] text-white w-full hover:bg-[#EC625F66]"
           >
             <img
-              src={songs.track.album.images[0].url}
+              src={songs.image}
               alt="song_cover"
-              className=" rounded-lg w-[4rem] h-[4rem] max-[850px]:w-[3rem] max-[850px]:h-[3rem] max-[550px]:w-[2.1rem] max-[550px]:h-[2.1rem]"
+              className=" rounded-lg w-[3rem] h-[3rem] max-tablet:w-[2rem] max-tablet:h-[2rem]"
             />
             <div className=" w-full">
-              <h3 className="font-nunito not-italic text-lg font-semibold max-[850px]:text-medium max-[550px]:text-sm">
-                {songs.track.name}
+              <h3 className="font-nunito not-italic text-base font-semibold max-tablet:text-sm">
+                {songs.name}
               </h3>
-              <p className="font-nunito not-italic text-base font-medium max-[850px]:text-sm max-[550px]:text-xxsm">
-                {songs.track.artists[0].name}
+              <p className="font-nunito not-italic text-sm font-medium max-tablet:text-xxsm">
+                {songs.artist}
               </p>
             </div>
-            <AiOutlinePlus className=" ml-auto text-lg" />
-            <audio ref={audioRef} src={songs.track.external_urls.spotify} controls/>
+            <div className=" flex justify-center items-center ml-auto text-lg gap-[40%] max-pad:text-base">
+              <AiOutlineHeart />
+              <AiOutlinePlus />
+            </div>
           </div>
         ))}
+        <div className=" h-[4.5rem] bg-light_black"></div>
       </section>
 
       <NowPlaying />

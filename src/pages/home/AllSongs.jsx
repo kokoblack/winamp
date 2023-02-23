@@ -18,6 +18,7 @@ function AllSongs() {
 
   const [publicPlaylists, setPublicPlaylists] = useState([]);
   const [count, setCount] = useState(0);
+  // const [search, setSearch] = useState(false)
   const [isHover, setIsHover] = useState(false);
   const [menu, setMenu] = useState(false);
   const timeoutRef = useRef(null);
@@ -99,7 +100,6 @@ function AllSongs() {
       })
       .then((res) => {
         setPublicPlaylists(res.data.playlists.items);
-        console.log(res.data.playlists.items)
       })
       .catch((err) => console.log(err));
   }, [token, query]);
@@ -109,16 +109,16 @@ function AllSongs() {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       style={{ backgroundImage: `url(${images[count]})` }}
-      className="relative w-full bg-[image:var(--image-url)] bg-cover bg-center bg-[blue] px-[4%] pt-3 pb-4   transition-all ease-in duration-[3000]"
+      className="relative w-full bg-[image:var(--image-url)] bg-cover bg-center px-[4%] pt-3 pb-4   transition-all ease-in duration-[3000]"
     >
-      <section className="w-full flex justify-end items-center">
+      <section className="w-full flex justify-end items-center max-tablet:mb-[5%] max-tablet:mt-[2%]">
         <div
           ref={ref}
-          className="hidden mr-auto max-[719px]:block text-[1.5rem] "
+          className="hidden mr-auto max-lap:block text-[1.5rem] "
         >
           <MdQueueMusic onClick={handleMenu} />
         </div>
-        <div className="flex justify-center items-center p-4 bg-light_black rounded-l-[5rem] rounded-r-[5rem] h-[2.8rem] m-4 max-laptop:px-4 max-laptop:pt-2 max-laptop:pb-3 max-laptop:h-[2.2rem] max-[479px]:px-2 max-[479px]:pb-2 max-[479px]:pt-1 ">
+        <div className="flex justify-center items-center p-4 bg-light_black rounded-l-[5rem] rounded-r-[5rem] h-[2.8rem] m-4 max-laptop:px-4 max-laptop:pt-2 max-laptop:pb-3 max-laptop:h-[2.2rem] max-tablet:hidden">
           <AiOutlineSearch className="text-[#C0BFBF] mt-[3%] max-laptop:text-sm max-[479px]:text-xsm " />
           <input
             type="text"
@@ -126,15 +126,16 @@ function AllSongs() {
             className="text-[#C0BFBF] bg-[transparent] border-light_dark border-solid border-1 ml-2 placeholder:font-nunito placeholder:not-italic placeholder:text-base placeholder:font-medium max-laptop:placeholder:text-sm max-laptop:w-[8rem] max-[479px]:text-xsm max-[479px]:w-[5rem] "
           />
         </div>
-        <BiCast className="ml-[1%] text-medium  max-[479px]:ml-1 " />
-        <IoMdNotificationsOutline className="ml-[2%] text-medium " />
+        <AiOutlineSearch className=" hidden max-tablet:block text-lg"/>
+        <BiCast className="ml-[1%] text-lg  max-[479px]:ml-1 " />
+        <IoMdNotificationsOutline className="ml-[2%] text-lg " />
         <img
           src={pic2}
-          className="ml-[2%] h-8 w-8 rounded-[100%] max-[479px]:w-5 max-[479px]:h-5 "
+          className="ml-[2%] h-8 w-8 rounded-[100%] "
         />
 
         {menu && (
-          <div className="hidden absolute h-screen top-0 left-0 w-[30%] bg-gradient-to-r from-[#201c1c] to-[#171616]  max-[719px]:block z-10 box-content max-[479px]:w-[35%] max-[330px]:w-[45%] ">
+          <div className="hidden absolute h-screen top-0 left-0 w-[20%] bg-gradient-to-r from-[#201c1c] to-[#171616]  max-lap:block z-10 box-content max-pad:w[30%] max-[650px]:w-[35%] max-[330px]:w-[45%] ">
             <SideNav />
           </div>
         )}
