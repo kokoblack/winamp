@@ -8,12 +8,12 @@ import HomeArtist from "./HomeArtist";
 function Home() {
   return (
     <div className="max-w-full relative bg-dark_black">
-      <section className="flex max-[719px]:block">
-        <section className="basis-1/6 max-[719px]:hidden">
+      <section className="flex max-lap:block">
+        <section className="basis-[13%] max-lap:hidden">
           <SideNav/>
         </section>
 
-        <section className="basis-5/6 w-full">
+        <section className="basis-[87%] w-full">
           <AllSongs />
           <div className=" flex justify-center items-center gap-4 p-[2%] max-[1000px]:block">
             <RecentPlayed />
@@ -21,7 +21,7 @@ function Home() {
           </div>
           <div className=" px-[2%] ">
             <Recommended />
-            <div className=" h-[5rem]"></div>
+            <div className=" h-[4.5rem]"></div>
           </div>
         </section>
       </section>

@@ -15,6 +15,10 @@ const signin = () => {
     "user-read-playback-position",
     "user-top-read",
     "user-read-recently-played",
+    "user-follow-modify",
+    "user-follow-read",
+    "app-remote-control",
+    "streaming",
   ];
 
   return (

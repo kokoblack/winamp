@@ -1,21 +1,34 @@
 import { useReducer } from "react";
 
 export const intialState = {
+  artist: [],
   audioPlayerArtist: "",
   audioPlayerAudio: "",
   audioPlayerImage: "",
   audioPlayerTitle: "",
+  followedArtist: [],
   isPlaying: false,
   nowPlayingToggle: false,
+  recentlyPlayed: [],
+  recommendation: [],
   songplayingimageSrc: "",
   songPlayingdescription: "",
   songPlayingId: "",
   songPlayingTrackTotal: "",
   songsTracks: [],
+  trackListUrl: [],
+  trackData: [],
+  updatePlayerSate: 'false'
 };
 
 export const reducer = (state, action) => {
   switch (action.type) {
+    case "SET_ARTIST":
+      return {
+        ...state,
+        artist: action.payload,
+      };
+
     case "GET_AUDIO_PLAYER_IMAGE":
       return {
         ...state,
@@ -40,6 +53,12 @@ export const reducer = (state, action) => {
         audioPlayerArtist: action.payload,
       };
 
+      case "SET_FOLLOWED_ARTIST":
+      return {
+        ...state,
+        followedArtist: action.payload,
+      };
+
     case "SET_IS_PLAYING":
       return {
         ...state,
@@ -50,6 +69,18 @@ export const reducer = (state, action) => {
       return {
         ...state,
         nowPlayingToggle: action.payload,
+      };
+
+    case "RECENTLY_PLAYED_DATA":
+      return {
+        ...state,
+        recentlyPlayed: action.payload,
+      };
+
+    case "RECOMMENDATION_DATA":
+      return {
+        ...state,
+        recommendation: action.payload,
       };
 
     case "GET_IMAGE_SRC":
@@ -80,6 +111,24 @@ export const reducer = (state, action) => {
       return {
         ...state,
         songsTracks: action.payload,
+      };
+
+    case "SET_TRACK_LIST_URL":
+      return {
+        ...state,
+        trackList: action.payload,
+      };
+
+    case "SET_TRACK_DATA":
+      return {
+        ...state,
+        trackData: action.payload,
+      };
+
+      case "SET_PLAYER_STATE":
+      return {
+        ...state,
+        updatePlayerSate: action.payload,
       };
   }
 };

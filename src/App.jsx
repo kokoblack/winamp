@@ -4,6 +4,7 @@ import { intialState, reducer } from "./components/reducer";
 import {
   Home,
   Albums,
+  AllRecentlyPlayed,
   Artists,
   Genres,
   Library,
@@ -58,6 +59,7 @@ function App() {
               <Route path="library" element={<Library />} />
               <Route path="playing" element={<Playing />} />
               <Route path="playlists" element={<Playlists />} />
+              <Route path="recently" element={<AllRecentlyPlayed/>}/>
               <Route path="recommended" element={<Recommended />} />
               <Route path="signin" element={<SignIn />} />
               <Route path="signup" element={<SignUp />} />
