@@ -1,18 +1,16 @@
 import { useState, useEffect, createContext, useReducer, useRef } from "react";
 import { Routes, Route } from "react-router-dom";
+import { AudioPlayer } from "./components/import";
 import { intialState, reducer } from "./components/reducer";
+import SideNav from "./components/SideNav";
 import {
   Home,
-  Albums,
   AllRecentlyPlayed,
   Artists,
   Genres,
-  Library,
   Playing,
   Playlists,
-  Recommended,
   SignIn,
-  SignUp,
   Songs,
   Trending,
 } from "./pages";
@@ -48,25 +46,36 @@ function App() {
 
   return (
     <div>
-      <AppDispatchContext.Provider value={{state, dispatch}}>
+      <AppDispatchContext.Provider value={{ state, dispatch }}>
         <RefreshTokenContext.Provider value={refreshToken}>
           <AudioRefContext.Provider value={audioRef}>
-            <Routes>
-              <Route path="/" element={!refreshToken ? <SignIn /> : <Home />} />
-              <Route path="albums" element={<Albums />} />
-              <Route path="artists" element={<Artists />} />
-              <Route path="genres" element={<Genres />} />
-              <Route path="library" element={<Library />} />
-              <Route path="playing" element={<Playing />} />
-              <Route path="playlists" element={<Playlists />} />
-              <Route path="recently" element={<AllRecentlyPlayed/>}/>
-              <Route path="recommended" element={<Recommended />} />
-              <Route path="signin" element={<SignIn />} />
-              <Route path="signup" element={<SignUp />} />
-              <Route path="songs" element={<Songs />} />
-              <Route path="trending" element={<Trending />} />
-            </Routes>
-          </AudioRefContext.Provider >
+            {!refreshToken ? (
+              <SignIn />
+            ) : (
+              <>
+                <div className=" flex justify-center items-start max-lap:block w-full relative">
+                  <div className=" basis-[13%] sticky top-0 max-lap:hidden">
+                    <SideNav />
+                  </div>
+                  <div className="basis-[87%]">
+                    <Routes>
+                      <Route path="/" element={<Home />} />
+                      <Route path="artists" element={<Artists />} />
+                      <Route path="genres" element={<Genres />} />
+                      <Route path="playing" element={<Playing />} />
+                      <Route path="playlists" element={<Playlists />} />
+                      <Route path="songs" element={<Songs />} />
+                      <Route path="recently" element={<AllRecentlyPlayed />} />
+                      <Route path="trending" element={<Trending />} />
+                    </Routes>
+                  </div>
+                </div>
+                <div className=" fixed bottom-0 z-50">
+                  <AudioPlayer />
+                </div>
+              </>
+            )}
+          </AudioRefContext.Provider>
         </RefreshTokenContext.Provider>
       </AppDispatchContext.Provider>
     </div>

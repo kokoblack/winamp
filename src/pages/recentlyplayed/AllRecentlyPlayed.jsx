@@ -3,7 +3,6 @@ import { BiLeftArrowAlt, BiPlay } from "react-icons/bi";
 import { AiOutlinePlus, AiOutlineHeart } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import {AppDispatchContext} from "../../App";
-import NowPlaying from "../home/NowPlaying";
 
 const AllRecentlyPlayed = () => {
     const allRecentlyPlayedReducer = useContext(AppDispatchContext);
@@ -18,11 +17,11 @@ const AllRecentlyPlayed = () => {
         }}
         className=" font-nunito not-italic relative px-[2%] pb-[6%] max-tablet:pb-[10%] text-white"
       >
-        <button onClick={() => navigate(-1)} className=" mb-[5%] ">
+        {/* <button onClick={() => navigate(-1)} className=" mb-[5%] ">
           <BiLeftArrowAlt className=" text-xxl max-[550px]:text-[1.7rem] " />
-        </button>
+        </button> */}
         <div className=" px-[1.5%]">
-          <h3 className=" text-lg font-semibold max-tablet:text-sm mb-[1.5%]">
+          <h3 className=" text-lg font-semibold max-tablet:text-sm pt-[2%] mb-[1.5%]">
             Recently Played
           </h3>
           <p className=" text-base font-medium max-tablet:text-xxsm">
@@ -94,8 +93,6 @@ const AllRecentlyPlayed = () => {
           </div>
         ))}
       </section>
-
-      <section><NowPlaying/></section>
 
       <section className=" h-[4.5rem] bg-light_black"></section>
     </div>

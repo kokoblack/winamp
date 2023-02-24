@@ -1,10 +1,6 @@
 import { useContext, useEffect } from "react";
 import axios from "axios";
-import {
-  AppDispatchContext,
-  RefreshTokenContext,
-} from "../../App";
-// import { BsPlayCircle } from "react-icons/bs";
+import { AppDispatchContext, RefreshTokenContext } from "../../App";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Mousewheel } from "swiper";
 import "swiper/css";
@@ -12,16 +8,6 @@ import "swiper/css";
 function Recommended() {
   const recommendationReducer = useContext(AppDispatchContext);
   const token = useContext(RefreshTokenContext);
-
-  // const [isHover, setIsHover] = useState(false);
-
-  // const handleMouseEnter = () => {
-  //   setIsHover(true);
-  // };
-
-  // const handleMouseLeave = () => {
-  //   setIsHover(false);
-  // };
 
   useEffect(() => {
     axios
@@ -41,21 +27,21 @@ function Recommended() {
             name: e.name,
             url: e.preview_url,
             artist: e.artists[0].name,
-            image: e.album.images[0].url
-          }
+            image: e.album.images[0].url,
+          };
         });
         const jsonObject = trackData.map(JSON.stringify);
         const uniqueSet = new Set(jsonObject);
         const removeDuplicate = Array.from(uniqueSet).map(JSON.parse);
 
-        const uniqueData = []
+        const uniqueData = [];
         removeDuplicate.forEach((e) => {
           if (e.url === null) {
-            null
-          }else {
-            uniqueData.push(e)
+            null;
+          } else {
+            uniqueData.push(e);
           }
-        })
+        });
 
         recommendationReducer.dispatch({
           type: "RECOMMENDATION_DATA",
@@ -82,55 +68,50 @@ function Recommended() {
       >
         {recommendationReducer.state.recommendation.slice(0, 10).map((e) => (
           <SwiperSlide
-          onClick={() => {
-            recommendationReducer.dispatch({
-              type: "SET_TRACK_LIST_URL",
-              payload: recommendationReducer.state.recommendation.map((e) => e.url),
-            });
-            recommendationReducer.dispatch({
-              type: "SET_TRACK_DATA",
-              payload: recommendationReducer.state.recommendation,
-            });
-            recommendationReducer.dispatch({
-              type: "SET_PLAYER_STATE",
-              payload: !recommendationReducer.state.updatePlayerSate,
-            });
-            recommendationReducer.dispatch({
-              type: "SET_IS_PLAYING",
-              payload: true,
-            });
-            recommendationReducer.dispatch({
-              type: "GET_AUDIO_PLAYER_ARTIST",
-              payload: e.artist,
-            });
-            recommendationReducer.dispatch({
-              type: "GET_AUDIO_PLAYER_TITLE",
-              payload: e.name,
-            });
-            recommendationReducer.dispatch({
-              type: "GET_AUDIO_PLAYER_AUDIO",
-              payload: e.url,
-            });
-            recommendationReducer.dispatch({
-              type: "GET_AUDIO_PLAYER_IMAGE",
-              payload: e.image,
-            });
-          }}
-          key={e.id}
-            // onMouseEnter={handleMouseEnter}
-            // onMouseLeave={handleMouseLeave}
-            className=" relative w-[15%] max-lap:w-[20%]  max-tablet:w-[25%] max-phone:w-[28%]"
+            onClick={() => {
+              recommendationReducer.dispatch({
+                type: "SET_TRACK_LIST_URL",
+                payload: recommendationReducer.state.recommendation.map(
+                  (e) => e.url
+                ),
+              });
+              recommendationReducer.dispatch({
+                type: "SET_TRACK_DATA",
+                payload: recommendationReducer.state.recommendation,
+              });
+              recommendationReducer.dispatch({
+                type: "SET_PLAYER_STATE",
+                payload: !recommendationReducer.state.updatePlayerSate,
+              });
+              recommendationReducer.dispatch({
+                type: "SET_IS_PLAYING",
+                payload: true,
+              });
+              recommendationReducer.dispatch({
+                type: "GET_AUDIO_PLAYER_ARTIST",
+                payload: e.artist,
+              });
+              recommendationReducer.dispatch({
+                type: "GET_AUDIO_PLAYER_TITLE",
+                payload: e.name,
+              });
+              recommendationReducer.dispatch({
+                type: "GET_AUDIO_PLAYER_AUDIO",
+                payload: e.url,
+              });
+              recommendationReducer.dispatch({
+                type: "GET_AUDIO_PLAYER_IMAGE",
+                payload: e.image,
+              });
+            }}
+            key={e.id}
+            className=" w-[15%] max-lap:w-[20%]  max-tablet:w-[25%] max-phone:w-[28%]"
           >
-              {/* <button className={` block absolute right-0 top-[50%] text-[2vw] text-bright_orange hover:${isHover? 'hidden' : null}`}>
-                <BsPlayCircle />
-              </button> */}
             <img
               src={e.image}
               className=" rounded-lg w-[8rem] h-auto mb-[3%]"
             />
-            <p className=" text-sm max-tablet:text-xsm">
-              {e.name}
-            </p>
+            <p className=" text-sm max-tablet:text-xsm">{e.name}</p>
             <p className=" text-xsm text-grey max-tablet:text-xxsm">
               {e.artist}
             </p>

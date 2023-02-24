@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useContext } from "react";
 import axios from "axios";
-import SideNav from "./SideNav";
+import SideNav from "../../components/SideNav";
 import { CloseOutsideMenu } from "../../components/CloseOutsideMenu";
 import { AppDispatchContext, RefreshTokenContext } from "../../App";
 import pic2 from "../../assets/profile1.jpg";
@@ -156,7 +156,7 @@ function AllSongs() {
             {tracks[count]}
           </p>
         </div>
-        <div className="flex gap-2 justify-start items-center">
+        <div>
           <Link
             onClick={handleLinkClick}
             to="/songs"
@@ -165,8 +165,6 @@ function AllSongs() {
             {" "}
             Listen Now{" "}
           </Link>
-          <AiOutlineHeart className="text-white" />
-          <AiOutlinePlus className="text-white " />
         </div>
       </section>
 
