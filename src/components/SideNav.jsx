@@ -1,5 +1,5 @@
-import React from "react";
-import logo from "../../assets/logo.png";
+import React, {useState} from "react";
+import logo from "../assets/logo.png";
 import { Link } from "react-router-dom";
 import { RiHomeLine } from "react-icons/ri";
 import { AiOutlineHeart } from "react-icons/ai";
@@ -15,12 +15,12 @@ const SideNav = () => {
   const FirstNav = [
     [<RiHomeLine />, "/", "Home"],
     [<MdOutlineLocalFireDepartment />, "/trending", "Trending"],
-    [<FaHeadphonesAlt />, "/library", "Your Library"],
     [<TfiVideoClapper />, "/playlists", "Playlists"],
-    [<FaBattleNet />, "/genres", "Genres"],
-    [<MdOutlineLocalFireDepartment />, "/artists", "Artists"],
+    [<GiGuitar />, "/artists", "Artists"],
     [<AiOutlineHeart />, "/favourites", "Favourites"],
   ];
+
+  const [checkNumber, setCheckNumber] = useState(0)
 
   return (
     <div style={{background: 'linear-gradient(182.2deg, rgba(32, 28, 28, 0.91) 0%, rgba(23, 22, 22, 0.94) 89.97%)'}} className=" sticky top-0 pt-10 pl-[5%] h-screen max-lap:pt-8">
@@ -30,13 +30,14 @@ const SideNav = () => {
           winamp
         </h3>
       </section>
-
+      
       <section className="mb-12 ">
-        {FirstNav.slice(0, 2).map(([icon, path, name]) => (
+        {FirstNav.map(([icon, path, name], index) => (
           <div key={name}>
             <Link
+            onClick={() => setCheckNumber(index)}
               to={path}
-              className="font-nunito not-italic text-[1.1vw] font-medium text-grey m-2 flex gap-2 justify-start items-center max-lap:text-sm max-[479px]:text-xsm"
+              className={`font-nunito not-italic text-[1.1vw] font-medium ${checkNumber === index ? 'text-bright_orange' : 'text-grey'} m-2 flex gap-2 justify-start items-center max-lap:text-sm max-[479px]:text-xsm`}
             >
               {icon}
               <p>{name}</p>
@@ -45,27 +46,28 @@ const SideNav = () => {
         ))}
       </section>
 
-      <section>
+      {/* <section>
         <div>
           <h3 className="font-nunito not-italic text-[1.3vw] font-semibold text-grey m-[3%] pb-4 max-[850px]:text-medium max-lappb-2 max-[479px]:text-base">
             PERSONAL
           </h3>
         </div>
 
-        {FirstNav.slice(3).map(([icon, path, name]) => (
+        {FirstNav.slice(3).map(([icon, path, name], index) => (
           <div key={name}>
             <Link
+            onClick={() => setCheckNumber2(index)}
               to={path}
-              className="font-nunito not-italic text-[1.1vw] font-medium text-grey m-2 flex gap-2 justify-start items-center max-lap:text-sm max-[479px]:text-xsm"
+              className={`font-nunito not-italic text-[1.1vw] font-medium ${checkNumber2 === index ? 'text-bright_orange' : 'text-grey'} m-2 flex gap-2 justify-start items-center max-lap:text-sm max-[479px]:text-xsm`}
             >
               {icon}
               <p>{name}</p>
             </Link>
           </div>
         ))}
-      </section>
+      </section> */}
     </div>
   );
 };
 
-export default SideNav;
+export default React.memo(SideNav);

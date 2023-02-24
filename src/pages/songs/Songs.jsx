@@ -1,6 +1,5 @@
 import { React, useEffect, useContext } from "react";
 import { BiLeftArrowAlt, BiPlay } from "react-icons/bi";
-import NowPlaying from "../home/NowPlaying";
 import { AppDispatchContext, RefreshTokenContext } from "../../App";
 import { AiOutlinePlus, AiOutlineHeart } from "react-icons/ai";
 import axios from "axios";
@@ -24,7 +23,16 @@ const Songs = () => {
         },
       })
       .then((res) => {
-        const trackData = res.data.items.map((e) => {
+        const removeNull = [];
+        res.data.items.forEach((e) => {
+          if (e.track === null) {
+            null;
+          } else {
+            removeNull.push(e);
+          }
+        });
+        
+        const trackData = removeNull.map((e) => {
           return {
             id: e.track.id,
             name: e.track.name,
@@ -33,6 +41,7 @@ const Songs = () => {
             image: e.track.album.images[0].url,
           };
         });
+        console.log(trackData)
         const jsonObject = trackData.map(JSON.stringify);
         const uniqueSet = new Set(jsonObject);
         const removeDuplicate = Array.from(uniqueSet).map(JSON.parse);
@@ -62,9 +71,6 @@ const Songs = () => {
         }}
         className=" relative w-full bg-cover bg-center bg-[blue] h-[50vh]"
       >
-        <button onClick={() => navigate(-1)} className=" mx-[2%] my-[1%]">
-          <BiLeftArrowAlt className=" text-xxl max-[550px]:text-[1.7rem] text-bright_orange" />
-        </button>
         <p className=" w-1/2 absolute bottom-[10%] left-[1%] font-nunito not-italic text-lg font-black text-white max-laptop:text-base max-[850px]:text-sm max-[479px]:text-xsm">
           {" "}
           {songPlayingReducer.state.songPlayingdescription}
@@ -122,7 +128,7 @@ const Songs = () => {
               className=" rounded-lg w-[3rem] h-[3rem] max-tablet:w-[2rem] max-tablet:h-[2rem]"
             />
             <div className=" w-full">
-              <h3 className="font-nunito not-italic text-base font-semibold max-tablet:text-sm">
+              <h3 className="font-nunito not-italic text-base font-semibold max-tablet:text-xsm">
                 {songs.name}
               </h3>
               <p className="font-nunito not-italic text-sm font-medium max-tablet:text-xxsm">
@@ -137,8 +143,6 @@ const Songs = () => {
         ))}
         <div className=" h-[4.5rem] bg-light_black"></div>
       </section>
-
-      <NowPlaying />
     </div>
   );
 };

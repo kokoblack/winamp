@@ -59,9 +59,9 @@ const HomeArtist = () => {
         <h3 className=" mr-auto text-lg font-bold max-[550px]:text-base ">
           Artist
         </h3>
-        <Link to='/artists' className=" ml-auto text-lg font-medium max-[550px]:text-medium">
+        <div className=" ml-auto text-lg font-medium max-[550px]:text-medium">
           <BsArrowRightCircle />
-        </Link>
+        </div>
       </section>
 
       <Swiper
