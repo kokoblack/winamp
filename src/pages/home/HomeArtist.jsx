@@ -74,10 +74,10 @@ const HomeArtist = () => {
         className="mySwiper h-[80%]"
       >
         {homeArtistReducer.state.artist.slice(0, 10).map((artist) => (
-          <SwiperSlide key={artist.id} className=" w-[30%] text-base flex justify-start items-center flex-col text-white text-center max-[1000px]:w-[20%]  max-tablet:w-[25%] max-tablet:text-sm max-phone:w-[28%]">
+          <SwiperSlide key={artist.id} className=" cursor-pointer w-[30%] text-base flex justify-start items-center flex-col text-white text-center max-[1000px]:w-[20%]  max-tablet:w-[25%] max-tablet:text-sm max-phone:w-[28%]">
             <img
               src={artist.image}
-              className=" rounded-[100%] w-[4.5rem] h-[4.5rem] max-tablet:w-[3.5rem] max-tablet:h-[3.5rem] max-tablet:mb-1"
+              className=" rounded-[100%] w-[4.5rem] h-[4.6rem] max-tablet:w-[3.5rem] max-tablet:h-[3.5rem] max-tablet:mb-1"
             />
             <p>{artist.name}</p>
           </SwiperSlide>

@@ -52,7 +52,7 @@ function Recommended() {
   }, [token]);
 
   return (
-    <div className=" font-nunito not-italic text-white">
+    <div className=" font-nunito not-italic text-white cursor-pointer">
       <h3 className=" mr-auto text-lg font-bold max-[550px]:text-base pb-[1%]">
         Recommended for you
       </h3>
