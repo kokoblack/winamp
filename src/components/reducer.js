@@ -11,6 +11,7 @@ export const intialState = {
   nowPlayingToggle: false,
   recentlyPlayed: [],
   recommendation: [],
+  sideNavToggle: false,
   songplayingimageSrc: "",
   songPlayingdescription: "",
   songPlayingId: "",
@@ -81,6 +82,12 @@ export const reducer = (state, action) => {
       return {
         ...state,
         recommendation: action.payload,
+      };
+
+      case "SET_SIDE_NAV_TOGGLE":
+      return {
+        ...state,
+        sideNavToggle: action.payload,
       };
 
     case "GET_IMAGE_SRC":

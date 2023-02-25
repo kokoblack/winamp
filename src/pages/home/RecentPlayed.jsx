@@ -102,7 +102,7 @@ function RecentPlayed() {
                 });
               }}
               key={e.url}
-              className=" flex justify-center items-center gap-[3%] px-[5%] py-[1%] text-white w-full hover:bg-[#EC625F66]"
+              className=" flex justify-center items-center gap-[3%] px-[5%] py-[1%] text-white w-full hover:bg-[#EC625F66] cursor-pointer"
             >
               <img
                 src={e.image}
@@ -165,7 +165,7 @@ function RecentPlayed() {
                 });
               }}
               key={e.url}
-              className=" hidden justify-center items-center gap-[3%] px-[5%] py-[1%] text-white w-full hover:bg-[#EC625F66] max-lap:flex"
+              className=" hidden cursor-pointer justify-center items-center gap-[3%] px-[5%] py-[1%] text-white w-full hover:bg-[#EC625F66] max-lap:flex"
             >
               <img
                 src={e.image}

@@ -10,18 +10,18 @@ const AllRecentlyPlayed = () => {
     const navigate = useNavigate()
 
   return (
-    <div className=" h-screen bg-light_black relative">
+    <div className=" bg-dark_black relative">
       <section
         style={{
-          background: "linear-gradient(#EC625F 5%, #1B1818)",
+          background: "linear-gradient(#EC625F 5%, #111111)",
         }}
         className=" font-nunito not-italic relative px-[2%] pb-[6%] max-tablet:pb-[10%] text-white"
       >
-        {/* <button onClick={() => navigate(-1)} className=" mb-[5%] ">
+        <button onClick={() => navigate(-1)} className=" hidden mb-[5%] max-lap:block ">
           <BiLeftArrowAlt className=" text-xxl max-[550px]:text-[1.7rem] " />
-        </button> */}
+        </button>
         <div className=" px-[1.5%]">
-          <h3 className=" text-lg font-semibold max-tablet:text-sm pt-[2%] mb-[1.5%]">
+          <h3 className=" text-lg font-semibold max-tablet:text-sm mb-[1.5%] pt-[3%] max-lap:pt-[1%]">
             Recently Played
           </h3>
           <p className=" text-base font-medium max-tablet:text-xxsm">
@@ -33,7 +33,7 @@ const AllRecentlyPlayed = () => {
         </button>
       </section>
 
-      <section className=" bg-light_black">
+      <section className=" bg-dark_black">
         {allRecentlyPlayedReducer.state.recentlyPlayed.map((e) => (
           <div
             onClick={() => {
@@ -71,7 +71,7 @@ const AllRecentlyPlayed = () => {
               });
             }}
             key={e.url}
-            className=" flex justify-center items-center gap-[3%] px-[5%] py-[1%] text-white w-full hover:bg-[#EC625F66]"
+            className=" cursor-pointer flex justify-center items-center gap-[3%] px-[5%] py-[1%] text-white w-full hover:bg-[#EC625F66]"
           >
             <img
               src={e.image}

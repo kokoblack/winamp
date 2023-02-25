@@ -1,9 +1,8 @@
-import { useState, useEffect, useContext, useCallback } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { AiOutlineSearch } from "react-icons/ai";
 import { MdQueueMusic } from "react-icons/md";
 import { AppDispatchContext, RefreshTokenContext } from "../../App";
-import SideNav from "../../components/SideNav";
 import CloseOutsideMenu from "../../components/CloseOutsideMenu";
 
 const Artists = () => {
@@ -11,15 +10,14 @@ const Artists = () => {
   const token = useContext(RefreshTokenContext);
 
   const [toggleShow, setToggleShow] = useState(true);
-  const [menu, setMenu] = useState(false);
 
-  const handleMenu = useCallback(() => {
-    setMenu(true);
-  }, [menu]);
+  const handleMenu = () => {
+    return artistReducer.setSideNavMenu(true);
+  };
 
-  const handleClickOutside = useCallback(() => {
-    setMenu(false);
-  }, [menu]);
+  const handleClickOutside = () => {
+    return artistReducer.setSideNavMenu(false);;
+  };
 
   const ref = CloseOutsideMenu(handleClickOutside);
 
@@ -79,7 +77,7 @@ const Artists = () => {
             </h3>
           </div>
           <div className="flex justify-center items-center ml-auto p-4 gap-[5%] bg-white text-dark_black rounded-l-[5rem] rounded-r-[5rem] h-[2.8rem] m-4 max-laptop:px-4 max-laptop:pt-2 max-laptop:pb-3 max-laptop:h-[2.2rem] max-tablet:hidden">
-            <AiOutlineSearch className=" text-lg  mt-[3%]  max-[479px]:text-xsm " />
+            <AiOutlineSearch className=" text-xl mt-[3%] max-[479px]:text-xsm " />
             <input
               type="text"
               placeholder="search artist"
@@ -88,12 +86,6 @@ const Artists = () => {
           </div>
 
           <AiOutlineSearch className=" hidden max-tablet:block text-lg ml-auto" />
-
-          {menu && (
-            <div className="hidden absolute h-screen top-0 left-0 w-[20%] bg-gradient-to-r from-[#201c1c] to-[#171616]  max-lap:block z-10 box-content max-pad:w[30%] max-[650px]:w-[35%] max-[330px]:w-[45%] ">
-              <SideNav />
-            </div>
-          )}
         </section>
 
         <section className="text-sm text-white font-medium max-tablet:text-xxsm mb-[2%] max-tablet:mb-[4%]">

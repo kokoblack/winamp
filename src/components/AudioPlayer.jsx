@@ -93,10 +93,10 @@ const AudioPlayer = () => {
                   type: "TOGGLE_NOW_PLAYING",
                   payload: false,
                 });
-                audioReducer.dispatch({
-                  type: "SET_PLAYER_STATE",
-                  payload: !audioReducer.state.updatePlayerSate,
-                });
+                // audioReducer.dispatch({
+                //   type: "SET_PLAYER_STATE",
+                //   payload: !audioReducer.state.updatePlayerSate,
+                // });
               }}
               className={`${nowPlayingTogggle ? "block" : "hidden"} text-white text-xxl ml-[3%] cursor-pointer`}
             />

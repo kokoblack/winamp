@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef, useContext } from "react";
 import axios from "axios";
-import SideNav from "../../components/SideNav";
 import { CloseOutsideMenu } from "../../components/CloseOutsideMenu";
 import { AppDispatchContext, RefreshTokenContext } from "../../App";
 import pic2 from "../../assets/profile1.jpg";
@@ -19,37 +18,36 @@ function AllSongs() {
   const [publicPlaylists, setPublicPlaylists] = useState([]);
   const [count, setCount] = useState(0);
   // const [search, setSearch] = useState(false)
-  const [isHover, setIsHover] = useState(false);
-  const [menu, setMenu] = useState(false);
+  // const [isHover, setIsHover] = useState(false);
   const timeoutRef = useRef(null);
 
   const images = publicPlaylists.slice(0, 5).map((e) => e.images[0].url);
   const namesOfPlaylists = publicPlaylists.slice(0, 5).map((e) => e.name);
   const tracks = publicPlaylists.slice(0, 5).map((e) => e.tracks.total);
-  const description = publicPlaylists.slice(0, 5).map((e) => e.description)
-  const id = publicPlaylists.slice(0, 5).map((e) => e.id)
+  const description = publicPlaylists.slice(0, 5).map((e) => e.description);
+  const id = publicPlaylists.slice(0, 5).map((e) => e.id);
 
-  const forward = () => {
-    setCount((count) => count + 1);
-    if (count === images.length - 1) {
-      setCount(0);
-    }
-  };
+  // const forward = () => {
+  //   setCount((count) => count + 1);
+  //   if (count === images.length - 1) {
+  //     setCount(0);
+  //   }
+  // };
 
-  const backward = () => {
-    setCount((count) => count - 1);
-    if (count === 0) {
-      setCount(0);
-    }
-  };
+  // const backward = () => {
+  //   setCount((count) => count - 1);
+  //   if (count === 0) {
+  //     setCount(0);
+  //   }
+  // };
 
-  const handleMouseEnter = () => {
-    setIsHover(true);
-  };
+  // const handleMouseEnter = () => {
+  //   setIsHover(true);
+  // };
 
-  const handleMouseLeave = () => {
-    setIsHover(false);
-  };
+  // const handleMouseLeave = () => {
+  //   setIsHover(false);
+  // };
 
   function resetTimeout() {
     if (timeoutRef.current) {
@@ -58,20 +56,19 @@ function AllSongs() {
   }
 
   const handleMenu = () => {
-    setMenu(true);
+    return allsongs.setSideNavMenu(true);;
   };
 
   const handleClickOutside = () => {
-    setMenu(false);
+    return allsongs.setSideNavMenu(false);;
   };
 
   const handleLinkClick = () => {
-    allsongs.dispatch({type: 'GET_IMAGE_SRC', payload: images[count]})
-    allsongs.dispatch({type: 'GET_ID', payload: id[count]})
-    allsongs.dispatch({type: 'GET_DESCRIPTION', payload: description[count]})
-    allsongs.dispatch({type: 'GET_TRACK_TOTAL', payload: tracks[count]})
-    console.log(allsongs.state.songPlayingId)
-  }
+    allsongs.dispatch({ type: "GET_IMAGE_SRC", payload: images[count] });
+    allsongs.dispatch({ type: "GET_ID", payload: id[count] });
+    allsongs.dispatch({ type: "GET_DESCRIPTION", payload: description[count] });
+    allsongs.dispatch({ type: "GET_TRACK_TOTAL", payload: tracks[count] });
+  };
 
   const ref = CloseOutsideMenu(handleClickOutside);
 
@@ -106,16 +103,13 @@ function AllSongs() {
 
   return (
     <div
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      // onMouseEnter={handleMouseEnter}
+      // onMouseLeave={handleMouseLeave}
       style={{ backgroundImage: `url(${images[count]})` }}
       className="relative w-full bg-[image:var(--image-url)] bg-cover bg-center px-[4%] pt-3 pb-4   transition-all ease-in duration-[3000]"
     >
       <section className="w-full flex justify-end items-center max-tablet:mb-[5%] max-tablet:mt-[2%]">
-        <div
-          ref={ref}
-          className="hidden mr-auto max-lap:block text-[1.5rem] "
-        >
+        <div ref={ref} className="hidden mr-auto max-lap:block text-[1.5rem] ">
           <MdQueueMusic onClick={handleMenu} />
         </div>
         <div className="flex justify-center items-center p-4 bg-light_black rounded-l-[5rem] rounded-r-[5rem] h-[2.8rem] m-4 max-laptop:px-4 max-laptop:pt-2 max-laptop:pb-3 max-laptop:h-[2.2rem] max-tablet:hidden">
@@ -126,19 +120,10 @@ function AllSongs() {
             className="text-[#C0BFBF] bg-[transparent] border-light_dark border-solid border-1 ml-2 placeholder:font-nunito placeholder:not-italic placeholder:text-base placeholder:font-medium max-laptop:placeholder:text-sm max-laptop:w-[8rem] max-[479px]:text-xsm max-[479px]:w-[5rem] "
           />
         </div>
-        <AiOutlineSearch className=" hidden max-tablet:block text-lg"/>
+        <AiOutlineSearch className=" hidden max-tablet:block text-lg" />
         <BiCast className="ml-[1%] text-lg  max-[479px]:ml-1 " />
         <IoMdNotificationsOutline className="ml-[2%] text-lg " />
-        <img
-          src={pic2}
-          className="ml-[2%] h-8 w-8 rounded-[100%] "
-        />
-
-        {menu && (
-          <div className="hidden absolute h-screen top-0 left-0 w-[20%] bg-gradient-to-r from-[#201c1c] to-[#171616]  max-lap:block z-10 box-content max-pad:w[30%] max-[650px]:w-[35%] max-[330px]:w-[45%] ">
-            <SideNav />
-          </div>
-        )}
+        <img src={pic2} className="ml-[2%] h-8 w-8 rounded-[100%] " />
       </section>
 
       <section>
@@ -172,14 +157,17 @@ function AllSongs() {
         {[1, 2, 3, 4, 5].map((e, i) => (
           <div
             key={e}
+            onClick={() => {
+              setCount(i)
+            }}
             className={`w-3 h-3 bg-${
               count === i ? "bright_orange" : "light_black"
-            } rounded-[100%] m-1 max-[479px]:w-2 max-[479px]:h-2 max-[479px]:wx-1 max-[479px]:wy-2 `}
+            } rounded-[100%] m-1 max-[479px]:w-2 max-[479px]:h-2 max-[479px]:wx-1 max-[479px]:wy-2 cursor-pointer `}
           ></div>
         ))}
       </section>
 
-      <div
+      {/* <div
         style={{ display: isHover ? "block" : "none" }}
         className="flex justify-center items-center"
       >
@@ -193,7 +181,7 @@ function AllSongs() {
           onClick={forward}
           className="absolute right-[2%] top-[46%] text-bright_orange text-xl"
         />
-      </div>
+      </div> */}
     </div>
   );
 }

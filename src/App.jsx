@@ -23,6 +23,7 @@ function App() {
   const audioRef = useRef();
 
   const [refreshToken, setRefreshToken] = useState("");
+  const [sideNavMenu, setSideNavMenu] = useState(false)
   const [state, dispatch] = useReducer(reducer, intialState);
 
   useEffect(() => {
@@ -46,7 +47,7 @@ function App() {
 
   return (
     <div>
-      <AppDispatchContext.Provider value={{ state, dispatch }}>
+      <AppDispatchContext.Provider value={{ state, dispatch, setSideNavMenu }}>
         <RefreshTokenContext.Provider value={refreshToken}>
           <AudioRefContext.Provider value={audioRef}>
             {!refreshToken ? (
@@ -54,7 +55,7 @@ function App() {
             ) : (
               <>
                 <div className=" flex justify-center items-start max-lap:block w-full relative">
-                  <div className=" basis-[13%] sticky top-0 max-lap:hidden">
+                  <div className={sideNavMenu ? " absolute h-screen top-0 left-0 w-[20%] bg-gradient-to-r from-[#201c1c] to-[#171616] z-10 box-content max-pad:w[30%] max-[650px]:w-[35%] max-[330px]:w-[45%]" : " basis-[13%] sticky top-0 max-lap:hidden"}>
                     <SideNav />
                   </div>
                   <div className="basis-[87%]">

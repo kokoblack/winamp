@@ -64,14 +64,17 @@ const Songs = () => {
   }, [token, id, total]);
 
   return (
-    <div className="w-full bg-light_black h-screen relative">
+    <div className="w-full bg-dark_black relative">
       <section
         style={{
           backgroundImage: `url(${songPlayingReducer.state.songplayingimageSrc})`,
         }}
-        className=" relative w-full bg-cover bg-center bg-[blue] h-[50vh]"
+        className=" relative w-full bg-cover bg-center bg-[blue] h-[50vh] p-[2%]"
       >
-        <p className=" w-1/2 absolute bottom-[10%] left-[1%] font-nunito not-italic text-lg font-black text-white max-laptop:text-base max-[850px]:text-sm max-[479px]:text-xsm">
+        <button onClick={() => navigate(-1)} className='text-xxl mb-[5%] hidden max-lap:block max-[550px]:text-[1.7rem]'>
+          <BiLeftArrowAlt/>
+        </button>
+        <p className=" w-1/2 absolute bottom-[10%] left-[2%] font-nunito not-italic text-lg font-black text-white max-laptop:text-base max-[850px]:text-sm max-[479px]:text-xsm">
           {" "}
           {songPlayingReducer.state.songPlayingdescription}
         </p>
@@ -80,7 +83,7 @@ const Songs = () => {
         </button>
       </section>
 
-      <section className=" bg-light_black">
+      <section className=" bg-dark_black">
         {songPlayingReducer.state.songsTracks.map((songs) => (
           <div
             onClick={() => {
@@ -120,7 +123,7 @@ const Songs = () => {
               });
             }}
             key={songs.id}
-            className=" flex justify-center items-center gap-[3%] px-[5%] py-[1%] text-white w-full hover:bg-[#EC625F66]"
+            className=" cursor-pointer flex justify-center items-center gap-[3%] px-[5%] py-[1%] text-white w-full hover:bg-[#EC625F66]"
           >
             <img
               src={songs.image}

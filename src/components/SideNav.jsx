@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import logo from "../assets/logo.png";
 import { Link } from "react-router-dom";
 import { RiHomeLine } from "react-icons/ri";
@@ -12,6 +12,7 @@ import { FaBattleNet, FaHeadphonesAlt } from "react-icons/fa";
 import { MdOutlineLocalFireDepartment } from "react-icons/md";
 
 const SideNav = () => {
+
   const FirstNav = [
     [<RiHomeLine />, "/", "Home"],
     [<MdOutlineLocalFireDepartment />, "/trending", "Trending"],
@@ -23,7 +24,7 @@ const SideNav = () => {
   const [checkNumber, setCheckNumber] = useState(0)
 
   return (
-    <div style={{background: 'linear-gradient(182.2deg, rgba(32, 28, 28, 0.91) 0%, rgba(23, 22, 22, 0.94) 89.97%)'}} className=" sticky top-0 pt-10 pl-[5%] h-screen max-lap:pt-8">
+    <div style={{background: 'linear-gradient(182.2deg, rgba(32, 28, 28, 0.91) 0%, rgba(23, 22, 22, 0.94) 89.97%)'}} className="sticky top-0 pt-10 pl-[5%] h-screen max-lap:pt-8">
       <section className="flex gap-2 pl-1 items-center mb-8">
         <img src={logo} alt="logo" className="w-6 h-8 max-lap:w-4 max-lap:h-6" />
         <h3 className="font-nunito not-italic text-[1.3vw] font-semibold text-white max-lap:text-medium max-[479px]:text-base">
