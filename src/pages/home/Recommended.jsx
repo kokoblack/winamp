@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import axios from "axios";
 import { AppDispatchContext, RefreshTokenContext } from "../../App";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -122,4 +122,4 @@ function Recommended() {
   );
 }
 
-export default Recommended;
+export default React.memo(Recommended);

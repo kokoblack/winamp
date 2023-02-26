@@ -16,7 +16,7 @@ const Artists = () => {
   };
 
   const handleClickOutside = () => {
-    return artistReducer.setSideNavMenu(false);;
+    return artistReducer.setSideNavMenu(false);
   };
 
   const ref = CloseOutsideMenu(handleClickOutside);
@@ -30,7 +30,6 @@ const Artists = () => {
         },
       })
       .then((res) => {
-        console.log(res.data);
         const artist = res.data.artists.items.map((e) => {
           return {
             id: e.id,
@@ -62,8 +61,8 @@ const Artists = () => {
   }, [token]);
 
   return (
-    <div className=" font-nunito not-italic bg-light_black text-white relative ">
-      <section className=" px-[2%] pt-[2%] max-tablet:px-[4%] max-tablet:pt-[4%]">
+    <div className=" font-nunito not-italic text-white relative ">
+      <section className=" px-[2%] py-[2%] bg-light_black max-tablet:px-[4%] max-tablet:pt-[4%]">
         <section className=" flex justify-center items-center mb-[1%] max-tablet:mb-[3%]">
           <div className=" flex justify-center items-center gap-[10%]">
             <div
@@ -88,7 +87,7 @@ const Artists = () => {
           <AiOutlineSearch className=" hidden max-tablet:block text-lg ml-auto" />
         </section>
 
-        <section className="text-sm text-white font-medium max-tablet:text-xxsm mb-[2%] max-tablet:mb-[4%]">
+        <section className=" text-sm text-white font-medium max-tablet:text-xxsm mb-[2%] max-tablet:mb-[4%]">
           <button
             onClick={() => setToggleShow(true)}
             className={`px-[2%] py-[1%] rounded-xl text-center border-[1px] border-solid border-bright_orange mr-[2%] bg-${
@@ -106,7 +105,9 @@ const Artists = () => {
             Followed Artist
           </button>
         </section>
+      </section>
 
+      <section className=" px-[2%] pt-[2%] bg-dark_black max-tablet:px-[4%] max-tablet:pt-[4%]">
         <section>
           {toggleShow &&
             artistReducer.state.artist.map((artist) => (
@@ -139,6 +140,7 @@ const Artists = () => {
             ))}
         </section>
       </section>
+      <div className=" h-[4.5rem]"></div>
     </div>
   );
 };

@@ -1,55 +1,88 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import AudioPlayer from "../../components/AudioPlayer";
+import { AppDispatchContext, RefreshTokenContext } from "../../App";
+import CloseOutsideMenu from "../../components/CloseOutsideMenu";
+import { MdQueueMusic } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 const Playlists = () => {
-  // const publicPlaylistsQuery = "browse/featured-playlists";
-  // const baseUrl = "https://api.spotify.com/v1/";
-  // const [refreshToken, setRefreshToken] = useState("");
-  // console.log(`refreshtoken: ${refreshToken}`);
-  // const [query, setQuery] = useState(publicPlaylistsQuery);
-  // const [publicPlaylistsData, setPublicPlaylistsData] = useState("kareem");
+  const playlistReducer = useContext(AppDispatchContext);
+  const token = useContext(RefreshTokenContext);
 
-  // console.log(`app: ${publicPlaylistsData}`);
+  const [playlist, setPlaylist] = useState([]);
 
-  // useEffect(() => {
-  //   const hash = window.location.hash;
-  //   console.log(`first hash: ${hash}`);
-  //   let token = window.localStorage.getItem("token");
-  //   console.log(`first token: ${token}`);
+  const handleMenu = () => {
+    return playlistReducer.setSideNavMenu(true);
+  };
 
-  //   if (hash) {
-  //     token = hash
-  //       .substring(1)
-  //       .split("&")
-  //       .find((ele) => ele.startsWith("access_token"))
-  //       .split("=")[1];
+  const handleClickOutside = () => {
+    return playlistReducer.setSideNavMenu(false);
+  };
 
-  //     window.location.hash = "";
-  //     window.localStorage.setItem("token", token);
-  //   }
+  const ref = CloseOutsideMenu(handleClickOutside);
 
-  //   setRefreshToken(token);
-  //   console.log(`set token: ${token}`);
-  // }),
-  //   [refreshToken];
-
-  // useEffect(() => {
-  //   axios
-  //     .get('https://jsonplaceholder.typicode.com/todos/1')
-  //     .then((res) => {
-  //       const data = res.data.title;
-  //       setPublicPlaylistsData(res.data.title);
-  //       console.log(`set: ${publicPlaylistsData}`);
-  //       console.log(res.data.title);
-  //       console.log(`data: ${data}`);
-  //     })
-  //     .catch((err) => console.log(err));
-  // }, [refreshToken, query]);
+  useEffect(() => {
+    axios
+      .get(`https://api.spotify.com/v1/me/playlists`, {
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        const data = res.data.items.map((e) => {
+          return {
+            description: e.description,
+            name: e.name,
+            id: e.id,
+            image: e.images[0].url,
+          };
+        });
+        setPlaylist(data);
+      })
+      .catch((err) => console.log(err));
+  }, [token]);
 
   return (
-    <div>
-      {/* <AudioPlayer /> */} hi
+    <div className="font-nunito not-italic text-white text-xl p-[2%] max-[550px]:text-medium max-lap:pt-[4%] max-lap:px-[4%]">
+      <div className=" flex justify-start items-center gap-[3%] mt-[1.5%] mb-[3%]">
+        <div
+          ref={ref}
+          className="hidden max-lap:block text-[2rem] max-tablet:text-lg "
+        >
+          <MdQueueMusic onClick={handleMenu} />
+        </div>
+        <h1 className=" text-white font-black">Playlist</h1>
+      </div>
+      <div className=" grid grid-cols-4 place-content-center gap-[5%] mt-[5%] max-lap:grid-cols-3 max-lap:mt-[12%] max-tablet:grid-cols-2 max-tablet:mt-[30%]">
+        {playlist.map((e) => (
+          <Link
+            onClick={() => {
+              playlistReducer.dispatch({
+                type: "GET_IMAGE_SRC",
+                payload: e.image,
+              });
+              playlistReducer.dispatch({
+                type: "GET_ID",
+                payload: e.id,
+              });
+              playlistReducer.dispatch({
+                type: "GET_DESCRIPTION",
+                payload: e.description,
+              });
+            }}
+            to="/songs"
+            key={e.id}
+          >
+            <img
+              src={e.image}
+              className=" rounded-lg w-[100%] h-auto mb-[3%]"
+            />
+            <p className=" text-medium max-tablet:text-sm">{e.name}</p>
+          </Link>
+        ))}
+      </div>
+      <div className=" h-[6rem] max-lap:h-[20rem] max-tablet:h-[20rem]"></div>
     </div>
   );
 };

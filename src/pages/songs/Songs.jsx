@@ -41,7 +41,6 @@ const Songs = () => {
             image: e.track.album.images[0].url,
           };
         });
-        console.log(trackData)
         const jsonObject = trackData.map(JSON.stringify);
         const uniqueSet = new Set(jsonObject);
         const removeDuplicate = Array.from(uniqueSet).map(JSON.parse);
@@ -69,7 +68,7 @@ const Songs = () => {
         style={{
           backgroundImage: `url(${songPlayingReducer.state.songplayingimageSrc})`,
         }}
-        className=" relative w-full bg-cover bg-center bg-[blue] h-[50vh] p-[2%]"
+        className=" relative w-full bg-cover bg-center h-[50vh] p-[2%]"
       >
         <button onClick={() => navigate(-1)} className='text-xxl mb-[5%] hidden max-lap:block max-[550px]:text-[1.7rem]'>
           <BiLeftArrowAlt/>
@@ -89,7 +88,7 @@ const Songs = () => {
             onClick={() => {
               songPlayingReducer.dispatch({
                 type: "SET_TRACK_LIST_URL",
-                payload: songPlayingReducer.state.recommendation.map(
+                payload: songPlayingReducer.state.songsTracks.map(
                   (e) => e.url
                 ),
               });
@@ -144,7 +143,7 @@ const Songs = () => {
             </div>
           </div>
         ))}
-        <div className=" h-[4.5rem] bg-light_black"></div>
+        <div className=" h-[4.5rem]"></div>
       </section>
     </div>
   );

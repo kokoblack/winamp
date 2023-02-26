@@ -6,6 +6,7 @@ export const intialState = {
   audioPlayerAudio: "",
   audioPlayerImage: "",
   audioPlayerTitle: "",
+  categoriesDAta: [],
   followedArtist: [],
   isPlaying: false,
   nowPlayingToggle: false,
@@ -19,6 +20,8 @@ export const intialState = {
   songsTracks: [],
   trackListUrl: [],
   trackData: [],
+  trendingData: [],
+  trendingPlaylistData: [],
   updatePlayerSate: 'false'
 };
 
@@ -52,6 +55,12 @@ export const reducer = (state, action) => {
       return {
         ...state,
         audioPlayerArtist: action.payload,
+      };
+
+      case "SET_CATEGORIES_DATA":
+      return {
+        ...state,
+        categoriesDAta: action.payload,
       };
 
       case "SET_FOLLOWED_ARTIST":
@@ -130,6 +139,18 @@ export const reducer = (state, action) => {
       return {
         ...state,
         trackData: action.payload,
+      };
+
+      case "SET_TRENDING_DATA":
+      return {
+        ...state,
+        trendingData: action.payload,
+      };
+
+      case "SET_TRENDING_PLAYLIST_DATA":
+      return {
+        ...state,
+        trendingPlaylistData: action.payload,
       };
 
       case "SET_PLAYER_STATE":
