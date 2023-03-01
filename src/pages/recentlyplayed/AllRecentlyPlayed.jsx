@@ -1,13 +1,13 @@
-import {useContext} from "react";
+import { useContext } from "react";
 import { BiLeftArrowAlt, BiPlay } from "react-icons/bi";
 import { AiOutlinePlus, AiOutlineHeart } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
-import {AppDispatchContext} from "../../App";
+import { AppDispatchContext } from "../../App";
 
 const AllRecentlyPlayed = () => {
-    const allRecentlyPlayedReducer = useContext(AppDispatchContext);
+  const allRecentlyPlayedReducer = useContext(AppDispatchContext);
 
-    const navigate = useNavigate()
+  const navigate = useNavigate();
 
   return (
     <div className=" bg-dark_black relative">
@@ -17,7 +17,10 @@ const AllRecentlyPlayed = () => {
         }}
         className=" font-nunito not-italic relative px-[2%] pb-[6%] max-tablet:pb-[10%] text-white"
       >
-        <button onClick={() => navigate(-1)} className=" hidden mb-[5%] max-lap:block ">
+        <button
+          onClick={() => navigate(-1)}
+          className=" hidden mb-[5%] max-lap:block "
+        >
           <BiLeftArrowAlt className=" text-xxl max-[550px]:text-[1.7rem] " />
         </button>
         <div className=" px-[1.5%]">
@@ -28,7 +31,59 @@ const AllRecentlyPlayed = () => {
             {`${allRecentlyPlayedReducer.state.recentlyPlayed.length} Songs`}
           </p>
         </div>
-        <button className=" absolute bottom-0 right-[2%] p-2 max-tablet:p-1 bg-bright_orange rounded-[100%]">
+        <button
+          onClick={() => {
+            allRecentlyPlayedReducer.dispatch({
+              type: "SET_SHUFFLE_URL",
+              payload: allRecentlyPlayedReducer.state.recentlyPlayedSuffle.map(
+                (e) => e.url
+              ),
+            });
+            allRecentlyPlayedReducer.dispatch({
+              type: "SET_SHUFFLE_DATA",
+              payload: allRecentlyPlayedReducer.state.recentlyPlayedSuffle.map(
+                (e) => e
+              ),
+            });
+            allRecentlyPlayedReducer.dispatch({
+              type: "SET_TRACK_LIST_URL",
+              payload: allRecentlyPlayedReducer.state.recentlyPlayed.map(
+                (e) => e.url
+              ),
+            });
+            allRecentlyPlayedReducer.dispatch({
+              type: "SET_TRACK_DATA",
+              payload: allRecentlyPlayedReducer.state.recentlyPlayed.map(
+                (e) => e
+              ),
+            });
+            allRecentlyPlayedReducer.dispatch({
+              type: "SET_PLAYER_STATE",
+              payload: !allRecentlyPlayedReducer.state.updatePlayerSate,
+            });
+            allRecentlyPlayedReducer.dispatch({
+              type: "SET_IS_PLAYING",
+              payload: true,
+            });
+            allRecentlyPlayedReducer.dispatch({
+              type: "GET_AUDIO_PLAYER_ARTIST",
+              payload: allRecentlyPlayedReducer.state.recentlyPlayed[0].artist,
+            });
+            allRecentlyPlayedReducer.dispatch({
+              type: "GET_AUDIO_PLAYER_TITLE",
+              payload: allRecentlyPlayedReducer.state.recentlyPlayed[0].name,
+            });
+            allRecentlyPlayedReducer.dispatch({
+              type: "GET_AUDIO_PLAYER_AUDIO",
+              payload: allRecentlyPlayedReducer.state.recentlyPlayed[0].url,
+            });
+            allRecentlyPlayedReducer.dispatch({
+              type: "GET_AUDIO_PLAYER_IMAGE",
+              payload: allRecentlyPlayedReducer.state.recentlyPlayed[0].image,
+            });
+          }}
+          className=" absolute bottom-0 right-[2%] p-2 max-tablet:p-1 bg-bright_orange rounded-[100%]"
+        >
           <BiPlay className=" text-[1.5rem] text-dark_black" />
         </button>
       </section>
@@ -38,12 +93,30 @@ const AllRecentlyPlayed = () => {
           <div
             onClick={() => {
               allRecentlyPlayedReducer.dispatch({
+                type: "SET_SHUFFLE_URL",
+                payload:
+                  allRecentlyPlayedReducer.state.recentlyPlayedSuffle.map(
+                    (e) => e.url
+                  ),
+              });
+              allRecentlyPlayedReducer.dispatch({
+                type: "SET_SHUFFLE_DATA",
+                payload:
+                  allRecentlyPlayedReducer.state.recentlyPlayedSuffle.map(
+                    (e) => e
+                  ),
+              });
+              allRecentlyPlayedReducer.dispatch({
                 type: "SET_TRACK_LIST_URL",
-                payload: allRecentlyPlayedReducer.state.recentlyPlayed.map((e) => e.url),
+                payload: allRecentlyPlayedReducer.state.recentlyPlayed.map(
+                  (e) => e.url
+                ),
               });
               allRecentlyPlayedReducer.dispatch({
                 type: "SET_TRACK_DATA",
-                payload: allRecentlyPlayedReducer.state.recentlyPlayed,
+                payload: allRecentlyPlayedReducer.state.recentlyPlayed.map(
+                  (e) => e
+                ),
               });
               allRecentlyPlayedReducer.dispatch({
                 type: "SET_PLAYER_STATE",

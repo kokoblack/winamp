@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useContext } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import axios from "axios";
 import { CloseOutsideMenu } from "../../components/CloseOutsideMenu";
 import { AppDispatchContext, RefreshTokenContext } from "../../App";
@@ -96,7 +96,20 @@ function AllSongs() {
         },
       })
       .then((res) => {
-        setPublicPlaylists(res.data.playlists.items);
+
+        const jsonObject = res.data.playlists.items.map(JSON.stringify);
+        const uniqueSet = new Set(jsonObject);
+        const removeDuplicate = Array.from(uniqueSet).map(JSON.parse);
+
+        const uniqueData = [];
+        removeDuplicate.forEach((e) => {
+          if (e === null) {
+            null;
+          } else {
+            uniqueData.push(e);
+          }
+        });
+        setPublicPlaylists(uniqueData);
       })
       .catch((err) => console.log(err));
   }, [token, query]);
@@ -166,55 +179,8 @@ function AllSongs() {
           ></div>
         ))}
       </section>
-
-      {/* <div
-        style={{ display: isHover ? "block" : "none" }}
-        className="flex justify-center items-center"
-      >
-        <BsArrowLeftCircle
-          size={30}
-          onClick={backward}
-          className="absolute left-[2%] top-[45%] text-bright_orange text-xl"
-        />
-        <BsArrowRightCircle
-          size={30}
-          onClick={forward}
-          className="absolute right-[2%] top-[46%] text-bright_orange text-xl"
-        />
-      </div> */}
     </div>
   );
 }
 
-export default AllSongs;
-
-// const [touchPosition, setTouchPosition] = useState(null);
-
-// const handleTouchStart = (e) => {
-//   const touchDown = e.touches[0].clientX;
-//   setTouchPosition(touchDown);
-// };
-
-// const handleTouchMove = (e) => {
-//   const touchDown = touchPosition;
-
-//   if (touchDown === null) {
-//     return;
-//   }
-
-//   const currentTouch = e.touches[0].clientX;
-//   const diff = touchDown - currentTouch;
-
-//   if (diff > 5) {
-//     next();
-//   }
-
-//   if (diff < -5) {
-//     prev();
-//   }
-
-//   setTouchPosition(null);
-// };
-
-// onTouchStart = { handleTouchStart };
-// onTouchMove = { handleTouchMove };
+export default React.memo(AllSongs);

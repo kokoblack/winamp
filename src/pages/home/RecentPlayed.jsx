@@ -1,5 +1,5 @@
 import { AiOutlineHeart, AiOutlinePlus } from "react-icons/ai";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { AppDispatchContext, RefreshTokenContext } from "../../App";
 import { Link } from "react-router-dom";
@@ -7,6 +7,9 @@ import { Link } from "react-router-dom";
 function RecentPlayed() {
   const recentlyPlayedReducer = useContext(AppDispatchContext);
   const token = useContext(RefreshTokenContext);
+
+  const [song, setSong] = useState([]);
+  const [shuffleSong, setShuffleSong] = useState([]);
 
   useEffect(() => {
     axios
@@ -31,17 +34,29 @@ function RecentPlayed() {
         const removeDuplicate = Array.from(uniqueSet).map(JSON.parse);
 
         const uniqueData = [];
+        const shuffle = [];
         removeDuplicate.forEach((e) => {
           if (e.url === null) {
             null;
           } else {
             uniqueData.push(e);
+            shuffle.push(e);
           }
         });
+
+        const shuffleData = shuffle.sort(() => Math.random() - 0.5);
+
+        setShuffleSong(shuffleData);
+        setSong(uniqueData);
 
         recentlyPlayedReducer.dispatch({
           type: "RECENTLY_PLAYED_DATA",
           payload: uniqueData,
+        });
+
+        recentlyPlayedReducer.dispatch({
+          type: "RECENTLY_PLAYED_SHUFFLE",
+          payload: shuffleData,
         });
       })
       .catch((err) => console.log(err));
@@ -67,14 +82,20 @@ function RecentPlayed() {
             <div
               onClick={() => {
                 recentlyPlayedReducer.dispatch({
+                  type: "SET_SHUFFLE_URL",
+                  payload: shuffleSong.map((e) => e.url),
+                });
+                recentlyPlayedReducer.dispatch({
+                  type: "SET_SHUFFLE_DATA",
+                  payload: shuffleSong.map(e => e),
+                });
+                recentlyPlayedReducer.dispatch({
                   type: "SET_TRACK_LIST_URL",
-                  payload: recentlyPlayedReducer.state.recentlyPlayed.map(
-                    (e) => e.url
-                  ),
+                  payload: song.map((e) => e.url),
                 });
                 recentlyPlayedReducer.dispatch({
                   type: "SET_TRACK_DATA",
-                  payload: recentlyPlayedReducer.state.recentlyPlayed,
+                  payload: song.map(e => e),
                 });
                 recentlyPlayedReducer.dispatch({
                   type: "SET_PLAYER_STATE",
@@ -130,14 +151,20 @@ function RecentPlayed() {
             <div
               onClick={() => {
                 recentlyPlayedReducer.dispatch({
+                  type: "SET_SHUFFLE_URL",
+                  payload: shuffleSong.map((e) => e.url),
+                });
+                recentlyPlayedReducer.dispatch({
+                  type: "SET_SHUFFLE_DATA",
+                  payload: shuffleSong,
+                });
+                recentlyPlayedReducer.dispatch({
                   type: "SET_TRACK_LIST_URL",
-                  payload: recentlyPlayedReducer.state.recentlyPlayed.map(
-                    (e) => e.url
-                  ),
+                  payload: song.map((e) => e.url),
                 });
                 recentlyPlayedReducer.dispatch({
                   type: "SET_TRACK_DATA",
-                  payload: recentlyPlayedReducer.state.recentlyPlayed,
+                  payload: song,
                 });
                 recentlyPlayedReducer.dispatch({
                   type: "SET_PLAYER_STATE",

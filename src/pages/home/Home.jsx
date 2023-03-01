@@ -14,7 +14,7 @@ function Home() {
           </div>
           <div className=" px-[2%] ">
             <Recommended />
-            <div className=" h-[4.5rem]"></div>
+            <div className=" h-[5rem]"></div>
           </div>
         </section>
     </div>

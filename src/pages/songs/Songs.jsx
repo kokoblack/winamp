@@ -1,4 +1,4 @@
-import { React, useEffect, useContext } from "react";
+import { React, useEffect, useContext, useState } from "react";
 import { BiLeftArrowAlt, BiPlay } from "react-icons/bi";
 import { AppDispatchContext, RefreshTokenContext } from "../../App";
 import { AiOutlinePlus, AiOutlineHeart } from "react-icons/ai";
@@ -10,6 +10,9 @@ const Songs = () => {
   const songPlayingReducer = useContext(AppDispatchContext);
 
   const navigate = useNavigate();
+
+  const [song, setSong] = useState([]);
+  const [shuffleSong, setShuffleSong] = useState([]);
 
   const id = songPlayingReducer.state.songPlayingId;
   const total = songPlayingReducer.state.songPlayingTrackTotal;
@@ -31,7 +34,7 @@ const Songs = () => {
             removeNull.push(e);
           }
         });
-        
+
         const trackData = removeNull.map((e) => {
           return {
             id: e.track.id,
@@ -41,20 +44,25 @@ const Songs = () => {
             image: e.track.album.images[0].url,
           };
         });
-        console.log(trackData)
         const jsonObject = trackData.map(JSON.stringify);
         const uniqueSet = new Set(jsonObject);
         const removeDuplicate = Array.from(uniqueSet).map(JSON.parse);
 
         const uniqueData = [];
+        const shuffle = [];
         removeDuplicate.forEach((e) => {
           if (e.url === null) {
             null;
           } else {
             uniqueData.push(e);
+            shuffle.push(e);
           }
         });
 
+        const shuffleData = shuffle.sort(() => Math.random() - 0.5);
+
+        setShuffleSong(shuffleData);
+        setSong(uniqueData);
         songPlayingReducer.dispatch({
           type: "SONG_TRACKS_DATA",
           payload: uniqueData,
@@ -69,16 +77,63 @@ const Songs = () => {
         style={{
           backgroundImage: `url(${songPlayingReducer.state.songplayingimageSrc})`,
         }}
-        className=" relative w-full bg-cover bg-center bg-[blue] h-[50vh] p-[2%]"
+        className=" relative w-full bg-cover bg-center h-[50vh] p-[2%]"
       >
-        <button onClick={() => navigate(-1)} className='text-xxl mb-[5%] hidden max-lap:block max-[550px]:text-[1.7rem]'>
-          <BiLeftArrowAlt/>
+        <button
+          onClick={() => navigate(-1)}
+          className="text-xxl mb-[5%] hidden max-lap:block max-[550px]:text-[1.7rem]"
+        >
+          <BiLeftArrowAlt />
         </button>
         <p className=" w-1/2 absolute bottom-[10%] left-[2%] font-nunito not-italic text-lg font-black text-white max-laptop:text-base max-[850px]:text-sm max-[479px]:text-xsm">
           {" "}
           {songPlayingReducer.state.songPlayingdescription}
         </p>
-        <button className=" absolute bottom-[-1.7vh] right-[2%] min-[1000px]:bottom-[-2.5vh] p-2 bg-bright_orange rounded-[100%]">
+        <button
+          onClick={() => {
+            songPlayingReducer.dispatch({
+              type: "SET_SHUFFLE_URL",
+              payload: shuffleSong.map((e) => e.url),
+            });
+            songPlayingReducer.dispatch({
+              type: "SET_SHUFFLE_DATA",
+              payload: shuffleSong.map(e => e),
+            });
+            songPlayingReducer.dispatch({
+              type: "SET_TRACK_LIST_URL",
+              payload: song.map((e) => e.url),
+            });
+            songPlayingReducer.dispatch({
+              type: "SET_TRACK_DATA",
+              payload: song.map(e => e),
+            });
+            songPlayingReducer.dispatch({
+              type: "SET_PLAYER_STATE",
+              payload: !songPlayingReducer.state.updatePlayerSate,
+            });
+            songPlayingReducer.dispatch({
+              type: "SET_IS_PLAYING",
+              payload: true,
+            });
+            songPlayingReducer.dispatch({
+              type: "GET_AUDIO_PLAYER_ARTIST",
+              payload: songPlayingReducer.state.songsTracks[0].artist,
+            });
+            songPlayingReducer.dispatch({
+              type: "GET_AUDIO_PLAYER_TITLE",
+              payload: songPlayingReducer.state.songsTracks[0].name,
+            });
+            songPlayingReducer.dispatch({
+              type: "GET_AUDIO_PLAYER_AUDIO",
+              payload: songPlayingReducer.state.songsTracks[0].url,
+            });
+            songPlayingReducer.dispatch({
+              type: "GET_AUDIO_PLAYER_IMAGE",
+              payload: songPlayingReducer.state.songsTracks[0].image,
+            });
+          }}
+          className=" absolute bottom-[-1.7vh] right-[2%] min-[1000px]:bottom-[-2.5vh] p-2 bg-bright_orange rounded-[100%]"
+        >
           <BiPlay className=" text-[1.5rem] text-dark_black" />
         </button>
       </section>
@@ -88,14 +143,20 @@ const Songs = () => {
           <div
             onClick={() => {
               songPlayingReducer.dispatch({
+                type: "SET_SHUFFLE_URL",
+                payload: shuffleSong.map((e) => e.url),
+              });
+              songPlayingReducer.dispatch({
+                type: "SET_SHUFFLE_DATA",
+                payload: shuffleSong.map(e => e),
+              });
+              songPlayingReducer.dispatch({
                 type: "SET_TRACK_LIST_URL",
-                payload: songPlayingReducer.state.recommendation.map(
-                  (e) => e.url
-                ),
+                payload: song.map((e) => e.url),
               });
               songPlayingReducer.dispatch({
                 type: "SET_TRACK_DATA",
-                payload: songPlayingReducer.state.songsTracks,
+                payload: song.map(e => e),
               });
               songPlayingReducer.dispatch({
                 type: "SET_PLAYER_STATE",
@@ -144,7 +205,7 @@ const Songs = () => {
             </div>
           </div>
         ))}
-        <div className=" h-[4.5rem] bg-light_black"></div>
+        <div className=" h-[4.5rem]"></div>
       </section>
     </div>
   );

@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { AppDispatchContext, RefreshTokenContext } from "../../App";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -8,6 +8,9 @@ import "swiper/css";
 function Recommended() {
   const recommendationReducer = useContext(AppDispatchContext);
   const token = useContext(RefreshTokenContext);
+
+  const [song, setSong] = useState([]);
+  const [shuffleSong, setShuffleSong] = useState([]);
 
   useEffect(() => {
     axios
@@ -33,15 +36,22 @@ function Recommended() {
         const jsonObject = trackData.map(JSON.stringify);
         const uniqueSet = new Set(jsonObject);
         const removeDuplicate = Array.from(uniqueSet).map(JSON.parse);
-
+        
         const uniqueData = [];
+        const shuffle = [];
         removeDuplicate.forEach((e) => {
           if (e.url === null) {
             null;
           } else {
             uniqueData.push(e);
+            shuffle.push(e);
           }
         });
+
+        const shuffleData = shuffle.sort(() => Math.random() - 0.5);
+
+        setShuffleSong(shuffleData);
+        setSong(uniqueData);
 
         recommendationReducer.dispatch({
           type: "RECOMMENDATION_DATA",
@@ -70,14 +80,20 @@ function Recommended() {
           <SwiperSlide
             onClick={() => {
               recommendationReducer.dispatch({
+                type: "SET_SHUFFLE_URL",
+                payload: shuffleSong.map((e) => e.url),
+              });
+              recommendationReducer.dispatch({
+                type: "SET_SHUFFLE_DATA",
+                payload: shuffleSong.map(e => e),
+              });
+              recommendationReducer.dispatch({
                 type: "SET_TRACK_LIST_URL",
-                payload: recommendationReducer.state.recommendation.map(
-                  (e) => e.url
-                ),
+                payload: song.map((e) => e.url),
               });
               recommendationReducer.dispatch({
                 type: "SET_TRACK_DATA",
-                payload: recommendationReducer.state.recommendation,
+                payload: song.map(e => e),
               });
               recommendationReducer.dispatch({
                 type: "SET_PLAYER_STATE",
@@ -122,4 +138,4 @@ function Recommended() {
   );
 }
 
-export default Recommended;
+export default React.memo(Recommended);
