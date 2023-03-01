@@ -96,7 +96,20 @@ function AllSongs() {
         },
       })
       .then((res) => {
-        setPublicPlaylists(res.data.playlists.items);
+
+        const jsonObject = res.data.playlists.items.map(JSON.stringify);
+        const uniqueSet = new Set(jsonObject);
+        const removeDuplicate = Array.from(uniqueSet).map(JSON.parse);
+
+        const uniqueData = [];
+        removeDuplicate.forEach((e) => {
+          if (e === null) {
+            null;
+          } else {
+            uniqueData.push(e);
+          }
+        });
+        setPublicPlaylists(uniqueData);
       })
       .catch((err) => console.log(err));
   }, [token, query]);

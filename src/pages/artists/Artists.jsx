@@ -1,15 +1,22 @@
-import { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { AiOutlineSearch } from "react-icons/ai";
-import { MdQueueMusic } from "react-icons/md";
+import { MdQueueMusic, MdOutlineClose } from "react-icons/md";
 import { AppDispatchContext, RefreshTokenContext } from "../../App";
 import CloseOutsideMenu from "../../components/CloseOutsideMenu";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Mousewheel } from "swiper";
+import "swiper/css";
 
 const Artists = () => {
   const artistReducer = useContext(AppDispatchContext);
   const token = useContext(RefreshTokenContext);
 
   const [toggleShow, setToggleShow] = useState(true);
+  const [count, setCount] = useState(null);
+  const [count2, setCount2] = useState(null)
+  const [id, setId] = useState("3tVQdUvClmAT7URs9V3rsp");
+  const [album, setAlbum] = useState([]);
 
   const handleMenu = () => {
     return artistReducer.setSideNavMenu(true);
@@ -59,6 +66,46 @@ const Artists = () => {
       })
       .catch((err) => console.log(err));
   }, [token]);
+
+  useEffect(() => {
+    axios
+      .get(
+        `https://api.spotify.com/v1/artists/${id}/albums?include_groups=album`,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((res) => {
+        const data =
+          res.data.items.length > 11
+            ? res.data.items.slice(0, 10).map((e) => {
+                return {
+                  id: e.id,
+                  name: e.name,
+                  image: e.images[0].url,
+                  releaseDate: e.release_date,
+                };
+              })
+            : res.data.items.map((e) => {
+                return {
+                  id: e.id,
+                  name: e.name,
+                  image: e.images[0].url,
+                  releaseDate: e.release_date,
+                };
+              });
+
+        const jsonObject = data.map(JSON.stringify);
+        const uniqueSet = new Set(jsonObject);
+        const removeDuplicate = Array.from(uniqueSet).map(JSON.parse);
+        setAlbum(removeDuplicate);
+        console.log(removeDuplicate)
+      })
+      .catch((err) => console.log(err));
+  }, [token, id]);
 
   return (
     <div className=" font-nunito not-italic text-white relative ">
@@ -110,33 +157,123 @@ const Artists = () => {
       <section className=" px-[2%] pt-[2%] bg-dark_black max-tablet:px-[4%] max-tablet:pt-[4%]">
         <section>
           {toggleShow &&
-            artistReducer.state.artist.map((artist) => (
-              <div
-                key={artist.id}
-                className=" text-base flex justify-start items-center gap-[4%] mb-[4%] text-white text-center max-tablet:text-xsm "
-              >
-                <img
-                  src={artist.image}
-                  className=" rounded-[100%] w-[4.5rem] h-[4.5rem] max-tablet:w-[2.5rem] max-tablet:h-[2.5rem] max-tablet:mb-1"
-                />
-                <p>{artist.name}</p>
-              </div>
+            artistReducer.state.artist.map((artist, index) => (
+              <>
+                <div
+                  key={artist.id}
+                  className=" text-base cursor-pointer flex justify-start items-center gap-[4%] mb-[4%] text-white text-center max-tablet:text-xsm "
+                >
+                  <img
+                    onClick={() => {
+                      setId(artist.id);
+                      setCount(index);
+                    }}
+                    src={artist.image}
+                    className=" rounded-[100%] w-[4.5rem] h-[4.5rem] max-tablet:w-[2.5rem] max-tablet:h-[2.5rem] max-tablet:mb-1"
+                  />
+                  <div className=" flex justify-start items-center gap-[4%] w-[30%]">
+                    <p>{artist.name}</p>
+                    <MdOutlineClose
+                      onClick={() => setCount(-1)}
+                      className={`${
+                        count === index ? "block" : "hidden"
+                      } right-[2%] top-0 text-bright_orange text-lg cursor-pointer`}
+                    />
+                  </div>
+                </div>
+                <div>
+                  <Swiper
+                    slidesPerView="auto"
+                    spaceBetween={15}
+                    mousewheel
+                    centeredSlides
+                    centeredSlidesBounds
+                    modules={[Mousewheel]}
+                    className={`${
+                      count === index ? "block" : "hidden"
+                    } mySwiper mb-[4%]`}
+                  >
+                    {album.map((artist) => (
+                      <SwiperSlide
+                        key={artist.id}
+                        className=" cursor-pointer w-[15%] text-base text-white max-[1000px]:w-[20%]  max-tablet:w-[25%] max-tablet:text-sm max-phone:w-[28%]"
+                      >
+                        <img
+                          src={artist.image}
+                          className=" rounded-xl w-full mb-[3%] h-auto max-tablet:mb-1"
+                        />
+                        <p className=" text-sm font-semibold text-left mb-[3%] max-tablet:text-xsm ">
+                          {artist.name}
+                        </p>
+                        <p className=" text-xsm font-medium text-grey text-left max-tablet:text-xxsm">
+                          {artist.releaseDate}
+                        </p>
+                      </SwiperSlide>
+                    ))}
+                  </Swiper>
+                </div>
+              </>
             ))}
         </section>
 
         <section>
           {!toggleShow &&
-            artistReducer.state.followedArtist.map((artist) => (
-              <div
-                key={artist.id}
-                className=" text-base flex justify-start items-center gap-[4%] mb-[4%] text-white text-center max-tablet:text-xsm "
-              >
-                <img
-                  src={artist.image}
-                  className=" rounded-[100%] w-[4.5rem] h-[4.5rem] max-tablet:w-[2.5rem] max-tablet:h-[2.5rem] max-tablet:mb-1"
-                />
-                <p>{artist.name}</p>
-              </div>
+            artistReducer.state.followedArtist.map((artist, index) => (
+              <>
+               <div
+                  key={artist.id}
+                  className=" text-base cursor-pointer flex justify-start items-center gap-[4%] mb-[4%] text-white text-center max-tablet:text-xsm "
+                >
+                  <img
+                    onClick={() => {
+                      setId(artist.id);
+                      setCount2(index);
+                    }}
+                    src={artist.image}
+                    className=" rounded-[100%] w-[4.5rem] h-[4.5rem] max-tablet:w-[2.5rem] max-tablet:h-[2.5rem] max-tablet:mb-1"
+                  />
+                  <div className=" flex justify-start items-center gap-[4%] w-[30%]">
+                    <p>{artist.name}</p>
+                    <MdOutlineClose
+                      onClick={() => setCount2(-1)}
+                      className={`${
+                        count2 === index ? "block" : "hidden"
+                      } right-[2%] top-0 text-bright_orange text-lg cursor-pointer`}
+                    />
+                  </div>
+                </div>
+                <div>
+                  <Swiper
+                    slidesPerView="auto"
+                    spaceBetween={15}
+                    mousewheel
+                    centeredSlides
+                    centeredSlidesBounds
+                    modules={[Mousewheel]}
+                    className={`${
+                      count2 === index ? "block" : "hidden"
+                    } mySwiper mb-[4%]`}
+                  >
+                    {album.map((artist) => (
+                      <SwiperSlide
+                        key={artist.id}
+                        className=" cursor-pointer w-[15%] text-base text-white max-[1000px]:w-[20%]  max-tablet:w-[25%] max-tablet:text-sm max-phone:w-[28%]"
+                      >
+                        <img
+                          src={artist.image}
+                          className=" rounded-xl w-full mb-[3%] h-auto max-tablet:mb-1"
+                        />
+                        <p className=" text-sm font-semibold text-left mb-[3%] max-tablet:text-xsm ">
+                          {artist.name}
+                        </p>
+                        <p className=" text-xsm font-medium text-grey text-left max-tablet:text-xxsm">
+                          {artist.releaseDate}
+                        </p>
+                      </SwiperSlide>
+                    ))}
+                  </Swiper>
+                </div>
+              </>
             ))}
         </section>
       </section>
@@ -145,4 +282,4 @@ const Artists = () => {
   );
 };
 
-export default Artists;
+export default React.memo(Artists);

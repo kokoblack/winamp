@@ -11,18 +11,22 @@ export const intialState = {
   isPlaying: false,
   nowPlayingToggle: false,
   recentlyPlayed: [],
+  recentlyPlayedSuffle: [],
   recommendation: [],
+  shuffleUrl: [],
+  shuffleData: [],
   sideNavToggle: false,
   songplayingimageSrc: "",
   songPlayingdescription: "",
   songPlayingId: "",
   songPlayingTrackTotal: "",
   songsTracks: [],
+  toggleShuffle: false,
   trackListUrl: [],
   trackData: [],
   trendingData: [],
   trendingPlaylistData: [],
-  updatePlayerSate: 'false'
+  updatePlayerSate: "false",
 };
 
 export const reducer = (state, action) => {
@@ -57,13 +61,13 @@ export const reducer = (state, action) => {
         audioPlayerArtist: action.payload,
       };
 
-      case "SET_CATEGORIES_DATA":
+    case "SET_CATEGORIES_DATA":
       return {
         ...state,
         categoriesDAta: action.payload,
       };
 
-      case "SET_FOLLOWED_ARTIST":
+    case "SET_FOLLOWED_ARTIST":
       return {
         ...state,
         followedArtist: action.payload,
@@ -87,13 +91,31 @@ export const reducer = (state, action) => {
         recentlyPlayed: action.payload,
       };
 
+      case "RECENTLY_PLAYED_SHUFFLE":
+        return {
+          ...state,
+          recentlyPlayedSuffle: action.payload,
+        };
+
     case "RECOMMENDATION_DATA":
       return {
         ...state,
         recommendation: action.payload,
       };
 
-      case "SET_SIDE_NAV_TOGGLE":
+    case "SET_SHUFFLE_URL":
+      return {
+        ...state,
+        shuffleUrl: action.payload,
+      };
+
+    case "SET_SHUFFLE_DATA":
+      return {
+        ...state,
+        shuffleData: action.payload,
+      };
+
+    case "SET_SIDE_NAV_TOGGLE":
       return {
         ...state,
         sideNavToggle: action.payload,
@@ -129,10 +151,16 @@ export const reducer = (state, action) => {
         songsTracks: action.payload,
       };
 
+    case "SET_TOGGLE_SHUFFLE":
+      return {
+        ...state,
+        toggleShuffle: action.payload,
+      };
+
     case "SET_TRACK_LIST_URL":
       return {
         ...state,
-        trackList: action.payload,
+        trackListUrl: action.payload,
       };
 
     case "SET_TRACK_DATA":
@@ -141,19 +169,19 @@ export const reducer = (state, action) => {
         trackData: action.payload,
       };
 
-      case "SET_TRENDING_DATA":
+    case "SET_TRENDING_DATA":
       return {
         ...state,
         trendingData: action.payload,
       };
 
-      case "SET_TRENDING_PLAYLIST_DATA":
+    case "SET_TRENDING_PLAYLIST_DATA":
       return {
         ...state,
         trendingPlaylistData: action.payload,
       };
 
-      case "SET_PLAYER_STATE":
+    case "SET_PLAYER_STATE":
       return {
         ...state,
         updatePlayerSate: action.payload,

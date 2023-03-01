@@ -18,7 +18,6 @@ const SideNav = () => {
     [<MdOutlineLocalFireDepartment />, "/trending", "Trending"],
     [<TfiVideoClapper />, "/playlists", "Playlists"],
     [<GiGuitar />, "/artists", "Artists"],
-    [<AiOutlineHeart />, "/favourites", "Favourites"],
   ];
 
   const [checkNumber, setCheckNumber] = useState(0)
