@@ -7,6 +7,8 @@ import CloseOutsideMenu from "../../components/CloseOutsideMenu";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Mousewheel } from "swiper";
 import "swiper/css";
+import ArtistIsLoading from "../../components/ArtistIsLoading";
+import RecommendedIsLoading from "../../components/RecommendedIsLoading";
 
 const Artists = () => {
   const artistReducer = useContext(AppDispatchContext);
@@ -14,9 +16,11 @@ const Artists = () => {
 
   const [toggleShow, setToggleShow] = useState(true);
   const [count, setCount] = useState(null);
-  const [count2, setCount2] = useState(null)
+  const [count2, setCount2] = useState(null);
   const [id, setId] = useState("3tVQdUvClmAT7URs9V3rsp");
   const [album, setAlbum] = useState([]);
+  const [loadingOne, setLoadingOne] = useState(false);
+  const [loadingTwo, setLoadingTwo] = useState(false);
 
   const handleMenu = () => {
     return artistReducer.setSideNavMenu(true);
@@ -29,6 +33,8 @@ const Artists = () => {
   const ref = CloseOutsideMenu(handleClickOutside);
 
   useEffect(() => {
+    setLoadingOne(true);
+
     axios
       .get("https://api.spotify.com/v1/me/following?type=artist&limit=50", {
         headers: {
@@ -63,11 +69,15 @@ const Artists = () => {
           type: "SET_FOLLOWED_ARTIST",
           payload: uniqueData,
         });
+
+        setLoadingOne(false);
       })
       .catch((err) => console.log(err));
   }, [token]);
 
   useEffect(() => {
+    setLoadingTwo(true);
+
     axios
       .get(
         `https://api.spotify.com/v1/artists/${id}/albums?include_groups=album`,
@@ -102,7 +112,8 @@ const Artists = () => {
         const uniqueSet = new Set(jsonObject);
         const removeDuplicate = Array.from(uniqueSet).map(JSON.parse);
         setAlbum(removeDuplicate);
-        console.log(removeDuplicate)
+
+        setLoadingTwo(false);
       })
       .catch((err) => console.log(err));
   }, [token, id]);
@@ -156,11 +167,11 @@ const Artists = () => {
 
       <section className=" px-[2%] pt-[2%] bg-dark_black max-tablet:px-[4%] max-tablet:pt-[4%]">
         <section>
-          {toggleShow &&
+          {toggleShow ? (
             artistReducer.state.artist.map((artist, index) => (
               <>
                 <div
-                  key={artist.id}
+                  key={index}
                   className=" text-base cursor-pointer flex justify-start items-center gap-[4%] mb-[4%] text-white text-center max-tablet:text-xsm "
                 >
                   <img
@@ -182,46 +193,56 @@ const Artists = () => {
                   </div>
                 </div>
                 <div>
-                  <Swiper
-                    slidesPerView="auto"
-                    spaceBetween={15}
-                    mousewheel
-                    centeredSlides
-                    centeredSlidesBounds
-                    modules={[Mousewheel]}
-                    className={`${
-                      count === index ? "block" : "hidden"
-                    } mySwiper mb-[4%]`}
-                  >
-                    {album.map((artist) => (
-                      <SwiperSlide
-                        key={artist.id}
-                        className=" cursor-pointer w-[15%] text-base text-white max-[1000px]:w-[20%]  max-tablet:w-[25%] max-tablet:text-sm max-phone:w-[28%]"
-                      >
-                        <img
-                          src={artist.image}
-                          className=" rounded-xl w-full mb-[3%] h-auto max-tablet:mb-1"
-                        />
-                        <p className=" text-sm font-semibold text-left mb-[3%] max-tablet:text-xsm ">
-                          {artist.name}
-                        </p>
-                        <p className=" text-xsm font-medium text-grey text-left max-tablet:text-xxsm">
-                          {artist.releaseDate}
-                        </p>
-                      </SwiperSlide>
-                    ))}
-                  </Swiper>
+                  {loadingTwo ? (
+                    <div
+                      className={`${
+                        count === index ? "flex" : "hidden"
+                      } justify-center items-center gap-[3%] mb-[4%]`}
+                    >
+                      {" "}
+                      <RecommendedIsLoading />{" "}
+                    </div>
+                  ) : (
+                    <Swiper
+                      slidesPerView="auto"
+                      spaceBetween={15}
+                      mousewheel
+                      centeredSlides
+                      centeredSlidesBounds
+                      modules={[Mousewheel]}
+                      className={`${
+                        count === index ? "block" : "hidden"
+                      } mySwiper mb-[4%]`}
+                    >
+                      {album.map((artist, index) => (
+                        <SwiperSlide
+                          key={index}
+                          className=" cursor-pointer w-[15%] text-base text-white max-[1000px]:w-[20%]  max-tablet:w-[25%] max-tablet:text-sm max-phone:w-[28%]"
+                        >
+                          <img
+                            src={artist.image}
+                            className=" rounded-xl w-full mb-[3%] h-auto max-tablet:mb-1"
+                          />
+                          <p className=" text-sm font-semibold text-left mb-[3%] max-tablet:text-xsm ">
+                            {artist.name}
+                          </p>
+                          <p className=" text-xsm font-medium text-grey text-left max-tablet:text-xxsm">
+                            {artist.releaseDate}
+                          </p>
+                        </SwiperSlide>
+                      ))}
+                    </Swiper>
+                  )}
                 </div>
               </>
-            ))}
-        </section>
-
-        <section>
-          {!toggleShow &&
+            ))
+          ) : loadingOne ? (
+            <ArtistIsLoading />
+          ) : (
             artistReducer.state.followedArtist.map((artist, index) => (
               <>
-               <div
-                  key={artist.id}
+                <div
+                  key={index}
                   className=" text-base cursor-pointer flex justify-start items-center gap-[4%] mb-[4%] text-white text-center max-tablet:text-xsm "
                 >
                   <img
@@ -243,38 +264,50 @@ const Artists = () => {
                   </div>
                 </div>
                 <div>
-                  <Swiper
-                    slidesPerView="auto"
-                    spaceBetween={15}
-                    mousewheel
-                    centeredSlides
-                    centeredSlidesBounds
-                    modules={[Mousewheel]}
-                    className={`${
-                      count2 === index ? "block" : "hidden"
-                    } mySwiper mb-[4%]`}
-                  >
-                    {album.map((artist) => (
-                      <SwiperSlide
-                        key={artist.id}
-                        className=" cursor-pointer w-[15%] text-base text-white max-[1000px]:w-[20%]  max-tablet:w-[25%] max-tablet:text-sm max-phone:w-[28%]"
-                      >
-                        <img
-                          src={artist.image}
-                          className=" rounded-xl w-full mb-[3%] h-auto max-tablet:mb-1"
-                        />
-                        <p className=" text-sm font-semibold text-left mb-[3%] max-tablet:text-xsm ">
-                          {artist.name}
-                        </p>
-                        <p className=" text-xsm font-medium text-grey text-left max-tablet:text-xxsm">
-                          {artist.releaseDate}
-                        </p>
-                      </SwiperSlide>
-                    ))}
-                  </Swiper>
+                  {loadingTwo ? (
+                    <div
+                      className={`${
+                        count2 === index ? "flex" : "hidden"
+                      } justify-center items-center gap-[3%] mb-[4%]`}
+                    >
+                      {" "}
+                      <RecommendedIsLoading />{" "}
+                    </div>
+                  ) : (
+                    <Swiper
+                      slidesPerView="auto"
+                      spaceBetween={15}
+                      mousewheel
+                      centeredSlides
+                      centeredSlidesBounds
+                      modules={[Mousewheel]}
+                      className={`${
+                        count2 === index ? "block" : "hidden"
+                      } mySwiper mb-[4%]`}
+                    >
+                      {album.map((artist, index) => (
+                        <SwiperSlide
+                          key={index}
+                          className=" cursor-pointer w-[15%] text-base text-white max-[1000px]:w-[20%]  max-tablet:w-[25%] max-tablet:text-sm max-phone:w-[28%]"
+                        >
+                          <img
+                            src={artist.image}
+                            className=" rounded-xl w-full mb-[3%] h-auto max-tablet:mb-1"
+                          />
+                          <p className=" text-sm font-semibold text-left mb-[3%] max-tablet:text-xsm ">
+                            {artist.name}
+                          </p>
+                          <p className=" text-xsm font-medium text-grey text-left max-tablet:text-xxsm">
+                            {artist.releaseDate}
+                          </p>
+                        </SwiperSlide>
+                      ))}
+                    </Swiper>
+                  )}
                 </div>
               </>
-            ))}
+            ))
+          )}
         </section>
       </section>
       <div className=" h-[4.5rem]"></div>

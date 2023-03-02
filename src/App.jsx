@@ -1,5 +1,6 @@
 import { useState, useEffect, createContext, useReducer, useRef } from "react";
 import { Routes, Route } from "react-router-dom";
+import axios from "axios";
 import { AudioPlayer } from "./components/import";
 import { intialState, reducer } from "./components/reducer";
 import SideNav from "./components/SideNav";
@@ -23,7 +24,7 @@ function App() {
   const audioRef = useRef();
 
   const [refreshToken, setRefreshToken] = useState("");
-  const [sideNavMenu, setSideNavMenu] = useState(false)
+  const [sideNavMenu, setSideNavMenu] = useState(false);
   const [state, dispatch] = useReducer(reducer, intialState);
 
   useEffect(() => {
@@ -45,6 +46,21 @@ function App() {
   }),
     [refreshToken];
 
+  useEffect(() => {
+    axios
+      .get(
+        "https://api.spotify.com/v1/search?include_external=audio&q=gooddays&type=album,track,artist",
+        {
+          headers: {
+            Authorization: "Bearer " + refreshToken,
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((res) => console.log(res.data))
+      .catch((err) => console.log(err));
+  }, [refreshToken]);
+
   return (
     <div>
       <AppDispatchContext.Provider value={{ state, dispatch, setSideNavMenu }}>
@@ -55,7 +71,13 @@ function App() {
             ) : (
               <>
                 <div className=" flex justify-center items-start max-lap:block w-full relative">
-                  <div className={sideNavMenu ? " absolute h-screen top-0 left-0 w-[20%] bg-gradient-to-r from-[#201c1c] to-[#171616] z-10 box-content max-pad:w[30%] max-[650px]:w-[35%] max-[330px]:w-[45%]" : " basis-[13%] sticky top-0 max-lap:hidden"}>
+                  <div
+                    className={
+                      sideNavMenu
+                        ? " absolute h-screen top-0 left-0 w-[20%] bg-gradient-to-r from-[#201c1c] to-[#171616] z-10 box-content max-pad:w[30%] max-[650px]:w-[35%] max-[330px]:w-[45%]"
+                        : " basis-[13%] sticky top-0 max-lap:hidden"
+                    }
+                  >
                     <SideNav />
                   </div>
                   <div className="basis-[87%]">
