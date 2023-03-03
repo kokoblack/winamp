@@ -130,7 +130,7 @@ function AllSongs() {
           <input
             type="text"
             placeholder="search"
-            className="text-[#C0BFBF] bg-[transparent] border-light_dark border-solid border-1 ml-2 placeholder:font-nunito placeholder:not-italic placeholder:text-base placeholder:font-medium max-laptop:placeholder:text-sm max-laptop:w-[8rem] max-[479px]:text-xsm max-[479px]:w-[5rem] "
+            className="text-[#C0BFBF] bg-[transparent] border-light_dark outline-none border-solid border-1 ml-2 placeholder:font-nunito placeholder:not-italic placeholder:text-base placeholder:font-medium max-laptop:placeholder:text-sm max-laptop:w-[8rem] max-[479px]:text-xsm max-[479px]:w-[5rem] "
           />
         </div>
         <AiOutlineSearch className=" hidden max-tablet:block text-lg" />

@@ -21,6 +21,26 @@ const Artists = () => {
   const [album, setAlbum] = useState([]);
   const [loadingOne, setLoadingOne] = useState(false);
   const [loadingTwo, setLoadingTwo] = useState(false);
+  const [toggleArtistSearch, setToggleArtistSearch] = useState(true);
+  const [searchArtist, setSearchArtist] = useState("");
+  const [searchFollowedArtist, setSearchFollowedArtist] = useState("");
+  const [data, setData] = useState([]);
+
+  const filteredArtistOne = artistReducer.state.artist.filter((artist) => {
+    return artist.name.toLowerCase().includes(searchArtist.toLowerCase());
+  });
+
+  const filteredArtistTwo = data.filter((artist) => {
+    return artist.name
+      .toLowerCase()
+      .includes(searchFollowedArtist.toLowerCase());
+  });
+
+  const onSearchChange = (event) => {
+    toggleArtistSearch
+      ? setSearchArtist(event.target.value)
+      : setSearchFollowedArtist(event.target.value);
+  };
 
   const handleMenu = () => {
     return artistReducer.setSideNavMenu(true);
@@ -69,7 +89,7 @@ const Artists = () => {
           type: "SET_FOLLOWED_ARTIST",
           payload: uniqueData,
         });
-
+        setData(uniqueData);
         setLoadingOne(false);
       })
       .catch((err) => console.log(err));
@@ -136,6 +156,7 @@ const Artists = () => {
           <div className="flex justify-center items-center ml-auto p-4 gap-[5%] bg-white text-dark_black rounded-l-[5rem] rounded-r-[5rem] h-[2.8rem] m-4 max-laptop:px-4 max-laptop:pt-2 max-laptop:pb-3 max-laptop:h-[2.2rem] max-tablet:hidden">
             <AiOutlineSearch className=" text-xl mt-[3%] max-[479px]:text-xsm " />
             <input
+              onChange={onSearchChange}
               type="text"
               placeholder="search artist"
               className=" bg-[transparent] border-light_dark border-solid border-1 outline-none placeholder:font-nunito placeholder:not-italic placeholder:text-base placeholder:font-medium max-laptop:placeholder:text-sm max-laptop:w-[8rem] max-[479px]:text-xsm max-[479px]:w-[5rem] "
@@ -147,7 +168,10 @@ const Artists = () => {
 
         <section className=" text-sm text-white font-medium max-tablet:text-xxsm mb-[2%] max-tablet:mb-[4%]">
           <button
-            onClick={() => setToggleShow(true)}
+            onClick={() => {
+              setToggleShow(true);
+              setToggleArtistSearch(true);
+            }}
             className={`px-[2%] py-[1%] rounded-xl text-center border-[1px] border-solid border-bright_orange mr-[2%] bg-${
               toggleShow && "bright_orange"
             } `}
@@ -155,7 +179,10 @@ const Artists = () => {
             Artist
           </button>
           <button
-            onClick={() => setToggleShow(false)}
+            onClick={() => {
+              setToggleShow(false);
+              setToggleArtistSearch(false);
+            }}
             className={`px-[2%] py-[1%] rounded-xl text-center border-[1px] border-solid border-bright_orange mr-[2%] bg-${
               !toggleShow && "bright_orange"
             }`}
@@ -168,12 +195,9 @@ const Artists = () => {
       <section className=" px-[2%] pt-[2%] bg-dark_black max-tablet:px-[4%] max-tablet:pt-[4%]">
         <section>
           {toggleShow ? (
-            artistReducer.state.artist.map((artist, index) => (
-              <>
-                <div
-                  key={index}
-                  className=" text-base cursor-pointer flex justify-start items-center gap-[4%] mb-[4%] text-white text-center max-tablet:text-xsm "
-                >
+            filteredArtistOne.map((artist, index) => (
+              <div key={index}>
+                <div className=" text-base cursor-pointer flex justify-start items-center gap-[4%] mb-[4%] text-white text-center max-tablet:text-xsm ">
                   <img
                     onClick={() => {
                       setId(artist.id);
@@ -234,17 +258,14 @@ const Artists = () => {
                     </Swiper>
                   )}
                 </div>
-              </>
+              </div>
             ))
           ) : loadingOne ? (
             <ArtistIsLoading />
           ) : (
-            artistReducer.state.followedArtist.map((artist, index) => (
-              <>
-                <div
-                  key={index}
-                  className=" text-base cursor-pointer flex justify-start items-center gap-[4%] mb-[4%] text-white text-center max-tablet:text-xsm "
-                >
+            filteredArtistTwo.map((artist, index) => (
+              <div key={index}>
+                <div className=" text-base cursor-pointer flex justify-start items-center gap-[4%] mb-[4%] text-white text-center max-tablet:text-xsm ">
                   <img
                     onClick={() => {
                       setId(artist.id);
@@ -305,7 +326,7 @@ const Artists = () => {
                     </Swiper>
                   )}
                 </div>
-              </>
+              </div>
             ))
           )}
         </section>
