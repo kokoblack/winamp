@@ -1,6 +1,5 @@
 export {default as Artists} from '../pages/artists/Artists'
 export {default as Home} from '../pages/home/Home'
-export {default as Playing} from '../pages/playing/Playing'
 export {default as Playlists} from '../pages/playlists/Playlists'
 export {default as AllRecentlyPlayed} from '../pages/recentlyplayed/AllRecentlyPlayed'
 export {default as SignIn} from '../pages/signin/SignIn'

@@ -4,9 +4,8 @@ import { CloseOutsideMenu } from "../../components/CloseOutsideMenu";
 import { AppDispatchContext, RefreshTokenContext } from "../../App";
 import pic2 from "../../assets/avatar.png";
 import { Link } from "react-router-dom";
-import { AiOutlineHeart, AiOutlinePlus, AiOutlineSearch } from "react-icons/ai";
+import { AiOutlineSearch } from "react-icons/ai";
 import { IoMdNotificationsOutline } from "react-icons/io";
-import { BsArrowLeftCircle, BsArrowRightCircle } from "react-icons/bs";
 import { MdQueueMusic } from "react-icons/md";
 import { BiCast } from "react-icons/bi";
 
