@@ -1,5 +1,4 @@
 export {default as Artists} from '../pages/artists/Artists'
-export {default as Genres} from '../pages/Genres/Genres'
 export {default as Home} from '../pages/home/Home'
 export {default as Playing} from '../pages/playing/Playing'
 export {default as Playlists} from '../pages/playlists/Playlists'
