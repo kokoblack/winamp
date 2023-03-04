@@ -66,7 +66,6 @@ function App() {
                     <Routes>
                       <Route path="/" element={<Home />} />
                       <Route path="artists" element={<Artists />} />
-                      <Route path="genres" element={<Genres />} />
                       <Route path="playlists" element={<Playlists />} />
                       <Route path="songs" element={<Songs />} />
                       <Route path="recently" element={<AllRecentlyPlayed />} />
