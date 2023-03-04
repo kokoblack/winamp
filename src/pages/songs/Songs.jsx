@@ -4,6 +4,7 @@ import { AppDispatchContext, RefreshTokenContext } from "../../App";
 import { AiOutlinePlus, AiOutlineHeart } from "react-icons/ai";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import SongsIsloading from "../../components/SongsIsloading";
 
 const Songs = () => {
   const token = useContext(RefreshTokenContext);
@@ -13,11 +14,14 @@ const Songs = () => {
 
   const [song, setSong] = useState([]);
   const [shuffleSong, setShuffleSong] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const id = songPlayingReducer.state.songPlayingId;
   const total = songPlayingReducer.state.songPlayingTrackTotal;
 
   useEffect(() => {
+    setLoading(true);
+
     axios
       .get(`https://api.spotify.com/v1/playlists/${id}/tracks`, {
         headers: {
@@ -67,6 +71,8 @@ const Songs = () => {
           type: "SONG_TRACKS_DATA",
           payload: uniqueData,
         });
+
+        setLoading(false);
       })
       .catch((err) => console.log(err));
   }, [token, id, total]);
@@ -97,7 +103,7 @@ const Songs = () => {
             });
             songPlayingReducer.dispatch({
               type: "SET_SHUFFLE_DATA",
-              payload: shuffleSong.map(e => e),
+              payload: shuffleSong.map((e) => e),
             });
             songPlayingReducer.dispatch({
               type: "SET_TRACK_LIST_URL",
@@ -105,7 +111,7 @@ const Songs = () => {
             });
             songPlayingReducer.dispatch({
               type: "SET_TRACK_DATA",
-              payload: song.map(e => e),
+              payload: song.map((e) => e),
             });
             songPlayingReducer.dispatch({
               type: "SET_PLAYER_STATE",
@@ -138,75 +144,79 @@ const Songs = () => {
         </button>
       </section>
 
-      <section className=" bg-dark_black">
-        {songPlayingReducer.state.songsTracks.map((songs) => (
-          <div
-            onClick={() => {
-              songPlayingReducer.dispatch({
-                type: "SET_SHUFFLE_URL",
-                payload: shuffleSong.map((e) => e.url),
-              });
-              songPlayingReducer.dispatch({
-                type: "SET_SHUFFLE_DATA",
-                payload: shuffleSong.map(e => e),
-              });
-              songPlayingReducer.dispatch({
-                type: "SET_TRACK_LIST_URL",
-                payload: song.map((e) => e.url),
-              });
-              songPlayingReducer.dispatch({
-                type: "SET_TRACK_DATA",
-                payload: song.map(e => e),
-              });
-              songPlayingReducer.dispatch({
-                type: "SET_PLAYER_STATE",
-                payload: !songPlayingReducer.state.updatePlayerSate,
-              });
-              songPlayingReducer.dispatch({
-                type: "SET_IS_PLAYING",
-                payload: true,
-              });
-              songPlayingReducer.dispatch({
-                type: "GET_AUDIO_PLAYER_ARTIST",
-                payload: songs.artist,
-              });
-              songPlayingReducer.dispatch({
-                type: "GET_AUDIO_PLAYER_TITLE",
-                payload: songs.name,
-              });
-              songPlayingReducer.dispatch({
-                type: "GET_AUDIO_PLAYER_AUDIO",
-                payload: songs.url,
-              });
-              songPlayingReducer.dispatch({
-                type: "GET_AUDIO_PLAYER_IMAGE",
-                payload: songs.image,
-              });
-            }}
-            key={songs.id}
-            className=" cursor-pointer flex justify-center items-center gap-[3%] px-[5%] py-[1%] text-white w-full hover:bg-[#EC625F66]"
-          >
-            <img
-              src={songs.image}
-              alt="song_cover"
-              className=" rounded-lg w-[3rem] h-[3rem] max-tablet:w-[2rem] max-tablet:h-[2rem]"
-            />
-            <div className=" w-full">
-              <h3 className="font-nunito not-italic text-base font-semibold max-tablet:text-xsm">
-                {songs.name}
-              </h3>
-              <p className="font-nunito not-italic text-sm font-medium max-tablet:text-xxsm">
-                {songs.artist}
-              </p>
+      {loading ? (
+        <SongsIsloading />
+      ) : (
+        <section className=" bg-dark_black">
+          {songPlayingReducer.state.songsTracks.map((songs) => (
+            <div
+              onClick={() => {
+                songPlayingReducer.dispatch({
+                  type: "SET_SHUFFLE_URL",
+                  payload: shuffleSong.map((e) => e.url),
+                });
+                songPlayingReducer.dispatch({
+                  type: "SET_SHUFFLE_DATA",
+                  payload: shuffleSong.map((e) => e),
+                });
+                songPlayingReducer.dispatch({
+                  type: "SET_TRACK_LIST_URL",
+                  payload: song.map((e) => e.url),
+                });
+                songPlayingReducer.dispatch({
+                  type: "SET_TRACK_DATA",
+                  payload: song.map((e) => e),
+                });
+                songPlayingReducer.dispatch({
+                  type: "SET_PLAYER_STATE",
+                  payload: !songPlayingReducer.state.updatePlayerSate,
+                });
+                songPlayingReducer.dispatch({
+                  type: "SET_IS_PLAYING",
+                  payload: true,
+                });
+                songPlayingReducer.dispatch({
+                  type: "GET_AUDIO_PLAYER_ARTIST",
+                  payload: songs.artist,
+                });
+                songPlayingReducer.dispatch({
+                  type: "GET_AUDIO_PLAYER_TITLE",
+                  payload: songs.name,
+                });
+                songPlayingReducer.dispatch({
+                  type: "GET_AUDIO_PLAYER_AUDIO",
+                  payload: songs.url,
+                });
+                songPlayingReducer.dispatch({
+                  type: "GET_AUDIO_PLAYER_IMAGE",
+                  payload: songs.image,
+                });
+              }}
+              key={songs.id}
+              className=" cursor-pointer flex justify-center items-center gap-[3%] px-[5%] py-[1%] text-white w-full hover:bg-[#EC625F66]"
+            >
+              <img
+                src={songs.image}
+                alt="song_cover"
+                className=" rounded-lg w-[3rem] h-[3rem] max-tablet:w-[2rem] max-tablet:h-[2rem]"
+              />
+              <div className=" w-full">
+                <h3 className="font-nunito not-italic text-base font-semibold max-tablet:text-xsm">
+                  {songs.name}
+                </h3>
+                <p className="font-nunito not-italic text-sm font-medium max-tablet:text-xxsm">
+                  {songs.artist}
+                </p>
+              </div>
+              <div className=" flex justify-center items-center ml-auto text-lg gap-[40%] max-pad:text-base">
+                <AiOutlineHeart />
+                <AiOutlinePlus />
+              </div>
             </div>
-            <div className=" flex justify-center items-center ml-auto text-lg gap-[40%] max-pad:text-base">
-              <AiOutlineHeart />
-              <AiOutlinePlus />
-            </div>
-          </div>
-        ))}
-        <div className=" h-[4.5rem]"></div>
-      </section>
+          ))}
+          <div className=" h-[4.5rem]"></div>
+        </section>
+      )}
     </div>
   );
 };

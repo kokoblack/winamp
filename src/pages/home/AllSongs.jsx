@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useContext } from "react";
 import axios from "axios";
 import { CloseOutsideMenu } from "../../components/CloseOutsideMenu";
 import { AppDispatchContext, RefreshTokenContext } from "../../App";
-import pic2 from "../../assets/profile1.jpg";
+import pic2 from "../../assets/avatar.png";
 import { Link } from "react-router-dom";
 import { AiOutlineHeart, AiOutlinePlus, AiOutlineSearch } from "react-icons/ai";
 import { IoMdNotificationsOutline } from "react-icons/io";
@@ -17,8 +17,10 @@ function AllSongs() {
 
   const [publicPlaylists, setPublicPlaylists] = useState([]);
   const [count, setCount] = useState(0);
-  // const [search, setSearch] = useState(false)
-  // const [isHover, setIsHover] = useState(false);
+  const [searchToggle, setSearchToggle] = useState(false);
+  const [MobileSearchToggle, setMobileSearchToggle] = useState(false);
+  const [text, setText] = useState("");
+  const [allSearchData, setAllSearchData] = useState([]);
   const timeoutRef = useRef(null);
 
   const images = publicPlaylists.slice(0, 5).map((e) => e.images[0].url);
@@ -27,28 +29,6 @@ function AllSongs() {
   const description = publicPlaylists.slice(0, 5).map((e) => e.description);
   const id = publicPlaylists.slice(0, 5).map((e) => e.id);
 
-  // const forward = () => {
-  //   setCount((count) => count + 1);
-  //   if (count === images.length - 1) {
-  //     setCount(0);
-  //   }
-  // };
-
-  // const backward = () => {
-  //   setCount((count) => count - 1);
-  //   if (count === 0) {
-  //     setCount(0);
-  //   }
-  // };
-
-  // const handleMouseEnter = () => {
-  //   setIsHover(true);
-  // };
-
-  // const handleMouseLeave = () => {
-  //   setIsHover(false);
-  // };
-
   function resetTimeout() {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
@@ -56,11 +36,11 @@ function AllSongs() {
   }
 
   const handleMenu = () => {
-    return allsongs.setSideNavMenu(true);;
+    return allsongs.setSideNavMenu(true);
   };
 
   const handleClickOutside = () => {
-    return allsongs.setSideNavMenu(false);;
+    return allsongs.setSideNavMenu(false);
   };
 
   const handleLinkClick = () => {
@@ -96,7 +76,6 @@ function AllSongs() {
         },
       })
       .then((res) => {
-
         const jsonObject = res.data.playlists.items.map(JSON.stringify);
         const uniqueSet = new Set(jsonObject);
         const removeDuplicate = Array.from(uniqueSet).map(JSON.parse);
@@ -114,32 +93,247 @@ function AllSongs() {
       .catch((err) => console.log(err));
   }, [token, query]);
 
+  useEffect(() => {
+    axios
+      .get(
+        `https://api.spotify.com/v1/search?include_external=audio&q=${text}&type=album,track,artist`,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((res) => {
+        const album = res.data.albums.items.slice(0, 5).map((e) => {
+          return {
+            id: e.id,
+            name: e.name,
+            artist: e.artists[0].name,
+            releaseDate: e.release_date.substring(0, 4),
+            image: e.images[0].url,
+            type: e.type,
+          };
+        });
+
+        allsongs.dispatch({
+          type: "SET_SEARCH_ALBUM",
+          payload: album,
+        });
+
+        const artist = [];
+        res.data.artists.items.slice(0, 5).forEach((e) => {
+          if (e.images.length === 0) {
+            null;
+          } else {
+            artist.push({
+              id: e.id,
+              name: e.name,
+              image: e.images[0].url,
+              type: e.type,
+            });
+          }
+        });
+
+        allsongs.dispatch({
+          type: "SET_SEARCH_ARTIST",
+          payload: artist,
+        });
+
+        const tracks = res.data.tracks.items.slice(0, 5).map((e) => {
+          return {
+            id: e.id,
+            name: e.name,
+            artist: e.artists[0].name,
+            url: e.preview_url,
+            image: e.album.images[0].url,
+            type: e.type,
+          };
+        });
+
+        const uniqueTrackData = [];
+        tracks.forEach((e) => {
+          if (e.url === null) {
+            null;
+          } else {
+            uniqueTrackData.push(e);
+          }
+        });
+
+        allsongs.dispatch({
+          type: "SET_SEARCH_TRACKS",
+          payload: uniqueTrackData,
+        });
+
+        const allData = [...album, ...artist, ...uniqueTrackData].sort(
+          () => Math.random() - 0.5
+        );
+
+        allsongs.dispatch({
+          type: "SET_SEARCH_ALL_DATA",
+          payload: allData,
+        });
+        setAllSearchData(allData);
+      })
+      .catch((err) => console.log(err));
+  }, [token, text]);
+
   return (
     <div
-      // onMouseEnter={handleMouseEnter}
-      // onMouseLeave={handleMouseLeave}
       style={{ backgroundImage: `url(${images[count]})` }}
-      className="relative w-full bg-[image:var(--image-url)] bg-cover bg-center px-[4%] pt-3 pb-4   transition-all ease-in duration-[3000]"
+      className="w-full bg-[image:var(--image-url)] bg-cover bg-center px-[2%] pt-3 pb-4   transition-all ease-in duration-[3000]"
     >
-      <section className="w-full flex justify-end items-center max-tablet:mb-[5%] max-tablet:mt-[2%]">
-        <div ref={ref} className="hidden mr-auto max-lap:block text-[1.5rem] ">
+      <section className="w-full flex justify-end items-center max-tablet:mb-[5%] max-tablet:mt-[2%] max-[700px]:">
+        <div
+          ref={ref}
+          className={`hidden text-[1.5rem] mr-auto ${
+            MobileSearchToggle ? "max-[700px]:hidden" : "max-[700px]:block"
+          } max-lap:block  `}
+        >
           <MdQueueMusic onClick={handleMenu} />
         </div>
-        <div className="flex justify-center items-center p-4 bg-light_black rounded-l-[5rem] rounded-r-[5rem] h-[2.8rem] m-4 max-laptop:px-4 max-laptop:pt-2 max-laptop:pb-3 max-laptop:h-[2.2rem] max-tablet:hidden">
-          <AiOutlineSearch className="text-[#C0BFBF] mt-[3%] max-laptop:text-sm max-[479px]:text-xsm " />
+        <div
+          className={` relative flex justify-start items-center p-4 bg-light_black ${
+            searchToggle ? null : "rounded-l-[5rem]"
+          } ${searchToggle ? null : "rounded-r-[5rem]"} ${
+            searchToggle ? "rounded-t-2xl" : null
+          }  w-[50%] h-[2.8rem] max-[700px]:w-full  max-[700px]:my-4 max-[700px]:mx-0 max-[700px]:h-[2.8rem] ${
+            MobileSearchToggle ? "max-[700px]:block" : "max-[700px]:hidden"
+          } m-4 max-laptop:px-4 max-laptop:pt-2 max-laptop:pb-3 max-laptop:h-[2.2rem] `}
+        >
+          <AiOutlineSearch className=" mt-[1%] text-[#C0BFBF] max-laptop:text-sm max-[700px]:text-base max-[700px]:absolute max-[700px]:top-[25%] max-[700px]:left-[5%] max-[500px]:top-[30%] " />
           <input
+            onChange={(event) => {
+              setSearchToggle(true);
+              setText(event.target.value);
+            }}
             type="text"
-            placeholder="search"
-            className="text-[#C0BFBF] bg-[transparent] border-light_dark border-solid border-1 ml-2 placeholder:font-nunito placeholder:not-italic placeholder:text-base placeholder:font-medium max-laptop:placeholder:text-sm max-laptop:w-[8rem] max-[479px]:text-xsm max-[479px]:w-[5rem] "
+            placeholder="search artists, albums, tracks"
+            className=" text-[#C0BFBF] bg-[transparent] border-light_dark outline-none border-solid border-1 ml-2 placeholder:font-nunito placeholder:not-italic placeholder:text-base placeholder:font-medium max-laptop:placeholder:text-sm max-[700px]:absolute max-[700px]:top-[20%] max-[700px]:left-[8%] max-[700px]:left-[12%]"
           />
+
+          {searchToggle && (
+            <div className="font-nunito not-italic z-20 absolute top-[90%] right-0 rounded-b-2xl w-full bg-light_black text-white">
+              {allSearchData.slice(0, 8).map((data) => (
+                <div key={data.id} className=" w-full">
+                  {data.type === "album" && (
+                    <div
+                      onClick={() => {
+                        setMobileSearchToggle(false);
+                        setSearchToggle(false);
+                        setText("");
+                      }}
+                      className=" w-full px-4 py-2 flex justify-start items-center gap-[4%] hover:bg-[#EC625F66] cursor-pointer"
+                    >
+                      <img
+                        src={data.image}
+                        alt="cover album"
+                        className="w-[3rem] h-[3rem] max-tablet:w-[2.5rem] max-tablet:h-[2.5rem]"
+                      />
+                      <div className=" w-full">
+                        <p className=" text-white text-sm mb-[1%] max-tablet:text-[.7rem]">
+                          {data.name}
+                        </p>
+                        <div className=" w-full flex justify-start items-center gap-[1%] text-grey text-xsm">
+                          <p>{data.type}</p>
+                          <p>•</p>
+                          <p>{data.artist}</p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {data.type === "track" && (
+                    <div
+                      onClick={() => {
+                        setMobileSearchToggle(false);
+                        setSearchToggle(false);
+                        setText("");
+                      }}
+                      className="w-full px-4 py-2 font-nunito not-italic flex justify-start items-center gap-[4%] hover:bg-[#EC625F66] cursor-pointer"
+                    >
+                      <img
+                        src={data.image}
+                        alt="cover track"
+                        className="w-[3rem] h-[3rem] max-tablet:w-[2.5rem] max-tablet:h-[2.5rem]"
+                      />
+                      <div className=" w-full">
+                        <p className=" text-white text-sm mb-[1%] max-tablet:text-[.7rem] ">
+                          {data.name}
+                        </p>
+                        <div className=" flex justify-start items-center gap-[1%] text-grey text-xsm">
+                          <p>{data.type}</p>
+                          <p>•</p>
+                          <p>{data.artist}</p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {data.type === "artist" && (
+                    <div
+                      onClick={() => {
+                        setMobileSearchToggle(false);
+                        setSearchToggle(false);
+                        setText("");
+                      }}
+                      className="w-full px-4 py-2 font-nunito not-italic flex justify-start items-center gap-[4%] hover:bg-[#EC625F66] cursor-pointer"
+                    >
+                      <img
+                        src={data.image}
+                        alt="cover album"
+                        className=" rounded-full w-[3rem] h-[3rem] max-tablet:w-[2.5rem] max-tablet:h-[2.5rem] "
+                      />
+                      <div className=" w-full">
+                        <p className=" text-white text-sm mb-[1%] max-tablet:text-[.7rem]">
+                          {data.name}
+                        </p>
+                        <p className="text-grey text-xsm">{data.type}</p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ))}
+
+              <Link className=" text-white px-4 pb-2 pt-1 flex justify-end items-center text-sm hover:text-bright_orange">
+                See All
+              </Link>
+            </div>
+          )}
         </div>
-        <AiOutlineSearch className=" hidden max-tablet:block text-lg" />
-        <BiCast className="ml-[1%] text-lg  max-[479px]:ml-1 " />
-        <IoMdNotificationsOutline className="ml-[2%] text-lg " />
-        <img src={pic2} className="ml-[2%] h-8 w-8 rounded-[100%] " />
+        <AiOutlineSearch
+          onClick={() => setMobileSearchToggle(true)}
+          className={`hidden ${
+            MobileSearchToggle ? "max-[700px]:hidden" : "max-[700px]:block"
+          } text-lg`}
+        />
+        <Link
+          to="trending"
+          className={`ml-[1%] text-lg max-tablet:ml-[2%] ${
+            MobileSearchToggle ? "max-[700px]:hidden" : "max-[700px]:block"
+          }`}
+        >
+          <BiCast />
+        </Link>
+        <IoMdNotificationsOutline
+          className={`ml-[2%] text-lg ${
+            MobileSearchToggle ? "max-[700px]:hidden" : "max-[700px]:block"
+          }`}
+        />
+        <img
+          src={pic2}
+          className={`ml-[2%] h-8 w-8 rounded-[100%] ${
+            MobileSearchToggle ? "max-[700px]:hidden" : "max-[700px]:block"
+          }`}
+        />
       </section>
 
-      <section>
+      <section
+        onClick={() => {
+          setMobileSearchToggle(false);
+          setSearchToggle(false);
+        }}
+      >
         <h3 className="font-nunito not-italic text-xl font-medium text-white mb-[3%] max-laptop:text-medium max-[850px]:text-base max-[479px]:text-sm max-[479px]:mb-[2%] ">
           TRENDING PLAYLISTS
         </h3>
@@ -171,7 +365,7 @@ function AllSongs() {
           <div
             key={e}
             onClick={() => {
-              setCount(i)
+              setCount(i);
             }}
             className={`w-3 h-3 bg-${
               count === i ? "bright_orange" : "light_black"

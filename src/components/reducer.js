@@ -16,6 +16,10 @@ export const intialState = {
   shuffleUrl: [],
   shuffleData: [],
   sideNavToggle: false,
+  searchAllData: [],
+  searchAlbum: [],
+  searchArtist: [],
+  searchTracks: [],
   songplayingimageSrc: "",
   songPlayingdescription: "",
   songPlayingId: "",
@@ -119,6 +123,30 @@ export const reducer = (state, action) => {
       return {
         ...state,
         sideNavToggle: action.payload,
+      };
+
+      case "SET_SEARCH_ALL_DATA":
+      return {
+        ...state,
+        searchAllData: action.payload,
+      };
+
+      case "SET_SEARCH_ALBUM":
+      return {
+        ...state,
+        searchAlbum: action.payload,
+      };
+
+      case "SET_SEARCH_ARTIST":
+      return {
+        ...state,
+        searchArtist: action.payload,
+      };
+
+      case "SET_SEARCH_TRACKS":
+      return {
+        ...state,
+        searchTracks: action.payload,
       };
 
     case "GET_IMAGE_SRC":

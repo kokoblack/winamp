@@ -4,24 +4,27 @@ import axios from "axios";
 import TrendingPlaylist from "../../components/TrendingPlaylist";
 import CloseOutsideMenu from "../../components/CloseOutsideMenu";
 import { MdQueueMusic } from "react-icons/md";
+import RecommendedIsLoading from "../../components/RecommendedIsLoading";
 
 const Trending = () => {
   const trendingReducer = useContext(AppDispatchContext);
   const token = useContext(RefreshTokenContext);
 
   const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const handleMenu = () => {
     return trendingReducer.setSideNavMenu(true);
   };
 
   const handleClickOutside = () => {
-    return trendingReducer.setSideNavMenu(false);;
+    return trendingReducer.setSideNavMenu(false);
   };
 
   const ref = CloseOutsideMenu(handleClickOutside);
 
   useEffect(() => {
+    setLoading(true);
     axios
       .get(`https://api.spotify.com/v1/browse/categories`, {
         headers: {
@@ -54,6 +57,7 @@ const Trending = () => {
           payload: data,
         });
         setItems(data);
+        setLoading(false);
       })
       .catch((err) => console.log(err));
   }, [token]);
@@ -67,18 +71,22 @@ const Trending = () => {
         >
           <MdQueueMusic onClick={handleMenu} />
         </div>
-        <h1 className=" text-white font-black">
-          Trending Now
-        </h1>
+        <h1 className=" text-white font-black">Trending Now</h1>
       </div>
-      {items.map((trend) => (
-        <div key={trend.id} className="  cursor-pointer mb-[3%]">
-          <h3 className=" mr-auto text-bright_orange text-lg font-bold max-[550px]:text-base pb-[1%]">
-            {trend.name}
-          </h3>
-          <TrendingPlaylist id={trend.id} token={token} />
-        </div>
-      ))}
+      {loading
+        ? [1, 2, 3, 4, 5, 6, 7, 8].map((e) => (
+            <div key={e} className=' w-full mb-[3%]'>
+              <div className=" flex justify-center items-center"> <RecommendedIsLoading /> </div>
+            </div>
+          ))
+        : items.map((trend) => (
+            <div key={trend.id} className="  cursor-pointer mb-[3%]">
+              <h3 className=" mr-auto text-bright_orange text-lg font-bold max-[550px]:text-base pb-[1%]">
+                {trend.name}
+              </h3>
+              <TrendingPlaylist id={trend.id} token={token} />
+            </div>
+          ))}
       <div className=" h-[4.5rem]"></div>
     </div>
   );
