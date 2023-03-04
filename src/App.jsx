@@ -1,6 +1,5 @@
 import { useState, useEffect, createContext, useReducer, useRef } from "react";
 import { Routes, Route } from "react-router-dom";
-import axios from "axios";
 import { AudioPlayer } from "./components/import";
 import { intialState, reducer } from "./components/reducer";
 import SideNav from "./components/SideNav";
@@ -8,8 +7,6 @@ import {
   Home,
   AllRecentlyPlayed,
   Artists,
-  Genres,
-  Playing,
   Playlists,
   SignIn,
   Songs,
@@ -70,7 +67,6 @@ function App() {
                       <Route path="/" element={<Home />} />
                       <Route path="artists" element={<Artists />} />
                       <Route path="genres" element={<Genres />} />
-                      <Route path="playing" element={<Playing />} />
                       <Route path="playlists" element={<Playlists />} />
                       <Route path="songs" element={<Songs />} />
                       <Route path="recently" element={<AllRecentlyPlayed />} />
