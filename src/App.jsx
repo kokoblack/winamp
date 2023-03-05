@@ -26,20 +26,22 @@ function App() {
 
   useEffect(() => {
     const hash = window.location.hash;
-    let token = window.localStorage.getItem("token");
+    // let token = window.localStorage.getItem("token");
 
     if (hash) {
-      token = hash
+      let token = hash
         .substring(1)
         .split("&")
         .find((ele) => ele.startsWith("access_token"))
         .split("=")[1];
+        console.log(token)
 
       window.location.hash = "";
-      window.localStorage.setItem("token", token);
+      // window.localStorage.setItem("token", token);
+      setRefreshToken(token);
     }
 
-    setRefreshToken(token);
+    
   }),
     [refreshToken];
 
@@ -56,7 +58,7 @@ function App() {
                   <div
                     className={
                       sideNavMenu
-                        ? " absolute h-screen top-0 left-0 w-[20%] bg-gradient-to-r from-[#201c1c] to-[#171616] z-30 box-content max-pad:w[30%] max-[650px]:w-[35%] max-[330px]:w-[45%]"
+                        ? " absolute h-screen top-0 left-0 w-[45%] bg-gradient-to-r from-[#201c1c] to-[#171616] z-30 box-content max-lap:w-[30%] max-[500px]:w-[45%]"
                         : " basis-[13%] sticky top-0 max-lap:hidden"
                     }
                   >

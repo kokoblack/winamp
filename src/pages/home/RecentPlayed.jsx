@@ -1,6 +1,7 @@
 import { AiOutlineHeart, AiOutlinePlus } from "react-icons/ai";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
+import img from '../../assets/css.jpg'
 import RecentlyPlayedIsLoading from "../../components/RecentlyPlayedIsLoading";
 import { AppDispatchContext, RefreshTokenContext } from "../../App";
 import { Link } from "react-router-dom";
@@ -69,14 +70,14 @@ function RecentPlayed() {
 
   return (
     <>
-      <div className=" font-nunito not-italic bg-light_black py-[.5rem] w-[60%] h-[12rem] rounded-2xl max-[1000px]:w-full max-lap:h-auto max-lap:mb-[2%]">
-        <section className=" flex justify-center items-center text-white px-[5%] py-[1%]">
-          <h3 className=" mr-auto text-lg font-bold max-[550px]:text-base">
+      <div className=" font-nunito not-italic overflow-hidden bg-light_black py-[.5rem] w-[60%] h-[12rem] rounded-2xl max-[1000px]:w-full max-lap:h-auto max-lap:mb-[2%]">
+        <section className=" flex justify-center items-center text-white px-[5%] py-[1%] mb-[2%]">
+          <h3 className=" mr-auto text-lg font-bold max-[550px]:text-medium">
             Recently played
           </h3>
           <Link
             to="/recently"
-            className=" ml-auto text-medium font-medium max-[550px]:text-xsm"
+            className=" ml-auto text-medium font-medium max-[550px]:text-base"
           >
             See all
           </Link>
@@ -86,7 +87,8 @@ function RecentPlayed() {
           <RecentlyPlayedIsLoading />
         ) : (
           <div>
-            <section className=" bg-light_black">
+
+            <section className=" ">
               {recentlyPlayedReducer.state.recentlyPlayed
                 .slice(0, 2)
                 .map((e) => (
@@ -139,17 +141,17 @@ function RecentPlayed() {
                     <img
                       src={e.image}
                       alt="song_cover"
-                      className=" rounded-lg w-[3rem] h-[3rem] max-tablet:w-[2rem] max-tablet:h-[2rem]"
+                      className=" rounded-lg w-[3rem] h-[3rem] max-tablet:w-[2.5rem] max-tablet:h-[2.5rem]"
                     />
-                    <div className=" w-full">
-                      <h3 className="font-nunito not-italic text-base font-semibold max-tablet:text-sm">
+                    <div className=" w-1/2">
+                      <h3 className="font-nunito not-italic text-base font-semibold truncate">
                         {e.name}
                       </h3>
-                      <p className="font-nunito not-italic text-sm font-medium max-tablet:text-xxsm">
+                      <p className="font-nunito not-italic text-sm font-medium ">
                         {e.artist}
                       </p>
                     </div>
-                    <div className=" flex justify-center items-center ml-auto text-lg gap-[40%] max-pad:text-base">
+                    <div className=" flex justify-center items-center ml-auto text-lg gap-[40%] max-pad:text-medium">
                       <AiOutlineHeart />
                       <AiOutlinePlus />
                     </div>
@@ -157,7 +159,7 @@ function RecentPlayed() {
                 ))}
             </section>
 
-            <section>
+            <section >
               {recentlyPlayedReducer.state.recentlyPlayed
                 .slice(3, 6)
                 .map((e) => (
@@ -210,17 +212,17 @@ function RecentPlayed() {
                     <img
                       src={e.image}
                       alt="song_cover"
-                      className=" rounded-lg w-[3rem] h-[3rem] max-tablet:w-[2rem] max-tablet:h-[2rem]"
+                      className=" rounded-lg w-[3rem] h-[3rem] max-tablet:w-[2.5rem] max-tablet:h-[2.5rem]"
                     />
-                    <div className=" w-full">
-                      <h3 className="font-nunito not-italic text-base font-semibold max-tablet:text-sm">
+                    <div className=" w-[50%]">
+                      <h3 className="font-nunito not-italic text-base font-semibold truncate ">
                         {e.name}
                       </h3>
-                      <p className="font-nunito not-italic text-sm font-medium max-tablet:text-xxsm">
+                      <p className="font-nunito not-italic text-sm font-medium ">
                         {e.artist}
                       </p>
                     </div>
-                    <div className=" flex justify-center items-center ml-auto text-lg gap-[40%] max-pad:text-base">
+                    <div className=" flex justify-center items-center ml-auto text-lg gap-[40%] max-pad:text-medium">
                       <AiOutlineHeart />
                       <AiOutlinePlus />
                     </div>

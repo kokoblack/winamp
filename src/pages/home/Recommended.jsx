@@ -69,7 +69,7 @@ function Recommended() {
 
   return (
     <div className=" font-nunito not-italic text-white cursor-pointer">
-      <h3 className=" mr-auto text-lg font-bold max-[550px]:text-base pb-[1%]">
+      <h3 className=" mr-auto text-lg font-bold max-[550px]:text-medium pb-[1%]">
         Recommended for you
       </h3>
 
@@ -130,14 +130,14 @@ function Recommended() {
                 });
               }}
               key={e.id}
-              className=" w-[15%] max-lap:w-[20%]  max-tablet:w-[25%] max-phone:w-[28%]"
+              className=" w-[15%] max-lap:w-[20%]  max-tablet:w-[30%]"
             >
               <img
                 src={e.image}
                 className=" rounded-lg w-[8rem] h-auto mb-[3%]"
               />
-              <p className=" text-sm max-tablet:text-xsm">{e.name}</p>
-              <p className=" text-xsm text-grey max-tablet:text-xxsm">
+              <p className=" text-sm ">{e.name}</p>
+              <p className=" text-xsm text-grey">
                 {e.artist}
               </p>
             </SwiperSlide>

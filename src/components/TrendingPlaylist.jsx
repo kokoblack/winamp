@@ -48,7 +48,7 @@ const TrendingPlaylist = ({ id, token }) => {
           ? playlist.slice(0, 10).map((e) => (
               <SwiperSlide
                 key={e.id}
-                className=" w-[15%] max-lap:w-[20%]  max-tablet:w-[25%] max-phone:w-[28%]"
+                className=" w-[15%] max-lap:w-[25%]  max-tablet:w-[40%] max-phone:w-[45%]"
               >
                 <Link
                   onClick={() => {
@@ -71,14 +71,14 @@ const TrendingPlaylist = ({ id, token }) => {
                     src={e.image}
                     className=" rounded-lg w-[100%] h-auto mb-[3%]"
                   />
-                  <p className=" text-medium max-tablet:text-xsm">{e.name}</p>
+                  <p className=" text-medium max-tablet:text-sm">{e.name}</p>
                 </Link>
               </SwiperSlide>
             ))
           : playlist.map((e) => (
               <SwiperSlide
                 key={e.name}
-                className=" w-[15%] max-lap:w-[20%]  max-tablet:w-[25%] max-phone:w-[28%]"
+                className=" w-[15%] max-lap:w-[20%]  max-tablet:w-[40%] max-phone:w-[45%]"
               >
                 <Link
                   onClick={() => {
@@ -101,7 +101,7 @@ const TrendingPlaylist = ({ id, token }) => {
                     src={e.image}
                     className=" rounded-lg w-[100%] h-auto mb-[3%]"
                   />
-                  <p className=" text-medium max-tablet:text-xsm">{e.name}</p>
+                  <p className=" text-medium max-tablet:text-sm">{e.name}</p>
                 </Link>
               </SwiperSlide>
             ))}
