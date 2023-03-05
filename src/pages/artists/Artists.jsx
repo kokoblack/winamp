@@ -142,14 +142,14 @@ const Artists = () => {
     <div className=" font-nunito not-italic text-white relative ">
       <section className=" px-[2%] py-[2%] bg-light_black max-tablet:px-[4%] max-tablet:pt-[4%]">
         <section className=" flex justify-center items-center mb-[1%] max-tablet:mb-[3%]">
-          <div className=" flex justify-center items-center gap-[10%]">
+          <div className=" flex justify-center items-center gap-[10%] mb-[4%]">
             <div
               ref={ref}
-              className="hidden mr-auto max-lap:block text-[2rem] max-tablet:text-lg "
+              className="hidden mr-auto max-lap:block text-[2rem] max-[550px]:text-[7vw] "
             >
               <MdQueueMusic onClick={handleMenu} />
             </div>
-            <h3 className=" text-xl font-semibold max-tablet:text-base">
+            <h3 className=" text-xl font-semibold max-tablet:text-[5.2vw]">
               Artists
             </h3>
           </div>
@@ -163,10 +163,10 @@ const Artists = () => {
             />
           </div>
 
-          <AiOutlineSearch className=" hidden max-tablet:block text-lg ml-auto" />
+          <AiOutlineSearch className=" hidden max-tablet:block max-[550px]:text-[5vw] ml-auto" />
         </section>
 
-        <section className=" text-sm text-white font-medium max-tablet:text-xxsm mb-[2%] max-tablet:mb-[4%]">
+        <section className=" text-sm text-white font-medium mb-[2%] max-tablet:mb-[4%]">
           <button
             onClick={() => {
               setToggleShow(true);
@@ -197,16 +197,16 @@ const Artists = () => {
           {toggleShow ? (
             filteredArtistOne.map((artist, index) => (
               <div key={index}>
-                <div className=" text-base cursor-pointer flex justify-start items-center gap-[4%] mb-[4%] text-white text-center max-tablet:text-xsm ">
+                <div className=" text-base cursor-pointer flex justify-start items-center gap-[4%] mb-[4%] text-white text-center max-tablet:text-base max-phone:text-sm ">
                   <img
                     onClick={() => {
                       setId(artist.id);
                       setCount(index);
                     }}
                     src={artist.image}
-                    className=" rounded-[100%] w-[4.5rem] h-[4.5rem] max-tablet:w-[2.5rem] max-tablet:h-[2.5rem] max-tablet:mb-1"
+                    className=" rounded-[100%] w-[4.5rem] h-[4.5rem] max-phone:w-[4rem] max-phone:h-[4rem] max-tablet:mb-1"
                   />
-                  <div className=" flex justify-start items-center gap-[4%] w-[30%]">
+                  <div className=" flex justify-start items-center gap-[4%] w-full">
                     <p>{artist.name}</p>
                     <MdOutlineClose
                       onClick={() => setCount(-1)}
@@ -265,16 +265,16 @@ const Artists = () => {
           ) : (
             filteredArtistTwo.map((artist, index) => (
               <div key={index}>
-                <div className=" text-base cursor-pointer flex justify-start items-center gap-[4%] mb-[4%] text-white text-center max-tablet:text-xsm ">
+                <div className=" text-base cursor-pointer flex justify-start items-center gap-[4%] mb-[4%] text-white text-center max-tablet:text-base max-phone:text-sm ">
                   <img
                     onClick={() => {
                       setId(artist.id);
                       setCount2(index);
                     }}
                     src={artist.image}
-                    className=" rounded-[100%] w-[4.5rem] h-[4.5rem] max-tablet:w-[2.5rem] max-tablet:h-[2.5rem] max-tablet:mb-1"
+                    className=" rounded-[100%] w-[4.5rem] h-[4.5rem] max-phone:w-[4rem] max-phone:h-[4rem] max-tablet:mb-1"
                   />
-                  <div className=" flex justify-start items-center gap-[4%] w-[30%]">
+                  <div className=" flex justify-start items-center gap-[4%] w-full">
                     <p>{artist.name}</p>
                     <MdOutlineClose
                       onClick={() => setCount2(-1)}

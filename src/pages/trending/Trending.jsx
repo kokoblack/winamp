@@ -63,11 +63,11 @@ const Trending = () => {
   }, [token]);
 
   return (
-    <div className="font-nunito not-italic text-white text-xl p-[2%] max-[550px]:text-medium max-lap:pt-[4%] max-lap:px-[2%]">
+    <div className="font-nunito not-italic text-white text-xl p-[2%] max-[550px]:text-[5.2vw] max-lap:pt-[4%] max-lap:px-[2%]">
       <div className=" flex justify-start items-center gap-[3%] mt-[1.5%] mb-[3%]">
         <div
           ref={ref}
-          className="hidden max-lap:block text-[2rem] max-tablet:text-lg "
+          className="hidden max-lap:block text-[2rem] max-[550px]:text-[7vw] "
         >
           <MdQueueMusic onClick={handleMenu} />
         </div>
@@ -81,7 +81,7 @@ const Trending = () => {
           ))
         : items.map((trend) => (
             <div key={trend.id} className="  cursor-pointer mb-[3%]">
-              <h3 className=" mr-auto text-bright_orange text-lg font-bold max-[550px]:text-base pb-[1%]">
+              <h3 className=" mr-auto text-bright_orange text-lg font-bold max-[550px]:text-medium pb-[1%]">
                 {trend.name}
               </h3>
               <TrendingPlaylist id={trend.id} token={token} />

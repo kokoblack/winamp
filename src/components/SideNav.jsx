@@ -25,8 +25,8 @@ const SideNav = () => {
   return (
     <div style={{background: 'linear-gradient(182.2deg, rgba(32, 28, 28, 0.91) 0%, rgba(23, 22, 22, 0.94) 89.97%)'}} className="sticky top-0 pt-10 pl-[5%] h-screen max-lap:pt-8">
       <section className="flex gap-2 pl-1 items-center mb-8">
-        <img src={logo} alt="logo" className="w-6 h-8 max-lap:w-4 max-lap:h-6" />
-        <h3 className="font-nunito not-italic text-[1.3vw] font-semibold text-white max-lap:text-medium max-[479px]:text-base">
+        <img src={logo} alt="logo" className="w-6 h-8 max-lap:w-[8%] max-[500px]:w-[14%] max-lap:h-auto" />
+        <h3 className="font-nunito not-italic text-[1.3vw] font-semibold text-white min-[1441px]:text-lg max-lap:text-[3vw] max-[500px]:text-[5.5vw] ">
           winamp
         </h3>
       </section>
@@ -37,7 +37,7 @@ const SideNav = () => {
             <Link
             onClick={() => setCheckNumber(index)}
               to={path}
-              className={`font-nunito not-italic text-[1.1vw] font-medium ${checkNumber === index ? 'text-bright_orange' : 'text-grey'} m-2 flex gap-2 justify-start items-center max-lap:text-sm max-[479px]:text-xsm`}
+              className={`font-nunito not-italic text-[1.1vw] font-medium ${checkNumber === index ? 'text-bright_orange' : 'text-grey'} m-2 flex gap-2 justify-start items-center min-[1441px]:text-medium max-lap:text-[2.5vw] max-[500px]:text-[4.5vw]`}
             >
               {icon}
               <p>{name}</p>
@@ -45,27 +45,6 @@ const SideNav = () => {
           </div>
         ))}
       </section>
-
-      {/* <section>
-        <div>
-          <h3 className="font-nunito not-italic text-[1.3vw] font-semibold text-grey m-[3%] pb-4 max-[850px]:text-medium max-lappb-2 max-[479px]:text-base">
-            PERSONAL
-          </h3>
-        </div>
-
-        {FirstNav.slice(3).map(([icon, path, name], index) => (
-          <div key={name}>
-            <Link
-            onClick={() => setCheckNumber2(index)}
-              to={path}
-              className={`font-nunito not-italic text-[1.1vw] font-medium ${checkNumber2 === index ? 'text-bright_orange' : 'text-grey'} m-2 flex gap-2 justify-start items-center max-lap:text-sm max-[479px]:text-xsm`}
-            >
-              {icon}
-              <p>{name}</p>
-            </Link>
-          </div>
-        ))}
-      </section> */}
     </div>
   );
 };

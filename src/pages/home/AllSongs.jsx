@@ -180,12 +180,12 @@ function AllSongs() {
   return (
     <div
       style={{ backgroundImage: `url(${images[count]})` }}
-      className="w-full bg-[image:var(--image-url)] bg-cover bg-center px-[2%] pt-3 pb-4   transition-all ease-in duration-[3000]"
+      className="w-full bg-[image:var(--image-url)] bg-cover bg-center bg-[blue] px-[2%] pt-3 pb-4   transition-all ease-in duration-[3000]"
     >
       <section className="w-full flex justify-end items-center max-tablet:mb-[5%] max-tablet:mt-[2%] max-[700px]:">
         <div
           ref={ref}
-          className={`hidden text-[1.5rem] mr-auto ${
+          className={`hidden text-[2rem] mr-auto ${
             MobileSearchToggle ? "max-[700px]:hidden" : "max-[700px]:block"
           } max-lap:block  `}
         >
@@ -302,20 +302,20 @@ function AllSongs() {
         </div>
         <AiOutlineSearch
           onClick={() => setMobileSearchToggle(true)}
-          className={`hidden ${
+          className={`hidden text-nl ${
             MobileSearchToggle ? "max-[700px]:hidden" : "max-[700px]:block"
           } text-lg`}
         />
         <Link
           to="trending"
-          className={`ml-[1%] text-lg max-tablet:ml-[2%] ${
+          className={`ml-[1%] text-nl max-tablet:ml-[2%] ${
             MobileSearchToggle ? "max-[700px]:hidden" : "max-[700px]:block"
           }`}
         >
           <BiCast />
         </Link>
         <IoMdNotificationsOutline
-          className={`ml-[2%] text-lg ${
+          className={`ml-[2%] text-nl ${
             MobileSearchToggle ? "max-[700px]:hidden" : "max-[700px]:block"
           }`}
         />
@@ -333,17 +333,17 @@ function AllSongs() {
           setSearchToggle(false);
         }}
       >
-        <h3 className="font-nunito not-italic text-xl font-medium text-white mb-[3%] max-laptop:text-medium max-[850px]:text-base max-[479px]:text-sm max-[479px]:mb-[2%] ">
+        <h3 className="font-nunito not-italic text-xl font-medium text-white mb-[3%] max-[500px]:text-base  max-[479px]:mb-[1%] ">
           TRENDING PLAYLISTS
         </h3>
-        <h1 className="font-raleway not-italic text-xxl font-black text-white max-laptop:text-[2.2rem] max-[850px]:text-[1.9rem] max-[479px]:text-nl max-[479px]:mb-2 max-[479px]:mt-5 ">
+        <h1 className="font-raleway not-italic text-xxl font-black text-white max-[500px]:text-[1.9rem] max-tablet:mb-2 max-tablet:mt-3 ">
           {namesOfPlaylists[count]}
         </h1>
-        <div className="flex justify-start items-center gap-8 mb-6 max-[479px]:mb-4">
-          <p className="font-nunito not-italic text-medium font-medium text-white max-laptop:text-base max-[850px]:text-sm max-[479px]:text-xsm ">
+        <div className="flex justify-start items-center gap-8 mb-6">
+          <p className="font-nunito not-italic text-medium font-medium text-white max-[500px]:text-sm ">
             Tracks
           </p>
-          <p className="font-nunito not-italic text-medium font-medium text-white max-laptop:text-base max-[850px]:text-sm max-[479px]:text-xsm ">
+          <p className="font-nunito not-italic text-medium font-medium text-white max-[500px]:text-sm ">
             {tracks[count]}
           </p>
         </div>
@@ -351,7 +351,7 @@ function AllSongs() {
           <Link
             onClick={handleLinkClick}
             to="/songs"
-            className="font-nunito not-italic text-medium font-semibold px-4 py-2 rounded-xl text-white bg-bright_orange mr-2 max-[850px]:text-sm max-[850px]:py-1 max-[479px]:text-xsm"
+            className="font-nunito not-italic text-medium font-semibold px-4 py-2 rounded-xl text-white bg-bright_orange mr-2 max-[850px]:text-base"
           >
             {" "}
             Listen Now{" "}
