@@ -18,7 +18,7 @@ function AllSongs() {
   const [count, setCount] = useState(0);
   const [searchToggle, setSearchToggle] = useState(false);
   const [MobileSearchToggle, setMobileSearchToggle] = useState(false);
-  const [text, setText] = useState("");
+  const [text, setText] = useState("hi");
   const [allSearchData, setAllSearchData] = useState([]);
   const timeoutRef = useRef(null);
 
@@ -192,7 +192,7 @@ function AllSongs() {
           <MdQueueMusic onClick={handleMenu} />
         </div>
         <div
-          className={` relative flex justify-start items-center p-4 bg-light_black ${
+          className={` relative flex justify-start items-center p-4 bg-white ${
             searchToggle ? null : "rounded-l-[5rem]"
           } ${searchToggle ? null : "rounded-r-[5rem]"} ${
             searchToggle ? "rounded-t-2xl" : null
@@ -208,12 +208,12 @@ function AllSongs() {
             }}
             type="text"
             placeholder="search artists, albums, tracks"
-            className=" w-full text-[#C0BFBF] bg-[transparent] border-light_dark outline-none border-solid border-1 ml-2 placeholder:font-nunito placeholder:not-italic placeholder:text-base placeholder:font-medium max-laptop:placeholder:text-sm max-[700px]:absolute max-[700px]:top-[25%] max-[700px]:left-[10%] max-[700px]:w-[80%] max-[320px]:left-[12%] max-[300px]:top-[20%]"
+            className=" w-full text-dark_black bg-[transparent] border-light_dark outline-none border-solid border-1 ml-2 placeholder:font-nunito placeholder:not-italic placeholder:text-base placeholder:font-medium max-laptop:placeholder:text-sm max-[700px]:absolute max-[700px]:top-[25%] max-[700px]:left-[10%] max-[700px]:w-[80%] max-[320px]:left-[12%] max-[300px]:top-[20%]"
           />
 
           {searchToggle && (
-            <div className="font-nunito not-italic z-20 absolute top-[90%] right-0 rounded-b-2xl w-full bg-light_black text-white">
-              {allSearchData.slice(0, 8).map((data) => (
+            <div className="font-nunito not-italic z-20 absolute top-[90%] right-0 rounded-b-2xl w-full bg-white text-dark_black">
+              {allSearchData.slice(0, 10).map((data) => (
                 <div key={data.id} className=" w-full">
                   {data.type === "album" && (
                     <div
@@ -222,15 +222,15 @@ function AllSongs() {
                         setSearchToggle(false);
                         setText("");
                       }}
-                      className=" w-full px-4 py-2 flex justify-start items-center gap-[4%] hover:bg-[#EC625F66] cursor-pointer"
+                      className=" w-full px-4 py-2 flex justify-start items-center gap-[4%]  cursor-pointer"
                     >
                       <img
                         src={data.image}
                         alt="cover album"
-                        className="w-[3rem] h-[3rem] max-tablet:w-[2.5rem] max-tablet:h-[2.5rem]"
+                        className="w-[4rem] h-[3rem] max-tablet:w-[3.5rem] max-tablet:h-[2.5rem]"
                       />
                       <div className=" w-full">
-                        <p className=" text-white text-sm mb-[1%] max-tablet:text-[.7rem]">
+                        <p className=" text-dark_grey text-sm mb-[1%]">
                           {data.name}
                         </p>
                         <div className=" w-full flex justify-start items-center gap-[1%] text-grey text-xsm">
@@ -249,15 +249,15 @@ function AllSongs() {
                         setSearchToggle(false);
                         setText("");
                       }}
-                      className="w-full px-4 py-2 font-nunito not-italic flex justify-start items-center gap-[4%] hover:bg-[#EC625F66] cursor-pointer"
+                      className="w-full px-4 py-2 font-nunito not-italic flex justify-start items-center gap-[4%] cursor-pointer"
                     >
                       <img
                         src={data.image}
                         alt="cover track"
-                        className="w-[3rem] h-[3rem] max-tablet:w-[2.5rem] max-tablet:h-[2.5rem]"
+                        className="w-[4rem] h-[3rem] max-tablet:w-[3.5rem] max-tablet:h-[2.5rem]"
                       />
                       <div className=" w-full">
-                        <p className=" text-white text-sm mb-[1%] max-tablet:text-[.7rem] ">
+                        <p className=" text-dark_grey text-sm mb-[1%] ">
                           {data.name}
                         </p>
                         <div className=" flex justify-start items-center gap-[1%] text-grey text-xsm">
@@ -276,15 +276,15 @@ function AllSongs() {
                         setSearchToggle(false);
                         setText("");
                       }}
-                      className="w-full px-4 py-2 font-nunito not-italic flex justify-start items-center gap-[4%] hover:bg-[#EC625F66] cursor-pointer"
+                      className="w-full px-4 py-2 font-nunito not-italic flex justify-start items-center gap-[4%] cursor-pointer"
                     >
                       <img
                         src={data.image}
                         alt="cover album"
-                        className=" rounded-full w-[3rem] h-[3rem] max-tablet:w-[2.5rem] max-tablet:h-[2.5rem] "
+                        className=" rounded-full w-[4rem] h-[3.2rem] max-tablet:w-[3.5rem] max-tablet:h-[2.7rem] "
                       />
                       <div className=" w-full">
-                        <p className=" text-white text-sm mb-[1%] max-tablet:text-[.7rem]">
+                        <p className=" text-dark_grey text-sm mb-[1%]">
                           {data.name}
                         </p>
                         <p className="text-grey text-xsm">{data.type}</p>
@@ -293,10 +293,6 @@ function AllSongs() {
                   )}
                 </div>
               ))}
-
-              <Link className=" text-white px-4 pb-2 pt-1 flex justify-end items-center text-sm hover:text-bright_orange">
-                See All
-              </Link>
             </div>
           )}
         </div>

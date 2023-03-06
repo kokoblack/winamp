@@ -1,14 +1,9 @@
-import React, {useContext, useState} from "react";
+import React, {useState} from "react";
 import logo from "../assets/logo.png";
 import { Link } from "react-router-dom";
 import { RiHomeLine } from "react-icons/ri";
-import { AiOutlineHeart } from "react-icons/ai";
-import { GiSettingsKnobs, GiGuitar } from "react-icons/gi";
-import { FiFolder } from "react-icons/fi";
-import { RxAvatar } from "react-icons/rx";
-import { SlPlaylist } from "react-icons/sl";
-import { TfiVideoClapper, TfiDownload } from "react-icons/tfi";
-import { FaBattleNet, FaHeadphonesAlt } from "react-icons/fa";
+import { GiGuitar } from "react-icons/gi";
+import { TfiVideoClapper } from "react-icons/tfi";
 import { MdOutlineLocalFireDepartment } from "react-icons/md";
 
 const SideNav = () => {

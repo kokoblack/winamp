@@ -10,8 +10,6 @@ import {
   IoRepeat,
   IoPlaySkipBackSharp,
   IoPlaySkipForwardSharp,
-  IoPlaySharp,
-  IoPauseSharp,
 } from "react-icons/io5";
 import { RiVolumeUpFill, RiVolumeDownFill } from "react-icons/ri";
 import { AiFillPlayCircle, AiFillPauseCircle } from "react-icons/ai";

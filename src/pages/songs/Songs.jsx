@@ -5,6 +5,7 @@ import { AiOutlinePlus, AiOutlineHeart } from "react-icons/ai";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import SongsIsloading from "../../components/SongsIsloading";
+import PlayButton from "../../components/PlayButton";
 
 const Songs = () => {
   const token = useContext(RefreshTokenContext);
@@ -95,53 +96,11 @@ const Songs = () => {
           {" "}
           {songPlayingReducer.state.songPlayingdescription}
         </p>
-        <button
-          onClick={() => {
-            songPlayingReducer.dispatch({
-              type: "SET_SHUFFLE_URL",
-              payload: shuffleSong.map((e) => e.url),
-            });
-            songPlayingReducer.dispatch({
-              type: "SET_SHUFFLE_DATA",
-              payload: shuffleSong.map((e) => e),
-            });
-            songPlayingReducer.dispatch({
-              type: "SET_TRACK_LIST_URL",
-              payload: song.map((e) => e.url),
-            });
-            songPlayingReducer.dispatch({
-              type: "SET_TRACK_DATA",
-              payload: song.map((e) => e),
-            });
-            songPlayingReducer.dispatch({
-              type: "SET_PLAYER_STATE",
-              payload: !songPlayingReducer.state.updatePlayerSate,
-            });
-            songPlayingReducer.dispatch({
-              type: "SET_IS_PLAYING",
-              payload: true,
-            });
-            songPlayingReducer.dispatch({
-              type: "GET_AUDIO_PLAYER_ARTIST",
-              payload: songPlayingReducer.state.songsTracks[0].artist,
-            });
-            songPlayingReducer.dispatch({
-              type: "GET_AUDIO_PLAYER_TITLE",
-              payload: songPlayingReducer.state.songsTracks[0].name,
-            });
-            songPlayingReducer.dispatch({
-              type: "GET_AUDIO_PLAYER_AUDIO",
-              payload: songPlayingReducer.state.songsTracks[0].url,
-            });
-            songPlayingReducer.dispatch({
-              type: "GET_AUDIO_PLAYER_IMAGE",
-              payload: songPlayingReducer.state.songsTracks[0].image,
-            });
-          }}
-          className=" z-10 absolute bottom-[-1.7vh] right-[2%] min-[1000px]:bottom-[-2.5vh] p-2 bg-bright_orange rounded-[100%]"
-        >
-          <BiPlay className=" text-[1.5rem] text-dark_black" />
-        </button>
+        <PlayButton
+          action={songPlayingReducer}
+          shuffleSong={shuffleSong}
+          song={song}
+        />
       </section>
 
       {loading ? (
