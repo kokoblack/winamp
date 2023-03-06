@@ -1,7 +1,5 @@
-import React, { useContext, useRef, useMemo, useEffect } from "react";
+import React, { useContext } from "react";
 import { AppDispatchContext, AudioRefContext } from "../App";
-import purpose from "../assets/Just_The_Way_You_Are.mp3";
-import profile from "../assets/the_weekend.jpg";
 
 function DisplayTracks({ setDuration, progressBarRef, repeat, handleNext }) {
   const displayTrackReducer = useContext(AppDispatchContext);

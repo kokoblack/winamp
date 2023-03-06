@@ -1,15 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { AiOutlineSearch } from "react-icons/ai";
-import { MdQueueMusic, MdOutlineClose } from "react-icons/md";
+import { MdQueueMusic } from "react-icons/md";
 import { AppDispatchContext, RefreshTokenContext } from "../../App";
 import CloseOutsideMenu from "../../components/CloseOutsideMenu";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Mousewheel } from "swiper";
-import "swiper/css";
 import ArtistIsLoading from "../../components/ArtistIsLoading";
-import RecommendedIsLoading from "../../components/RecommendedIsLoading";
 import ArtistSearch from "../../components/ArtistSearch";
+import MappedArtist from "../../components/MappedArtist";
 
 const Artists = () => {
   const artistReducer = useContext(AppDispatchContext);
@@ -180,7 +177,10 @@ const Artists = () => {
           )}
         </section>
 
-        <section onClick={() => setSearchToggle(false)} className=" text-sm text-white font-medium mb-[2%] max-tablet:mb-[4%]">
+        <section
+          onClick={() => setSearchToggle(false)}
+          className=" text-sm text-white font-medium mb-[2%] max-tablet:mb-[4%]"
+        >
           <button
             onClick={() => {
               setToggleShow(true);
@@ -209,139 +209,25 @@ const Artists = () => {
       <section className=" px-[2%] pt-[2%] bg-dark_black max-tablet:px-[4%] max-tablet:pt-[4%]">
         <section>
           {toggleShow ? (
-            filteredArtistOne.map((artist, index) => (
-              <div key={index}>
-                <div className=" text-base cursor-pointer flex justify-start items-center gap-[4%] mb-[4%] text-white text-center max-tablet:text-base max-phone:text-sm ">
-                  <img
-                    onClick={() => {
-                      setId(artist.id);
-                      setCount(index);
-                    }}
-                    src={artist.image}
-                    className=" rounded-[100%] w-[5rem] h-[4rem] max-phone:w-[4.5rem] max-phone:h-[3.5rem] max-tablet:mb-1"
-                  />
-                  <div className=" flex justify-start items-center gap-[4%] w-full">
-                    <p>{artist.name}</p>
-                    <MdOutlineClose
-                      onClick={() => setCount(-1)}
-                      className={`${
-                        count === index ? "block" : "hidden"
-                      } right-[2%] top-0 text-bright_orange text-lg cursor-pointer`}
-                    />
-                  </div>
-                </div>
-                <div>
-                  {loadingTwo ? (
-                    <div
-                      className={`${
-                        count === index ? "flex" : "hidden"
-                      } justify-center items-center gap-[3%] mb-[4%]`}
-                    >
-                      {" "}
-                      <RecommendedIsLoading />{" "}
-                    </div>
-                  ) : (
-                    <Swiper
-                      slidesPerView="auto"
-                      spaceBetween={15}
-                      mousewheel
-                      centeredSlides
-                      centeredSlidesBounds
-                      modules={[Mousewheel]}
-                      className={`${
-                        count === index ? "block" : "hidden"
-                      } mySwiper mb-[4%]`}
-                    >
-                      {album.map((artist, index) => (
-                        <SwiperSlide
-                          key={index}
-                          className=" cursor-pointer w-[15%] text-base text-white max-[1000px]:w-[20%]  max-tablet:w-[25%] max-tablet:text-sm max-phone:w-[28%]"
-                        >
-                          <img
-                            src={artist.image}
-                            className=" rounded-xl w-full mb-[3%] h-auto max-tablet:mb-1"
-                          />
-                          <p className=" text-sm font-semibold text-left mb-[3%] max-tablet:text-xsm ">
-                            {artist.name}
-                          </p>
-                          <p className=" text-xsm font-medium text-grey text-left max-tablet:text-xxsm">
-                            {artist.releaseDate}
-                          </p>
-                        </SwiperSlide>
-                      ))}
-                    </Swiper>
-                  )}
-                </div>
-              </div>
-            ))
+            <MappedArtist
+              filteredArtist={filteredArtistOne}
+              count={count}
+              setId={setId}
+              setCount={setCount}
+              loading={loadingTwo}
+              album={album}
+            />
           ) : loadingOne ? (
             <ArtistIsLoading />
           ) : (
-            filteredArtistTwo.map((artist, index) => (
-              <div key={index}>
-                <div className=" text-base cursor-pointer flex justify-start items-center gap-[4%] mb-[4%] text-white text-center max-tablet:text-base max-phone:text-sm ">
-                  <img
-                    onClick={() => {
-                      setId(artist.id);
-                      setCount2(index);
-                    }}
-                    src={artist.image}
-                    className=" rounded-[100%] w-[5rem] h-[4.5rem] max-phone:w-[4.5rem] max-phone:h-[4rem] max-tablet:mb-1"
-                  />
-                  <div className=" flex justify-start items-center gap-[4%] w-full">
-                    <p>{artist.name}</p>
-                    <MdOutlineClose
-                      onClick={() => setCount2(-1)}
-                      className={`${
-                        count2 === index ? "block" : "hidden"
-                      } right-[2%] top-0 text-bright_orange text-lg cursor-pointer`}
-                    />
-                  </div>
-                </div>
-                <div>
-                  {loadingTwo ? (
-                    <div
-                      className={`${
-                        count2 === index ? "flex" : "hidden"
-                      } justify-center items-center gap-[3%] mb-[4%]`}
-                    >
-                      {" "}
-                      <RecommendedIsLoading />{" "}
-                    </div>
-                  ) : (
-                    <Swiper
-                      slidesPerView="auto"
-                      spaceBetween={15}
-                      mousewheel
-                      centeredSlides
-                      centeredSlidesBounds
-                      modules={[Mousewheel]}
-                      className={`${
-                        count2 === index ? "block" : "hidden"
-                      } mySwiper mb-[4%]`}
-                    >
-                      {album.map((artist, index) => (
-                        <SwiperSlide
-                          key={index}
-                          className=" cursor-pointer w-[15%] text-base text-white max-[1000px]:w-[20%]  max-tablet:w-[25%] max-tablet:text-sm max-phone:w-[28%]"
-                        >
-                          <img
-                            src={artist.image}
-                            className=" rounded-xl w-full mb-[3%] h-auto max-tablet:mb-1"
-                          />
-                          <p className=" text-sm font-semibold text-left mb-[3%] max-tablet:text-xsm ">
-                            {artist.name}
-                          </p>
-                          <p className=" text-xsm font-medium text-grey text-left max-tablet:text-xxsm">
-                            {artist.releaseDate}
-                          </p>
-                        </SwiperSlide>
-                      ))}
-                    </Swiper>
-                  )}
-                </div>
-              </div>
-            ))
+            <MappedArtist
+              filteredArtist={filteredArtistTwo}
+              count={count2}
+              setId={setId}
+              setCount={setCount2}
+              loading={loadingTwo}
+              album={album}
+            />
           )}
         </section>
       </section>

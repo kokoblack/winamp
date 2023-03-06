@@ -1,10 +1,9 @@
-import { AiOutlineHeart, AiOutlinePlus } from "react-icons/ai";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
-import img from '../../assets/css.jpg'
 import RecentlyPlayedIsLoading from "../../components/RecentlyPlayedIsLoading";
 import { AppDispatchContext, RefreshTokenContext } from "../../App";
 import { Link } from "react-router-dom";
+import RecentlyPlayedSongs from "../../components/RecentlyPlayedSongs";
 
 function RecentPlayed() {
   const recentlyPlayedReducer = useContext(AppDispatchContext);
@@ -87,147 +86,24 @@ function RecentPlayed() {
           <RecentlyPlayedIsLoading />
         ) : (
           <div>
-
-            <section className=" ">
-              {recentlyPlayedReducer.state.recentlyPlayed
-                .slice(0, 2)
-                .map((e) => (
-                  <div
-                    onClick={() => {
-                      recentlyPlayedReducer.dispatch({
-                        type: "SET_SHUFFLE_URL",
-                        payload: shuffleSong.map((e) => e.url),
-                      });
-                      recentlyPlayedReducer.dispatch({
-                        type: "SET_SHUFFLE_DATA",
-                        payload: shuffleSong.map((e) => e),
-                      });
-                      recentlyPlayedReducer.dispatch({
-                        type: "SET_TRACK_LIST_URL",
-                        payload: song.map((e) => e.url),
-                      });
-                      recentlyPlayedReducer.dispatch({
-                        type: "SET_TRACK_DATA",
-                        payload: song.map((e) => e),
-                      });
-                      recentlyPlayedReducer.dispatch({
-                        type: "SET_PLAYER_STATE",
-                        payload: !recentlyPlayedReducer.state.updatePlayerSate,
-                      });
-                      recentlyPlayedReducer.dispatch({
-                        type: "SET_IS_PLAYING",
-                        payload: true,
-                      });
-                      recentlyPlayedReducer.dispatch({
-                        type: "GET_AUDIO_PLAYER_ARTIST",
-                        payload: e.artist,
-                      });
-                      recentlyPlayedReducer.dispatch({
-                        type: "GET_AUDIO_PLAYER_TITLE",
-                        payload: e.name,
-                      });
-                      recentlyPlayedReducer.dispatch({
-                        type: "GET_AUDIO_PLAYER_AUDIO",
-                        payload: e.url,
-                      });
-                      recentlyPlayedReducer.dispatch({
-                        type: "GET_AUDIO_PLAYER_IMAGE",
-                        payload: e.image,
-                      });
-                    }}
-                    key={e.url}
-                    className=" flex justify-center items-center gap-[3%] px-[5%] py-[1%] text-white w-full hover:bg-[#EC625F66] cursor-pointer max-tablet:py-[2%]"
-                  >
-                    <img
-                      src={e.image}
-                      alt="song_cover"
-                      className=" rounded-lg w-[3rem] h-[3rem] max-tablet:w-[2.5rem] max-tablet:h-[2.5rem]"
-                    />
-                    <div className=" w-1/2">
-                      <h3 className="font-nunito not-italic text-base font-semibold truncate">
-                        {e.name}
-                      </h3>
-                      <p className="font-nunito not-italic text-sm font-medium ">
-                        {e.artist}
-                      </p>
-                    </div>
-                    <div className=" flex justify-center items-center ml-auto text-lg gap-[40%] max-pad:text-medium">
-                      <AiOutlineHeart />
-                      <AiOutlinePlus />
-                    </div>
-                  </div>
-                ))}
+            <section>
+              <RecentlyPlayedSongs
+                action={recentlyPlayedReducer}
+                shuffleSong={shuffleSong}
+                song={song}
+                start={0}
+                end={2}
+              />
             </section>
 
-            <section >
-              {recentlyPlayedReducer.state.recentlyPlayed
-                .slice(3, 6)
-                .map((e) => (
-                  <div
-                    onClick={() => {
-                      recentlyPlayedReducer.dispatch({
-                        type: "SET_SHUFFLE_URL",
-                        payload: shuffleSong.map((e) => e.url),
-                      });
-                      recentlyPlayedReducer.dispatch({
-                        type: "SET_SHUFFLE_DATA",
-                        payload: shuffleSong,
-                      });
-                      recentlyPlayedReducer.dispatch({
-                        type: "SET_TRACK_LIST_URL",
-                        payload: song.map((e) => e.url),
-                      });
-                      recentlyPlayedReducer.dispatch({
-                        type: "SET_TRACK_DATA",
-                        payload: song,
-                      });
-                      recentlyPlayedReducer.dispatch({
-                        type: "SET_PLAYER_STATE",
-                        payload: !recentlyPlayedReducer.state.updatePlayerSate,
-                      });
-                      recentlyPlayedReducer.dispatch({
-                        type: "SET_IS_PLAYING",
-                        payload: true,
-                      });
-                      recentlyPlayedReducer.dispatch({
-                        type: "GET_AUDIO_PLAYER_ARTIST",
-                        payload: e.artist,
-                      });
-                      recentlyPlayedReducer.dispatch({
-                        type: "GET_AUDIO_PLAYER_TITLE",
-                        payload: e.name,
-                      });
-                      recentlyPlayedReducer.dispatch({
-                        type: "GET_AUDIO_PLAYER_AUDIO",
-                        payload: e.url,
-                      });
-                      recentlyPlayedReducer.dispatch({
-                        type: "GET_AUDIO_PLAYER_IMAGE",
-                        payload: e.image,
-                      });
-                    }}
-                    key={e.url}
-                    className=" hidden cursor-pointer justify-center items-center gap-[3%] px-[5%] py-[1%] text-white w-full hover:bg-[#EC625F66] max-lap:flex"
-                  >
-                    <img
-                      src={e.image}
-                      alt="song_cover"
-                      className=" rounded-lg w-[3rem] h-[3rem] max-tablet:w-[2.5rem] max-tablet:h-[2.5rem]"
-                    />
-                    <div className=" w-[50%]">
-                      <h3 className="font-nunito not-italic text-base font-semibold truncate ">
-                        {e.name}
-                      </h3>
-                      <p className="font-nunito not-italic text-sm font-medium ">
-                        {e.artist}
-                      </p>
-                    </div>
-                    <div className=" flex justify-center items-center ml-auto text-lg gap-[40%] max-pad:text-medium">
-                      <AiOutlineHeart />
-                      <AiOutlinePlus />
-                    </div>
-                  </div>
-                ))}
+            <section className=" hidden max-pad:block">
+              <RecentlyPlayedSongs
+                action={recentlyPlayedReducer}
+                shuffleSong={shuffleSong}
+                song={song}
+                start={3}
+                end={6}
+              />
             </section>
           </div>
         )}

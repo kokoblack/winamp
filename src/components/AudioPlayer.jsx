@@ -1,5 +1,5 @@
 import React, { useRef, useState, useContext } from "react";
-import { MdKeyboardArrowDown } from "react-icons/md";
+import { RiArrowDownSLine } from "react-icons/ri";
 import { AppDispatchContext } from "../App";
 import { DisplayTracks, Controls } from "./import";
 
@@ -92,7 +92,7 @@ const AudioPlayer = () => {
             : " h-screen bg-light_black w-screen bottom-0 py-[1%]"
         }
       >
-        <MdKeyboardArrowDown
+        <RiArrowDownSLine
           onClick={() => {
             audioReducer.dispatch({
               type: "TOGGLE_NOW_PLAYING",
