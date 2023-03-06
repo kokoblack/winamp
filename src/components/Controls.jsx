@@ -14,6 +14,7 @@ import {
   IoPauseSharp,
 } from "react-icons/io5";
 import { RiVolumeUpFill, RiVolumeDownFill } from "react-icons/ri";
+import { AiFillPlayCircle, AiFillPauseCircle } from "react-icons/ai";
 import { AppDispatchContext, AudioRefContext } from "../App";
 import "./progressbar.css";
 
@@ -137,26 +138,14 @@ function Controls({
           >
             <IoPlaySkipBackSharp />
           </button>
-          <div
-            style={{
-              background:
-                "linear-gradient(242.35deg, rgba(236, 98, 95, 0.95) 14.44%, rgba(236, 98, 95, 0.35) 89.71%)",
-            }}
+          <button
+            onClick={togglePlayPause}
             className={
-              !nowPlayingTogggle
-                ? " rounded-[100%] px-2 pt-1.5 pb-0 text-lg max-[550px]:text-medium max-[550px]:px-1.5 max-[550px]:pt-1"
-                : " rounded-[100%] px-3 pt-1.5 pb-0 text-[2rem] max-[560px]:text-medium max-[560px]:px-1.5 max-[560px]:pt-1"
+              !nowPlayingTogggle ? " text-bright_orange text-xxl max-tablet:text-[2.5rem]" : " text-bright_orange text-[4rem] max-tablet:text-[3rem]"
             }
           >
-            <button
-              onClick={togglePlayPause}
-              className={
-                !nowPlayingTogggle ? " text-dark_black" : " text-dark_black"
-              }
-            >
-              {isPlaying ? <IoPauseSharp /> : <IoPlaySharp />}
-            </button>
-          </div>
+            {isPlaying ? <AiFillPauseCircle /> : <AiFillPlayCircle />}
+          </button>
           <button
             onClick={handleNext}
             className={
@@ -216,7 +205,7 @@ function Controls({
         <div
           className={
             !nowPlayingTogggle
-              ? "volume flex justify-center ml-auto items-center gap-2 w-[15%] max-[750px]:hidden"
+              ? "volume flex justify-center ml-auto items-center gap-2 w-[15%] max-lap:hidden"
               : " hidden"
           }
         >

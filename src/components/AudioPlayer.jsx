@@ -119,7 +119,7 @@ const AudioPlayer = () => {
             }}
             className={
               !nowPlayingTogggle &&
-              "mr-auto basis-[30%] max-[550px]:basis-[60%] cursor-pointer"
+              "mr-auto w-[30%] max-[550px]:w-[60%] max-[300px]:w-[50%] cursor-pointer"
             }
           >
             <DisplayTracks
@@ -134,7 +134,7 @@ const AudioPlayer = () => {
           <div
             className={
               !nowPlayingTogggle &&
-              " ml-auto basis-[70%] max-[550px]:basis-[40%]"
+              " ml-auto w-[70%] max-[550px]:w-[40%] max-[300px]:w-[50%]"
             }
           >
             <Controls

@@ -136,7 +136,7 @@ function RecentPlayed() {
                       });
                     }}
                     key={e.url}
-                    className=" flex justify-center items-center gap-[3%] px-[5%] py-[1%] text-white w-full hover:bg-[#EC625F66] cursor-pointer"
+                    className=" flex justify-center items-center gap-[3%] px-[5%] py-[1%] text-white w-full hover:bg-[#EC625F66] cursor-pointer max-tablet:py-[2%]"
                   >
                     <img
                       src={e.image}

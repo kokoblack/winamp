@@ -19,15 +19,15 @@ const AllRecentlyPlayed = () => {
       >
         <button
           onClick={() => navigate(-1)}
-          className=" hidden mb-[5%] max-lap:block "
+          className=" hidden pt-[1%] mb-[5%] max-lap:block "
         >
           <BiLeftArrowAlt className=" text-xxl max-[550px]:text-[1.7rem] " />
         </button>
         <div className=" px-[1.5%]">
-          <h3 className=" text-lg font-semibold max-tablet:text-sm mb-[1.5%] pt-[3%] max-lap:pt-[1%]">
+          <h3 className=" text-lg font-semibold max-tablet:text-medium mb-[1.5%] pt-[3%] max-lap:pt-[5%]">
             Recently Played
           </h3>
-          <p className=" text-base font-medium max-tablet:text-xxsm">
+          <p className=" text-base font-medium max-tablet:text-sm">
             {`${allRecentlyPlayedReducer.state.recentlyPlayed.length} Songs`}
           </p>
         </div>
@@ -144,18 +144,18 @@ const AllRecentlyPlayed = () => {
               });
             }}
             key={e.url}
-            className=" cursor-pointer flex justify-center items-center gap-[3%] px-[5%] py-[1%] text-white w-full hover:bg-[#EC625F66]"
+            className=" cursor-pointer flex justify-center items-center gap-[3%] px-[5%] py-[1%] text-white w-full hover:bg-[#EC625F66] max-tablet:py-[2%]"
           >
             <img
               src={e.image}
               alt="song_cover"
-              className=" rounded-lg w-[3rem] h-[3rem] max-tablet:w-[2rem] max-tablet:h-[2rem]"
+              className=" rounded-lg w-[3rem] h-[3rem] max-tablet:w-[2.5rem] max-tablet:h-[2.5rem]"
             />
-            <div className=" w-full">
-              <h3 className="font-nunito not-italic text-base font-semibold max-tablet:text-sm">
+            <div className=" w-1/2">
+              <h3 className="font-nunito not-italic text-base font-semibold truncate">
                 {e.name}
               </h3>
-              <p className="font-nunito not-italic text-sm font-medium max-tablet:text-xxsm">
+              <p className="font-nunito not-italic text-sm font-medium ">
                 {e.artist}
               </p>
             </div>
