@@ -58,11 +58,11 @@ function DisplayTracks({ setDuration, progressBarRef, repeat, handleNext }) {
         <div
           className={
             !nowPlayingTogggle
-              ? "block"
+              ? "block w-[50%] overflow-hidden"
               : " absolute text-white hidden max-[1000px]:block"
           }
         >
-          <p className={!nowPlayingTogggle ? " text-sm" : " text-[4vw]"}>
+          <p className={!nowPlayingTogggle ? " text-sm truncate" : " text-[4vw]"}>
             {title}
           </p>
           <p className={!nowPlayingTogggle ? " text-xsm" : " text-[3vw]"}>

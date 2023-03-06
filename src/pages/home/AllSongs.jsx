@@ -104,7 +104,7 @@ function AllSongs() {
         }
       )
       .then((res) => {
-        const album = res.data.albums.items.slice(0, 5).map((e) => {
+        const album = res.data.albums.items.slice(0, 6).map((e) => {
           return {
             id: e.id,
             name: e.name,
@@ -121,7 +121,7 @@ function AllSongs() {
         });
 
         const artist = [];
-        res.data.artists.items.slice(0, 5).forEach((e) => {
+        res.data.artists.items.slice(0, 6).forEach((e) => {
           if (e.images.length === 0) {
             null;
           } else {
@@ -139,7 +139,7 @@ function AllSongs() {
           payload: artist,
         });
 
-        const tracks = res.data.tracks.items.slice(0, 5).map((e) => {
+        const tracks = res.data.tracks.items.slice(0, 8).map((e) => {
           return {
             id: e.id,
             name: e.name,
@@ -200,7 +200,7 @@ function AllSongs() {
             MobileSearchToggle ? "max-[700px]:block" : "max-[700px]:hidden"
           } m-4 max-laptop:px-4 max-laptop:pt-2 max-laptop:pb-3 max-laptop:h-[2.2rem] `}
         >
-          <AiOutlineSearch className=" mt-[1%] text-[#C0BFBF] max-laptop:text-sm max-[700px]:text-base max-[700px]:absolute max-[700px]:top-[25%] max-[700px]:left-[5%] max-[500px]:top-[30%] " />
+          <AiOutlineSearch className=" mt-[1%] text-[#C0BFBF] max-laptop:text-sm max-[700px]:text-lg max-[700px]:absolute max-[700px]:top-[25%] max-[700px]:left-[5%] max-[500px]:top-[30%] max-[300px]:top-[25%]" />
           <input
             onChange={(event) => {
               setSearchToggle(true);
@@ -208,7 +208,7 @@ function AllSongs() {
             }}
             type="text"
             placeholder="search artists, albums, tracks"
-            className=" text-[#C0BFBF] bg-[transparent] border-light_dark outline-none border-solid border-1 ml-2 placeholder:font-nunito placeholder:not-italic placeholder:text-base placeholder:font-medium max-laptop:placeholder:text-sm max-[700px]:absolute max-[700px]:top-[20%] max-[700px]:left-[8%] max-[700px]:left-[12%]"
+            className=" w-full text-[#C0BFBF] bg-[transparent] border-light_dark outline-none border-solid border-1 ml-2 placeholder:font-nunito placeholder:not-italic placeholder:text-base placeholder:font-medium max-laptop:placeholder:text-sm max-[700px]:absolute max-[700px]:top-[25%] max-[700px]:left-[10%] max-[700px]:w-[80%] max-[320px]:left-[12%] max-[300px]:top-[20%]"
           />
 
           {searchToggle && (

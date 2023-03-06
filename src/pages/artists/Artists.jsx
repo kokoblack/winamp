@@ -9,6 +9,7 @@ import { Mousewheel } from "swiper";
 import "swiper/css";
 import ArtistIsLoading from "../../components/ArtistIsLoading";
 import RecommendedIsLoading from "../../components/RecommendedIsLoading";
+import ArtistSearch from "../../components/ArtistSearch";
 
 const Artists = () => {
   const artistReducer = useContext(AppDispatchContext);
@@ -21,6 +22,7 @@ const Artists = () => {
   const [album, setAlbum] = useState([]);
   const [loadingOne, setLoadingOne] = useState(false);
   const [loadingTwo, setLoadingTwo] = useState(false);
+  const [searchToggle, setSearchToggle] = useState(false);
   const [toggleArtistSearch, setToggleArtistSearch] = useState(true);
   const [searchArtist, setSearchArtist] = useState("");
   const [searchFollowedArtist, setSearchFollowedArtist] = useState("");
@@ -141,32 +143,44 @@ const Artists = () => {
   return (
     <div className=" font-nunito not-italic text-white relative ">
       <section className=" px-[2%] py-[2%] bg-light_black max-tablet:px-[4%] max-tablet:pt-[4%]">
-        <section className=" flex justify-center items-center mb-[1%] max-tablet:mb-[3%]">
-          <div className=" flex justify-center items-center gap-[10%] mb-[4%]">
+        <section className=" flex justify-start items-center mb-[3%] max-tablet:mb-[5%]">
+          <div className=" flex justify-center items-center gap-[10%] ">
             <div
               ref={ref}
-              className="hidden mr-auto max-lap:block text-[2rem] max-[550px]:text-[7vw] "
+              className={`hidden ${
+                searchToggle ? " max-tablet:hidden" : " max-lap:block"
+              } mr-auto  text-[2rem] max-[550px]:text-[7vw] `}
             >
               <MdQueueMusic onClick={handleMenu} />
             </div>
-            <h3 className=" text-xl font-semibold max-tablet:text-[5.2vw]">
+            <h3
+              className={`${
+                searchToggle ? "hidden" : "block"
+              } text-xl font-semibold max-tablet:text-[5.2vw]`}
+            >
               Artists
             </h3>
           </div>
-          <div className="flex justify-center items-center ml-auto p-4 gap-[5%] bg-white text-dark_black rounded-l-[5rem] rounded-r-[5rem] h-[2.8rem] m-4 max-laptop:px-4 max-laptop:pt-2 max-laptop:pb-3 max-laptop:h-[2.2rem] max-tablet:hidden">
-            <AiOutlineSearch className=" text-xl mt-[3%] max-[479px]:text-xsm " />
-            <input
-              onChange={onSearchChange}
-              type="text"
-              placeholder="search artist"
-              className=" bg-[transparent] border-light_dark border-solid border-1 outline-none placeholder:font-nunito placeholder:not-italic placeholder:text-base placeholder:font-medium max-laptop:placeholder:text-sm max-laptop:w-[8rem] max-[479px]:text-xsm max-[479px]:w-[5rem] "
-            />
+
+          <div className=" max-tablet:hidden ml-auto">
+            <ArtistSearch {...{ onSearchChange }} />
           </div>
 
-          <AiOutlineSearch className=" hidden max-tablet:block max-[550px]:text-[5vw] ml-auto" />
+          <AiOutlineSearch
+            onClick={() => setSearchToggle(true)}
+            className={` hidden ${
+              searchToggle ? "max-tablet:hidden" : "max-tablet:block"
+            } max-[550px]:text-[5vw] ml-auto`}
+          />
+
+          {searchToggle && (
+            <div className=" w-full">
+              <ArtistSearch {...{ onSearchChange }} />
+            </div>
+          )}
         </section>
 
-        <section className=" text-sm text-white font-medium mb-[2%] max-tablet:mb-[4%]">
+        <section onClick={() => setSearchToggle(false)} className=" text-sm text-white font-medium mb-[2%] max-tablet:mb-[4%]">
           <button
             onClick={() => {
               setToggleShow(true);
@@ -204,7 +218,7 @@ const Artists = () => {
                       setCount(index);
                     }}
                     src={artist.image}
-                    className=" rounded-[100%] w-[4.5rem] h-[4.5rem] max-phone:w-[4rem] max-phone:h-[4rem] max-tablet:mb-1"
+                    className=" rounded-[100%] w-[5rem] h-[4rem] max-phone:w-[4.5rem] max-phone:h-[3.5rem] max-tablet:mb-1"
                   />
                   <div className=" flex justify-start items-center gap-[4%] w-full">
                     <p>{artist.name}</p>
@@ -272,7 +286,7 @@ const Artists = () => {
                       setCount2(index);
                     }}
                     src={artist.image}
-                    className=" rounded-[100%] w-[4.5rem] h-[4.5rem] max-phone:w-[4rem] max-phone:h-[4rem] max-tablet:mb-1"
+                    className=" rounded-[100%] w-[5rem] h-[4.5rem] max-phone:w-[4.5rem] max-phone:h-[4rem] max-tablet:mb-1"
                   />
                   <div className=" flex justify-start items-center gap-[4%] w-full">
                     <p>{artist.name}</p>

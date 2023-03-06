@@ -83,7 +83,7 @@ const Songs = () => {
         style={{
           backgroundImage: `url(${songPlayingReducer.state.songplayingimageSrc})`,
         }}
-        className=" relative w-full bg-cover bg-center h-[50vh] p-[2%]"
+        className=" relative w-full bg-cover bg-center h-[30vh] p-[2%]"
       >
         <button
           onClick={() => navigate(-1)}
@@ -91,7 +91,7 @@ const Songs = () => {
         >
           <BiLeftArrowAlt />
         </button>
-        <p className=" w-1/2 absolute bottom-[10%] left-[2%] font-nunito not-italic text-lg font-black text-white max-laptop:text-base max-[850px]:text-sm max-[479px]:text-xsm">
+        <p className=" w-1/2 absolute bottom-[10%] left-[2%] font-nunito not-italic text-lg font-black text-white max-laptop:text-base max-tablet:text-[.8rem]">
           {" "}
           {songPlayingReducer.state.songPlayingdescription}
         </p>
@@ -138,7 +138,7 @@ const Songs = () => {
               payload: songPlayingReducer.state.songsTracks[0].image,
             });
           }}
-          className=" absolute bottom-[-1.7vh] right-[2%] min-[1000px]:bottom-[-2.5vh] p-2 bg-bright_orange rounded-[100%]"
+          className=" z-10 absolute bottom-[-1.7vh] right-[2%] min-[1000px]:bottom-[-2.5vh] p-2 bg-bright_orange rounded-[100%]"
         >
           <BiPlay className=" text-[1.5rem] text-dark_black" />
         </button>
@@ -193,18 +193,18 @@ const Songs = () => {
                 });
               }}
               key={songs.id}
-              className=" cursor-pointer flex justify-center items-center gap-[3%] px-[5%] py-[1%] text-white w-full hover:bg-[#EC625F66]"
+              className=" cursor-pointer flex justify-center items-center gap-[3%] px-[5%] py-[1%] text-white w-full hover:bg-[#EC625F66] max-tablet:py-[2%]"
             >
               <img
                 src={songs.image}
                 alt="song_cover"
-                className=" rounded-lg w-[3rem] h-[3rem] max-tablet:w-[2rem] max-tablet:h-[2rem]"
+                className=" rounded-lg w-[3rem] h-[3rem] max-tablet:w-[2.5rem] max-tablet:h-[2.5rem]"
               />
-              <div className=" w-full">
-                <h3 className="font-nunito not-italic text-base font-semibold max-tablet:text-xsm">
+              <div className=" w-1/2">
+                <h3 className="font-nunito not-italic text-base font-semibold truncate">
                   {songs.name}
                 </h3>
-                <p className="font-nunito not-italic text-sm font-medium max-tablet:text-xxsm">
+                <p className="font-nunito not-italic text-sm font-medium ">
                   {songs.artist}
                 </p>
               </div>
