@@ -92,7 +92,7 @@ const AudioPlayer = () => {
             : " h-screen bg-light_black w-screen bottom-0 py-[1%]"
         }
       >
-        <RiArrowDownSLine
+        <button
           onClick={() => {
             audioReducer.dispatch({
               type: "TOGGLE_NOW_PLAYING",
@@ -101,8 +101,10 @@ const AudioPlayer = () => {
           }}
           className={`${
             nowPlayingTogggle ? "block" : "hidden"
-          } text-white text-xxl ml-[3%] cursor-pointer`}
-        />
+          } text-white text-xxl ml-[3%] pt-[3%] cursor-pointer`}
+        >
+          <RiArrowDownSLine />
+        </button>
         <div
           className={
             !nowPlayingTogggle
@@ -127,7 +129,7 @@ const AudioPlayer = () => {
                 setDuration,
                 progressBarRef,
                 handleNext,
-                repeat
+                repeat,
               }}
             />
           </div>
@@ -145,7 +147,7 @@ const AudioPlayer = () => {
                 timeProgress,
                 handleNext,
                 handlePrev,
-                setRepeat
+                setRepeat,
               }}
               replay={repeat}
             />
