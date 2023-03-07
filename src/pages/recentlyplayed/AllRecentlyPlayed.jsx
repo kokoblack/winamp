@@ -25,7 +25,7 @@ const AllRecentlyPlayed = () => {
           onClick={() => navigate(-1)}
           className=" hidden pt-[1%] mb-[5%] max-lap:block "
         >
-          <BiLeftArrowAlt className=" text-xxl max-[550px]:text-[1.7rem] " />
+          <BiLeftArrowAlt className={` ${toggle ? " text-white" : " text-dark_black"} text-xxl max-[550px]:text-[1.7rem] `} />
         </button>
         <div className=" px-[1.5%]">
           <h3 className={` ${toggle ? " text-white" : " text-dark_black"} text-lg font-semibold max-tablet:text-medium mb-[1.5%] pt-[3%] max-lap:pt-[5%]`}>

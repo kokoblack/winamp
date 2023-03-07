@@ -139,7 +139,7 @@ const Artists = () => {
   }, [token, id]);
 
   return (
-    <div className={` font-nunito not-italic ${toggle? " bg-dark_black text-white" : " bg-white text-dark_black" }  relative `}>
+    <div className={` font-nunito not-italic ${toggle? " bg-dark_black text-white" : " bg-white text-dark_black" }  relative max-lap:h-screen`}>
       <section className={` px-[2%] py-[2%] ${toggle? " bg-light_black" : " bg-[#F7F7F7]" } max-tablet:px-[4%] max-tablet:pt-[4%]`}>
         <section className=" flex justify-start items-center mb-[3%] max-tablet:mb-[5%]">
           <div className=" flex justify-center items-center gap-[10%] ">
