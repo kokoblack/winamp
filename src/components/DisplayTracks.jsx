@@ -1,5 +1,7 @@
 import React, { useContext } from "react";
 import { AppDispatchContext, AudioRefContext } from "../App";
+import whiteImg from "../assets/white.png"
+import blackImg from "../assets/dark.png"
 
 function DisplayTracks({ setDuration, progressBarRef, repeat, handleNext }) {
   const displayTrackReducer = useContext(AppDispatchContext);
@@ -16,6 +18,8 @@ function DisplayTracks({ setDuration, progressBarRef, repeat, handleNext }) {
   const artist = displayTrackReducer.state.audioPlayerArtist;
 
   const toggle = displayTrackReducer.state.themeToggle;
+
+  const image1 = toggle ? blackImg : whiteImg
 
   const onLoadedMetadata = () => {
     const sec = audioRef.current.duration;
@@ -42,7 +46,7 @@ function DisplayTracks({ setDuration, progressBarRef, repeat, handleNext }) {
         }
       >
         <img
-          src={image}
+          src={image === "" ? image1 : image}
           className={
             `${!nowPlayingTogggle
               ? "w-[3rem] h-[3rem] max-[560px]:w-[2.5rem] max-[560px]:h-[2.5rem]"
