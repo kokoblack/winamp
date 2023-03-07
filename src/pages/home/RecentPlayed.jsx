@@ -103,8 +103,8 @@ function RecentPlayed() {
                 action={recentlyPlayedReducer}
                 shuffleSong={shuffleSong}
                 song={song}
-                start={3}
-                end={6}
+                start={2}
+                end={5}
               />
             </section>
           </div>
