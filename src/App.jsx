@@ -24,6 +24,8 @@ function App() {
   const [sideNavMenu, setSideNavMenu] = useState(false);
   const [state, dispatch] = useReducer(reducer, intialState);
 
+  const toggle = state.themeToggle
+
   useEffect(() => {
     const hash = window.location.hash;
     // let token = window.localStorage.getItem("token");
@@ -53,7 +55,7 @@ function App() {
               <SignIn />
             ) : (
               <>
-                <div className=" flex justify-center items-start max-lap:block w-full relative">
+                <div className={`${toggle ? " bg-dark_black" : " bg-white"} flex justify-center items-start max-lap:block w-full relative`}>
                   <div
                     className={
                       sideNavMenu

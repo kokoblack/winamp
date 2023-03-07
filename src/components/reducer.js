@@ -1,5 +1,3 @@
-import { useReducer } from "react";
-
 export const intialState = {
   artist: [],
   audioPlayerArtist: "",

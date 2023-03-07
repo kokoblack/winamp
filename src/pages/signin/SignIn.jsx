@@ -3,7 +3,7 @@ import logo from "../../assets/logo.png";
 
 const signin = () => {
   const client_id = "2a2dbeac86854258ae8629ed11a0cdaf";
-  const REDIRECTED_URI = "https://winamp-nu.vercel.app/";
+  const REDIRECTED_URI = "http://localhost:5173";
   const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize";
   const RESPONSE_TYPE = "token";
   const scope = [
