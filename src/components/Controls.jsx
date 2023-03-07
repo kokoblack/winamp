@@ -36,6 +36,7 @@ function Controls({
   const isPlaying = controlReducer.state.isPlaying;
   const toggleShuffle = controlReducer.state.toggleShuffle;
   const updatePlayerSate = controlReducer.state.updatePlayerSate;
+  const toggle = controlReducer.state.themeToggle;
 
   const handleChange = () => {
     audioRef.current.currentTime = progressBarRef.current.value;
@@ -87,9 +88,9 @@ function Controls({
     <>
       <div
         className={
-          !nowPlayingTogggle
-            ? " flex justify-center items-center gap-[15%] text-white"
-            : " flex justify-center items-center flex-col h-screen gap-y-12 text-white text-center max-[1000px]:h-[50vh]"
+          `${!nowPlayingTogggle
+            ? " flex justify-center items-center gap-[15%]"
+            : " flex justify-center items-center flex-col h-screen gap-y-12 text-center max-[1000px]:h-[50vh]"} ${toggle ? " text-white" : " text-dark_black"}`
         }
       >
         <div
@@ -105,9 +106,9 @@ function Controls({
 
         <div
           className={
-            !nowPlayingTogggle
+            `${!nowPlayingTogggle
               ? " flex justify-center items-center gap-[8%] mr-auto max-[750px]:mr-0 max-[550px]:gap-[15%]"
-              : " flex justify-center items-center gap-x-8"
+              : " flex justify-center items-center gap-x-[12%]"}`
           }
         >
           <button
@@ -115,13 +116,13 @@ function Controls({
               setRepeat((prev) => !prev);
             }}
             className={
-              !nowPlayingTogggle
+             `${ !nowPlayingTogggle
                 ? `${
-                    replay ? "text-bright_orange" : "text-white"
+                    replay ? "text-bright_orange" : toggle ? " text-white" : " text-dark_black"
                   } text-lg max-[550px]:hidden`
                 : `${
-                    replay ? "text-bright_orange" : "text-white"
-                  } text-xl max-[560px]:text-medium`
+                    replay ? "text-bright_orange" : toggle ? " text-white" : " text-dark_black"
+                  } text-xl max-[560px]:text-lg`}`
             }
           >
             <IoRepeat />
@@ -129,9 +130,9 @@ function Controls({
           <button
             onClick={handlePrev}
             className={
-              !nowPlayingTogggle
+              `${!nowPlayingTogggle
                 ? ` text-[2rem] max-[550px]:text-xl`
-                : ` text-[3rem] max-[560px]:text-[1.8rem]`
+                : ` text-[3rem] max-[560px]:text-[1.8rem]`}`
             }
           >
             <IoPlaySkipBackSharp />
@@ -139,7 +140,7 @@ function Controls({
           <button
             onClick={togglePlayPause}
             className={
-              !nowPlayingTogggle ? " text-bright_orange text-xxl max-tablet:text-[2.5rem]" : " text-bright_orange text-[4rem] max-tablet:text-[3rem]"
+              `${!nowPlayingTogggle ? " text-bright_orange text-xxl max-tablet:text-[2.5rem]" : " text-bright_orange text-[4rem] max-tablet:text-[3rem]"}`
             }
           >
             {isPlaying ? <AiFillPauseCircle /> : <AiFillPlayCircle />}
@@ -147,9 +148,9 @@ function Controls({
           <button
             onClick={handleNext}
             className={
-              !nowPlayingTogggle
+             `${ !nowPlayingTogggle
                 ? "text-[2rem] max-[550px]:text-xl"
-                : "text-[3rem] max-[560px]:text-[1.8rem]"
+                : "text-[3rem] max-[560px]:text-[1.8rem]"}`
             }
           >
             <IoPlaySkipForwardSharp />
@@ -162,13 +163,13 @@ function Controls({
               });
             }}
             className={
-              !nowPlayingTogggle
+              `${!nowPlayingTogggle
                 ? `${
-                    toggleShuffle ? "text-bright_orange" : "text-white"
+                    toggleShuffle ? "text-bright_orange" : toggle ? " text-white" : " text-dark_black"
                   } text-lg max-[550px]:hidden`
                 : `${
-                    toggleShuffle ? "text-bright_orange" : "text-white"
-                  } text-xl max-[560px]:text-medium`
+                    toggleShuffle ? "text-bright_orange" : toggle ? " text-white" : " text-dark_black"
+                  } text-xl max-[560px]:text-lg`}`
             }
           >
             <IoShuffleSharp />
@@ -177,14 +178,14 @@ function Controls({
 
         <div
           className={
-            !nowPlayingTogggle
+            `${!nowPlayingTogggle
               ? "progress flex justify-center items-center gap-2 w-[40%] max-[550px]:hidden"
-              : "progress flex justify-center items-center gap-2 text-medium w-full max-[560px]:text-sm"
+              : "progress flex justify-center items-center gap-2 text-medium w-full max-[560px]:text-sm"}`
           }
         >
           <span
             className={
-              !nowPlayingTogggle ? "time current text-sm" : "time current "
+              `${!nowPlayingTogggle ? "time current text-sm" : "time current "}`
             }
           >
             {formatTime(timeProgress)}
@@ -195,16 +196,16 @@ function Controls({
             defaultValue="0"
             onChange={handleChange}
           />
-          <span className={!nowPlayingTogggle ? "time text-sm" : "time"}>
+          <span className={`${!nowPlayingTogggle ? "time text-sm" : "time"}`}>
             {formatTime(duration)}
           </span>
         </div>
 
         <div
           className={
-            !nowPlayingTogggle
+            `${!nowPlayingTogggle
               ? "volume flex justify-center ml-auto items-center gap-2 w-[15%] max-lap:hidden"
-              : " hidden"
+              : " hidden"}`
           }
         >
           <button className=" text-sm">

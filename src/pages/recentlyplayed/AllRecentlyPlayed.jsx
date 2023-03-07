@@ -7,15 +7,18 @@ import RecentlyPlayedSongs from "../../components/RecentlyPlayedSongs";
 
 const AllRecentlyPlayed = () => {
   const allRecentlyPlayedReducer = useContext(AppDispatchContext);
+  const toggle = allRecentlyPlayedReducer.state.themeToggle
+
+  const style = {
+    background: toggle ? "linear-gradient(#EC625F 5%, #111111)" : "linear-gradient(#EC625F 5%, #fff)",
+  }
 
   const navigate = useNavigate();
 
   return (
-    <div className=" bg-dark_black relative">
+    <div className={` relative`}>
       <section
-        style={{
-          background: "linear-gradient(#EC625F 5%, #111111)",
-        }}
+      style={style}
         className=" font-nunito not-italic relative px-[2%] pb-[6%] max-tablet:pb-[10%] text-white"
       >
         <button
@@ -25,10 +28,10 @@ const AllRecentlyPlayed = () => {
           <BiLeftArrowAlt className=" text-xxl max-[550px]:text-[1.7rem] " />
         </button>
         <div className=" px-[1.5%]">
-          <h3 className=" text-lg font-semibold max-tablet:text-medium mb-[1.5%] pt-[3%] max-lap:pt-[5%]">
+          <h3 className={` ${toggle ? " text-white" : " text-dark_black"} text-lg font-semibold max-tablet:text-medium mb-[1.5%] pt-[3%] max-lap:pt-[5%]`}>
             Recently Played
           </h3>
-          <p className=" text-base font-medium max-tablet:text-sm">
+          <p className={` ${toggle ? " text-white" : " text-dark_black"}  text-base font-medium max-tablet:text-sm`}>
             {`${allRecentlyPlayedReducer.state.recentlyPlayed.length} Songs`}
           </p>
         </div>
@@ -85,7 +88,7 @@ const AllRecentlyPlayed = () => {
         </button>
       </section>
 
-      <section className=" bg-dark_black">
+      <section className={`${toggle ? " bg-dark_black" : " bg-white"}`}>
         <RecentlyPlayedSongs
           action={allRecentlyPlayedReducer}
           shuffleSong={allRecentlyPlayedReducer.state.recentlyPlayedSuffle}
@@ -95,7 +98,7 @@ const AllRecentlyPlayed = () => {
         />
       </section>
 
-      <section className=" h-[4.5rem] bg-light_black"></section>
+      <section className=" h-[4.5rem]"></section>
     </div>
   );
 };

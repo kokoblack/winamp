@@ -4,13 +4,18 @@ import RecommendedIsLoading from "./RecommendedIsLoading"
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Mousewheel } from "swiper";
 import "swiper/css";
+import { useContext } from "react";
+import { AppDispatchContext } from "../App";
 
 const MappedArtist = ({filteredArtist, count, setId, setCount, loading, album }) => {
+  const mappedArtistReducer = useContext(AppDispatchContext)
+  const toggle = mappedArtistReducer.state.themeToggle
+
   return (
     <>
       {filteredArtist.map((artist, index) => (
         <div key={index}>
-          <div className=" text-base cursor-pointer flex justify-start items-center gap-[4%] mb-[4%] text-white text-center max-tablet:text-base max-phone:text-sm ">
+          <div className={` text-base cursor-pointer flex justify-start items-center gap-[4%] mb-[4%] ${toggle? "text-white" : "text-dark_black" } text-center max-tablet:text-base max-phone:text-sm `}>
             <img
               onClick={() => {
                 setId(artist.id);
@@ -54,7 +59,7 @@ const MappedArtist = ({filteredArtist, count, setId, setCount, loading, album })
                 {album.map((artist, index) => (
                   <SwiperSlide
                     key={index}
-                    className=" cursor-pointer w-[15%] text-base text-white max-[1000px]:w-[20%]  max-tablet:w-[25%] max-tablet:text-sm max-phone:w-[28%]"
+                    className=" cursor-pointer w-[15%] text-base max-[1000px]:w-[20%]  max-tablet:w-[25%] max-tablet:text-sm max-phone:w-[28%]"
                   >
                     <img
                       src={artist.image}
@@ -63,7 +68,7 @@ const MappedArtist = ({filteredArtist, count, setId, setCount, loading, album })
                     <p className=" text-sm font-semibold text-left mb-[3%] max-tablet:text-xsm ">
                       {artist.name}
                     </p>
-                    <p className=" text-xsm font-medium text-grey text-left max-tablet:text-xxsm">
+                    <p className={` text-xsm font-medium ${toggle? "text-grey" : "text-light_black" } text-left max-tablet:text-xxsm`}>
                       {artist.releaseDate}
                     </p>
                   </SwiperSlide>

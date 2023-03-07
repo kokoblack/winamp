@@ -57,7 +57,7 @@ function App() {
                   <div
                     className={
                       sideNavMenu
-                        ? " absolute h-screen top-0 left-0 w-[45%] bg-gradient-to-r from-[#201c1c] to-[#171616] z-30 box-content max-lap:w-[30%] max-[500px]:w-[45%]"
+                        ? " absolute h-screen top-0 left-0 w-[45%] z-30 box-content max-lap:w-[30%] max-[500px]:w-[45%]"
                         : " basis-[13%] sticky top-0 max-lap:hidden"
                     }
                   >

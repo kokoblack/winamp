@@ -10,6 +10,7 @@ import PlayButton from "../../components/PlayButton";
 const Songs = () => {
   const token = useContext(RefreshTokenContext);
   const songPlayingReducer = useContext(AppDispatchContext);
+  const toggle = songPlayingReducer.state.themeToggle;
 
   const navigate = useNavigate();
 
@@ -79,7 +80,7 @@ const Songs = () => {
   }, [token, id, total]);
 
   return (
-    <div className="w-full bg-dark_black relative">
+    <div className={`w-full ${toggle ? "bg-dark_black" : "bg-white"} relative`}>
       <section
         style={{
           backgroundImage: `url(${songPlayingReducer.state.songplayingimageSrc})`,
@@ -92,7 +93,7 @@ const Songs = () => {
         >
           <BiLeftArrowAlt />
         </button>
-        <p className=" w-1/2 absolute bottom-[10%] left-[2%] font-nunito not-italic text-lg font-black text-white max-laptop:text-base max-tablet:text-[.8rem]">
+        <p className={` w-1/2 absolute bottom-[10%] left-[2%] font-nunito not-italic text-lg font-black ${toggle ? "text-white" : " text-dark_black"} max-laptop:text-base max-tablet:text-[.8rem]`}>
           {" "}
           {songPlayingReducer.state.songPlayingdescription}
         </p>
@@ -106,7 +107,7 @@ const Songs = () => {
       {loading ? (
         <SongsIsloading />
       ) : (
-        <section className=" bg-dark_black">
+        <section className={` ${toggle ? "bg-dark_black" : "bg-white"} `}>
           {songPlayingReducer.state.songsTracks.map((songs) => (
             <div
               onClick={() => {
@@ -152,7 +153,7 @@ const Songs = () => {
                 });
               }}
               key={songs.id}
-              className=" cursor-pointer flex justify-center items-center gap-[3%] px-[5%] py-[1%] text-white w-full hover:bg-[#EC625F66] max-tablet:py-[2%]"
+              className={` cursor-pointer flex justify-center items-center gap-[3%] px-[5%] py-[1%] ${toggle ? "text-white" : " text-dark_black"}  w-full hover:bg-[#EC625F66] max-tablet:py-[2%]`}
             >
               <img
                 src={songs.image}

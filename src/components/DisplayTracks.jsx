@@ -15,6 +15,8 @@ function DisplayTracks({ setDuration, progressBarRef, repeat, handleNext }) {
 
   const artist = displayTrackReducer.state.audioPlayerArtist;
 
+  const toggle = displayTrackReducer.state.themeToggle;
+
   const onLoadedMetadata = () => {
     const sec = audioRef.current.duration;
     setDuration(sec);
@@ -34,17 +36,17 @@ function DisplayTracks({ setDuration, progressBarRef, repeat, handleNext }) {
     <>
       <div
         className={
-          !nowPlayingTogggle
+          `${!nowPlayingTogggle
             ? " flex justify-start gap-x-2 items-center text-white"
-            : " relative flex justify-center items-center text-center h-screen max-[1000px]:h-[50vh]"
+            : " relative flex justify-center items-center text-center h-screen max-[1000px]:h-[50vh]"} ${toggle ? "text-white" : " text-dark_black"}`
         }
       >
         <img
           src={image}
           className={
-            !nowPlayingTogggle
+            `${!nowPlayingTogggle
               ? "w-[3rem] h-[3rem] max-[560px]:w-[2.5rem] max-[560px]:h-[2.5rem]"
-              : "w-[25rem] h-auto rounded-3xl max-[1000px]:blur-sm max-[1000px]:w-[70%]"
+              : "w-[25rem] h-auto rounded-3xl max-[1000px]:blur-sm max-[1000px]:w-[70%]"}`
           }
         />
         <audio
@@ -55,15 +57,15 @@ function DisplayTracks({ setDuration, progressBarRef, repeat, handleNext }) {
         />
         <div
           className={
-            !nowPlayingTogggle
+            `${!nowPlayingTogggle
               ? "block w-[50%] overflow-hidden"
-              : " absolute text-white hidden max-[1000px]:block"
+              : " absolute text-white hidden max-[1000px]:block"} ${toggle ? " text-white" : " text-dark_black"}`
           }
         >
-          <p className={!nowPlayingTogggle ? " text-sm truncate" : " text-[4vw]"}>
+          <p className={`${!nowPlayingTogggle ? " text-sm truncate" : " text-[4vw]"}`}>
             {title}
           </p>
-          <p className={!nowPlayingTogggle ? " text-xsm" : " text-[3vw]"}>
+          <p className={`${!nowPlayingTogggle ? " text-xsm" : " text-[3vw]"}`}>
             {artist}
           </p>
         </div>

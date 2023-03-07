@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { AiOutlineHeart, AiOutlinePlus } from "react-icons/ai";
+import { AppDispatchContext } from "../App";
 
 const RecentlyPlayedSongs = ({ action, shuffleSong, song, start, end }) => {
+  const recentlyPlayedSongReducer = useContext(AppDispatchContext)
+  const toggle = recentlyPlayedSongReducer.state.themeToggle;
+
   return (
     <>
       {action.state.recentlyPlayed.slice(start, end).map((e, i) => (
@@ -49,7 +53,7 @@ const RecentlyPlayedSongs = ({ action, shuffleSong, song, start, end }) => {
             });
           }}
           key={e.url}
-          className=" flex cursor-pointer justify-center items-center gap-[3%] px-[5%] py-[1%] text-white w-full hover:bg-[#EC625F66] "
+          className={` flex cursor-pointer justify-center items-center gap-[3%] px-[5%] py-[1%] ${toggle ? " text-white" : " text-dark_black"} w-full hover:bg-[#EC625F66] `}
         >
           <img
             src={e.image}
