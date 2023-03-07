@@ -4,7 +4,7 @@ import { AiOutlineHeart, AiOutlinePlus } from "react-icons/ai";
 const RecentlyPlayedSongs = ({ action, shuffleSong, song, start, end }) => {
   return (
     <>
-      {action.state.recentlyPlayed.slice(start, end).map((e) => (
+      {action.state.recentlyPlayed.slice(start, end).map((e, i) => (
         <div
           onClick={() => {
             action.dispatch({

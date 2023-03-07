@@ -302,14 +302,13 @@ function AllSongs() {
             MobileSearchToggle ? "max-[700px]:hidden" : "max-[700px]:block"
           } text-lg`}
         />
-        <Link
-          to="trending"
+        <button
           className={`ml-[1%] text-nl max-tablet:ml-[2%] ${
             MobileSearchToggle ? "max-[700px]:hidden" : "max-[700px]:block"
           }`}
         >
           <BiCast />
-        </Link>
+        </button>
         <IoMdNotificationsOutline
           className={`ml-[2%] text-nl ${
             MobileSearchToggle ? "max-[700px]:hidden" : "max-[700px]:block"

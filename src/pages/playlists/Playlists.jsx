@@ -59,7 +59,7 @@ const Playlists = () => {
         </div>
         <h1 className=" text-white font-black">Playlist</h1>
       </div>
-      <div className=" grid grid-cols-4 place-content-center gap-[5%] mt-[5%] max-lap:grid-cols-3 max-lap:mt-[12%] max-tablet:grid-cols-2">
+      <div className=" flex justify-start flex-wrap items-center gap-x-[2.5%] gap-y-[30%] mt-[5%]">
         {loading ? (
           <PlaylistIsLoading />
         ) : (
@@ -81,6 +81,7 @@ const Playlists = () => {
               }}
               to="/songs"
               key={e.id}
+              className=" w-[23%] max-lap:w-[31.5%] max-tablet:w-[48.5%] mb-[3%]"
             >
               <img
                 src={e.image}
