@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 
 const TrendingPlaylist = ({ id, token }) => {
   const trendingPlaylistReducer = useContext(AppDispatchContext);
+   const toggle = trendingPlaylistReducer.state.themeToggle;
 
   const [playlist, setPlaylist] = useState([]);
 
@@ -34,7 +35,7 @@ const TrendingPlaylist = ({ id, token }) => {
   }, [token]);
 
   return (
-    <div className=" font-nunito not-italic text-white cursor-pointer">
+    <div className={` font-nunito not-italic ${toggle ? "text-white" : " text-dark_black"}  cursor-pointer`}>
       <Swiper
         slidesPerView="auto"
         spaceBetween={20}

@@ -27,6 +27,7 @@ function AllSongs() {
   const tracks = publicPlaylists.slice(0, 5).map((e) => e.tracks.total);
   const description = publicPlaylists.slice(0, 5).map((e) => e.description);
   const id = publicPlaylists.slice(0, 5).map((e) => e.id);
+  const toggle = allsongs.state.themeToggle;
 
   function resetTimeout() {
     if (timeoutRef.current) {
@@ -180,7 +181,9 @@ function AllSongs() {
   return (
     <div
       style={{ backgroundImage: `url(${images[count]})` }}
-      className="w-full bg-[image:var(--image-url)] bg-cover bg-center bg-[blue] px-[2%] pt-3 pb-4   transition-all ease-in duration-[3000]"
+      className={`w-full bg-[image:var(--image-url)] bg-cover bg-center px-[2%] pt-3 pb-4 ${
+        toggle ? " text-dark_black" : " text-white"
+      } transition-all ease-in duration-[3000]`}
     >
       <section className="w-full flex justify-end items-center max-tablet:mb-[5%] max-tablet:mt-[2%] max-[700px]:">
         <div
@@ -192,9 +195,11 @@ function AllSongs() {
           <MdQueueMusic onClick={handleMenu} />
         </div>
         <div
-          className={` relative flex justify-start items-center p-4 bg-white ${
-            searchToggle ? null : "rounded-l-[5rem]"
-          } ${searchToggle ? null : "rounded-r-[5rem]"} ${
+          className={` relative flex justify-start items-center p-4 ${
+            toggle ? "bg-white" : " bg-light_black"
+          } ${searchToggle ? null : "rounded-l-[5rem]"} ${
+            searchToggle ? null : "rounded-r-[5rem]"
+          } ${
             searchToggle ? "rounded-t-2xl" : null
           }  w-[50%] h-[2.8rem] max-[700px]:w-full  max-[700px]:my-4 max-[700px]:mx-0 max-[700px]:h-[2.8rem] ${
             MobileSearchToggle ? "max-[700px]:block" : "max-[700px]:hidden"
@@ -208,11 +213,19 @@ function AllSongs() {
             }}
             type="text"
             placeholder="search artists, albums, tracks"
-            className=" w-full text-dark_black bg-[transparent] border-light_dark outline-none border-solid border-1 ml-2 placeholder:font-nunito placeholder:not-italic placeholder:text-base placeholder:font-medium max-laptop:placeholder:text-sm max-[700px]:absolute max-[700px]:top-[25%] max-[700px]:left-[10%] max-[700px]:w-[80%] max-[320px]:left-[12%] max-[300px]:top-[20%]"
+            className={` w-full ${
+              toggle ? " text-dark_black" : " text-white"
+            } bg-[transparent] border-light_dark outline-none border-solid border-1 ml-2 placeholder:font-nunito placeholder:not-italic placeholder:text-base placeholder:font-medium max-laptop:placeholder:text-sm max-[700px]:absolute max-[700px]:top-[25%] max-[700px]:left-[10%] max-[700px]:w-[80%] max-[320px]:left-[12%] max-[300px]:top-[20%]`}
           />
 
           {searchToggle && (
-            <div className="font-nunito not-italic z-20 absolute top-[90%] right-0 rounded-b-2xl w-full bg-white text-dark_black">
+            <div
+              className={`font-nunito not-italic z-20 absolute top-[90%] right-0 rounded-b-2xl w-full ${
+                toggle
+                  ? "bg-white text-dark_black"
+                  : " bg-light_black text-white"
+              } `}
+            >
               {allSearchData.slice(0, 10).map((data) => (
                 <div key={data.id} className=" w-full">
                   {data.type === "album" && (
@@ -230,10 +243,8 @@ function AllSongs() {
                         className="w-[4rem] h-[3rem] max-tablet:w-[3.5rem] max-tablet:h-[2.5rem]"
                       />
                       <div className=" w-full">
-                        <p className=" text-dark_grey text-sm mb-[1%]">
-                          {data.name}
-                        </p>
-                        <div className=" w-full flex justify-start items-center gap-[1%] text-grey text-xsm">
+                        <p className=" text-sm mb-[1%]">{data.name}</p>
+                        <div className=" w-full flex justify-start items-center gap-[1%] text-xsm">
                           <p>{data.type}</p>
                           <p>•</p>
                           <p>{data.artist}</p>
@@ -257,10 +268,8 @@ function AllSongs() {
                         className="w-[4rem] h-[3rem] max-tablet:w-[3.5rem] max-tablet:h-[2.5rem]"
                       />
                       <div className=" w-full">
-                        <p className=" text-dark_grey text-sm mb-[1%] ">
-                          {data.name}
-                        </p>
-                        <div className=" flex justify-start items-center gap-[1%] text-grey text-xsm">
+                        <p className="  text-sm mb-[1%] ">{data.name}</p>
+                        <div className=" flex justify-start items-center gap-[1%] text-xsm">
                           <p>{data.type}</p>
                           <p>•</p>
                           <p>{data.artist}</p>
@@ -284,10 +293,8 @@ function AllSongs() {
                         className=" rounded-full w-[4rem] h-[3.2rem] max-tablet:w-[3.5rem] max-tablet:h-[2.7rem] "
                       />
                       <div className=" w-full">
-                        <p className=" text-dark_grey text-sm mb-[1%]">
-                          {data.name}
-                        </p>
-                        <p className="text-grey text-xsm">{data.type}</p>
+                        <p className="  text-sm mb-[1%]">{data.name}</p>
+                        <p className=" text-xsm">{data.type}</p>
                       </div>
                     </div>
                   )}
@@ -302,13 +309,20 @@ function AllSongs() {
             MobileSearchToggle ? "max-[700px]:hidden" : "max-[700px]:block"
           } text-lg`}
         />
-        <button
+        <Link
+          onClick={() =>
+            allsongs.dispatch({
+              type: "SET_SIDE_NAV_LINK",
+              payload: 1,
+            })
+          }
+          to="/trending"
           className={`ml-[1%] text-nl max-tablet:ml-[2%] ${
             MobileSearchToggle ? "max-[700px]:hidden" : "max-[700px]:block"
           }`}
         >
           <BiCast />
-        </button>
+        </Link>
         <IoMdNotificationsOutline
           className={`ml-[2%] text-nl ${
             MobileSearchToggle ? "max-[700px]:hidden" : "max-[700px]:block"

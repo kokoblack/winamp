@@ -16,6 +16,7 @@ export const intialState = {
   shuffleUrl: [],
   shuffleData: [],
   sideNavToggle: false,
+  sideNavLink: 0,
   searchAllData: [],
   searchAlbum: [],
   searchArtist: [],
@@ -25,6 +26,7 @@ export const intialState = {
   songPlayingId: "",
   songPlayingTrackTotal: "",
   songsTracks: [],
+  themeToggle: true,
   toggleShuffle: false,
   trackListUrl: [],
   trackData: [],
@@ -95,11 +97,11 @@ export const reducer = (state, action) => {
         recentlyPlayed: action.payload,
       };
 
-      case "RECENTLY_PLAYED_SHUFFLE":
-        return {
-          ...state,
-          recentlyPlayedSuffle: action.payload,
-        };
+    case "RECENTLY_PLAYED_SHUFFLE":
+      return {
+        ...state,
+        recentlyPlayedSuffle: action.payload,
+      };
 
     case "RECOMMENDATION_DATA":
       return {
@@ -119,31 +121,37 @@ export const reducer = (state, action) => {
         shuffleData: action.payload,
       };
 
+    case "SET_SIDE_NAV_LINK":
+      return {
+        ...state,
+        sideNavLink: action.payload,
+      };
+
     case "SET_SIDE_NAV_TOGGLE":
       return {
         ...state,
         sideNavToggle: action.payload,
       };
 
-      case "SET_SEARCH_ALL_DATA":
+    case "SET_SEARCH_ALL_DATA":
       return {
         ...state,
         searchAllData: action.payload,
       };
 
-      case "SET_SEARCH_ALBUM":
+    case "SET_SEARCH_ALBUM":
       return {
         ...state,
         searchAlbum: action.payload,
       };
 
-      case "SET_SEARCH_ARTIST":
+    case "SET_SEARCH_ARTIST":
       return {
         ...state,
         searchArtist: action.payload,
       };
 
-      case "SET_SEARCH_TRACKS":
+    case "SET_SEARCH_TRACKS":
       return {
         ...state,
         searchTracks: action.payload,
@@ -177,6 +185,12 @@ export const reducer = (state, action) => {
       return {
         ...state,
         songsTracks: action.payload,
+      };
+
+    case "CHANGE_THEME_TOGGLE":
+      return {
+        ...state,
+        themeToggle: action.payload,
       };
 
     case "SET_TOGGLE_SHUFFLE":

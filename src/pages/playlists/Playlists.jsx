@@ -9,6 +9,7 @@ import PlaylistIsLoading from "../../components/PlaylistIsLoading";
 const Playlists = () => {
   const playlistReducer = useContext(AppDispatchContext);
   const token = useContext(RefreshTokenContext);
+  const toggle = playlistReducer.state.themeToggle;
 
   const [playlist, setPlaylist] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -49,7 +50,7 @@ const Playlists = () => {
   }, [token]);
 
   return (
-    <div className="font-nunito not-italic text-white text-xl p-[2%] max-[550px]:text-[5.2vw] max-lap:pt-[4%] max-lap:px-[4%]">
+    <div className={`font-nunito not-italic ${toggle ? "bg-dark_black text-white" : "bg-white text-dark_black"}  text-xl p-[2%] max-[550px]:text-[5.2vw] max-lap:pt-[4%] max-lap:px-[4%]`}>
       <div className=" flex justify-start items-center gap-[3%] mt-[1.5%] mb-[3%]">
         <div
           ref={ref}
@@ -57,7 +58,7 @@ const Playlists = () => {
         >
           <MdQueueMusic onClick={handleMenu} />
         </div>
-        <h1 className=" text-white font-black">Playlist</h1>
+        <h1 className=" font-black">Playlist</h1>
       </div>
       <div className=" flex justify-start flex-wrap items-center gap-x-[2.5%] gap-y-[30%] mt-[5%]">
         {loading ? (

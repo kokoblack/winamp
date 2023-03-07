@@ -9,6 +9,7 @@ import RecommendedIsLoading from "../../components/RecommendedIsLoading";
 const Trending = () => {
   const trendingReducer = useContext(AppDispatchContext);
   const token = useContext(RefreshTokenContext);
+  const toggle = trendingReducer.state.themeToggle;
 
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -63,7 +64,7 @@ const Trending = () => {
   }, [token]);
 
   return (
-    <div className="font-nunito not-italic text-white text-xl p-[2%] max-[550px]:text-[5.2vw] max-lap:pt-[4%] max-lap:px-[2%]">
+    <div className={`font-nunito not-italic text-xl p-[2%] ${toggle ? "bg-dark_black text-white" : "bg-white text-dark_black"}  max-[550px]:text-[5.2vw] max-lap:pt-[4%] max-lap:px-[2%]`}>
       <div className=" flex justify-start items-center gap-[3%] mt-[1.5%] mb-[3%]">
         <div
           ref={ref}
@@ -71,7 +72,7 @@ const Trending = () => {
         >
           <MdQueueMusic onClick={handleMenu} />
         </div>
-        <h1 className=" text-white font-black">Trending Now</h1>
+        <h1 className=" font-black">Trending Now</h1>
       </div>
       {loading
         ? [1, 2, 3, 4, 5, 6, 7, 8].map((e) => (

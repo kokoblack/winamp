@@ -11,6 +11,7 @@ import MappedArtist from "../../components/MappedArtist";
 const Artists = () => {
   const artistReducer = useContext(AppDispatchContext);
   const token = useContext(RefreshTokenContext);
+  const toggle = artistReducer.state.themeToggle
 
   const [toggleShow, setToggleShow] = useState(true);
   const [count, setCount] = useState(null);
@@ -138,8 +139,8 @@ const Artists = () => {
   }, [token, id]);
 
   return (
-    <div className=" font-nunito not-italic text-white relative ">
-      <section className=" px-[2%] py-[2%] bg-light_black max-tablet:px-[4%] max-tablet:pt-[4%]">
+    <div className={` font-nunito not-italic ${toggle? "text-white" : "text-dark_black" }  relative `}>
+      <section className={` px-[2%] py-[2%] ${toggle? " bg-light_black" : " bg-[#F7F7F7]" } max-tablet:px-[4%] max-tablet:pt-[4%]`}>
         <section className=" flex justify-start items-center mb-[3%] max-tablet:mb-[5%]">
           <div className=" flex justify-center items-center gap-[10%] ">
             <div
@@ -179,7 +180,7 @@ const Artists = () => {
 
         <section
           onClick={() => setSearchToggle(false)}
-          className=" text-sm text-white font-medium mb-[2%] max-tablet:mb-[4%]"
+          className=" text-sm font-medium mb-[2%] max-tablet:mb-[4%]"
         >
           <button
             onClick={() => {
@@ -206,7 +207,7 @@ const Artists = () => {
         </section>
       </section>
 
-      <section className=" px-[2%] pt-[2%] bg-dark_black max-tablet:px-[4%] max-tablet:pt-[4%]">
+      <section className={` px-[2%] pt-[2%] ${toggle? " bg-dark_black" : " bg-white" } max-tablet:px-[4%] max-tablet:pt-[4%]`}>
         <section>
           {toggleShow ? (
             <MappedArtist

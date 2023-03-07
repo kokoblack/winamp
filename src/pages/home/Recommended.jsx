@@ -9,6 +9,7 @@ import "swiper/css";
 function Recommended() {
   const recommendationReducer = useContext(AppDispatchContext);
   const token = useContext(RefreshTokenContext);
+  const toggle = recommendationReducer.state.themeToggle;
 
   const [song, setSong] = useState([]);
   const [shuffleSong, setShuffleSong] = useState([]);
@@ -68,7 +69,7 @@ function Recommended() {
   }, [token]);
 
   return (
-    <div className=" font-nunito not-italic text-white cursor-pointer">
+    <div className={` font-nunito not-italic ${toggle ? " text-white" : " text-dark_black"} cursor-pointer`}>
       <h3 className=" mr-auto text-lg font-bold max-[550px]:text-medium pb-[1%]">
         Recommended for you
       </h3>
@@ -137,7 +138,7 @@ function Recommended() {
                 className=" rounded-lg w-[8rem] h-auto mb-[3%]"
               />
               <p className=" text-sm ">{e.name}</p>
-              <p className=" text-xsm text-grey">
+              <p className={` text-xsm ${toggle ? " text-grey" : " text-dark_black"}`}>
                 {e.artist}
               </p>
             </SwiperSlide>

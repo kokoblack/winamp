@@ -13,6 +13,8 @@ function RecentPlayed() {
   const [loading, setLoading] = useState(false);
   const [shuffleSong, setShuffleSong] = useState([]);
 
+  const toggle = recentlyPlayedReducer.state.themeToggle;
+
   useEffect(() => {
     setLoading(true);
     axios
@@ -69,8 +71,8 @@ function RecentPlayed() {
 
   return (
     <>
-      <div className=" font-nunito not-italic overflow-hidden bg-light_black py-[.5rem] w-[60%] h-[12rem] rounded-2xl max-[1000px]:w-full max-lap:h-auto max-lap:mb-[2%]">
-        <section className=" flex justify-center items-center text-white px-[5%] py-[1%] mb-[2%]">
+      <div className={` font-nunito not-italic overflow-hidden ${toggle ? "bg-light_black" : "bg-[#F7F7F7]"} py-[.5rem] w-[60%] h-[12rem] rounded-2xl max-[1000px]:w-full max-lap:h-auto max-lap:mb-[2%]`}>
+        <section className={` flex justify-center items-center ${toggle ? " text-white" : " text-dark_black"} px-[5%] py-[1%] mb-[2%]`}>
           <h3 className=" mr-auto text-lg font-bold max-[550px]:text-medium">
             Recently played
           </h3>

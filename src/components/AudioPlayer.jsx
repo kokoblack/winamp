@@ -22,6 +22,8 @@ const AudioPlayer = () => {
       ? audioReducer.state.shuffleData
       : audioReducer.state.trackData;
 
+  const toggle = audioReducer.state.themeToggle;
+
   const handleNext = () => {
     audioReducer.dispatch({
       type: "SET_PLAYER_STATE",
@@ -87,9 +89,9 @@ const AudioPlayer = () => {
     <>
       <div
         className={
-          !nowPlayingTogggle
-            ? " bg-light_black px-[2%] py-[1%] w-screen max-w-[1440px] max-[550px]:py-[2%]"
-            : " h-screen bg-light_black w-screen bottom-0 py-[1%]"
+          `${!nowPlayingTogggle
+            ? " px-[2%] py-[1%] w-screen max-w-[1440px] max-[550px]:py-[2%]"
+            : " h-screen w-screen bottom-0 py-[1%]" } ${toggle ? "bg-light_black" : "bg-white"}`
         }
       >
         <button
@@ -101,15 +103,15 @@ const AudioPlayer = () => {
           }}
           className={`${
             nowPlayingTogggle ? "block" : "hidden"
-          } text-white text-xxl ml-[3%] pt-[3%] cursor-pointer`}
+          } text-xxl ml-[3%] pt-[3%] cursor-pointer ${toggle ? "text-white" : " text-dark_grey"}`}
         >
           <RiArrowDownSLine />
         </button>
         <div
           className={
-            !nowPlayingTogggle
+            `${!nowPlayingTogggle
               ? " flex justify-center items-center gap-2 "
-              : " grid grid-cols-2  gap-x-8 place-content-center h-screen px-[5%] max-[1000px]:block"
+              : " grid grid-cols-2  gap-x-8 place-content-center h-screen px-[5%] max-[1000px]:block"}`
           }
         >
           <div
@@ -120,8 +122,8 @@ const AudioPlayer = () => {
               });
             }}
             className={
-              !nowPlayingTogggle &&
-              "mr-auto w-[30%] max-[550px]:w-[60%] max-[300px]:w-[50%] cursor-pointer"
+              `${!nowPlayingTogggle &&
+              "mr-auto w-[30%] max-[550px]:w-[60%] max-[300px]:w-[50%] cursor-pointer"}`
             }
           >
             <DisplayTracks
@@ -135,8 +137,8 @@ const AudioPlayer = () => {
           </div>
           <div
             className={
-              !nowPlayingTogggle &&
-              " ml-auto w-[70%] max-[550px]:w-[40%] max-[300px]:w-[50%]"
+              `${!nowPlayingTogggle &&
+              " ml-auto w-[70%] max-[550px]:w-[40%] max-[300px]:w-[50%]"}`
             }
           >
             <Controls
