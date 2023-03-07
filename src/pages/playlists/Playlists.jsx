@@ -50,7 +50,7 @@ const Playlists = () => {
   }, [token]);
 
   return (
-    <div className={`font-nunito not-italic ${toggle ? "bg-dark_black text-white" : "bg-white text-dark_black"}  text-xl p-[2%] max-[550px]:text-[5.2vw] max-lap:pt-[4%] max-lap:px-[4%]`}>
+    <div className={`font-nunito not-italic ${toggle ? "bg-dark_black text-white" : "bg-white text-dark_black"}  text-xl p-[2%] max-[550px]:text-[5.2vw] max-lap:h-screen max-lap:pt-[4%] max-lap:px-[4%]`}>
       <div className=" flex justify-start items-center gap-[3%] mt-[1.5%] mb-[3%]">
         <div
           ref={ref}
