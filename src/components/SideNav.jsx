@@ -11,9 +11,9 @@ import { AppDispatchContext } from "../App";
 const SideNav = () => {
   const FirstNav = [
     [<RiHomeLine />, "/", "Home"],
-    [<MdOutlineLocalFireDepartment />, "trending", "Trending"],
-    [<TfiVideoClapper />, "playlists", "Playlists"],
-    [<GiGuitar />, "artists", "Artists"],
+    [<MdOutlineLocalFireDepartment />, "/trending", "Trending"],
+    [<TfiVideoClapper />, "/playlists", "Playlists"],
+    [<GiGuitar />, "/artists", "Artists"],
   ];
 
   const sideNavReducer = useContext(AppDispatchContext);
