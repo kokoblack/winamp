@@ -38,7 +38,7 @@ const signin = () => {
         Connect With Spotify
       </a>
       <div className=" w-full flex justify-center items-center font-nunito font-semibold not-italic text-grey gap-[4%] max-lap:text-[3vw] max-[500px]:text-[4vw]">
-        <p className=" max-[500px]:w-[50%]">Don"t have an account?</p>
+        <p className=" max-[500px]:w-[50%]">Don't have an account?</p>
         <a
           href="https://www.spotify.com/ng/signup?forward_url=https%3A%2F%2Fopen.spotify.com%2F%3F"
           className=" decoration-bright_orange underline hover:text-bright_orange"

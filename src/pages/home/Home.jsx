@@ -13,13 +13,13 @@ function Home() {
     <div className={`max-w-full relative ${toggle ? "bg-dark_black" : "bg-white"} max-lap:h-screen`}>
         <section className="w-full">
           <AllSongs />
-          <div className=" flex justify-center items-center gap-4 p-[2%] max-[1000px]:block">
+          <div className={`${toggle ? "bg-dark_black" : "bg-white"} flex justify-center items-center gap-4 p-[2%] max-[1000px]:block`}>
             <RecentPlayed />
             <HomeArtist />
           </div>
-          <div className=" px-[2%] ">
+          <div className={`${toggle ? "bg-dark_black" : "bg-white"} px-[2%] `}>
             <Recommended />
-            <div className=" h-[5rem]"></div>
+            <div className={`${toggle ? "bg-dark_black" : "bg-white"} h-[5rem]`}></div>
           </div>
         </section>
     </div>
