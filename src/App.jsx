@@ -65,7 +65,7 @@ function App() {
                   >
                     <SideNav />
                   </div>
-                  <div className="basis-[87%]">
+                  <div className={`${toggle ? " bg-dark_black" : " bg-white"} basis-[87%]`}>
                     <Routes>
                       <Route path="/" element={<Home />} />
                       <Route path="artists" element={<Artists />} />
