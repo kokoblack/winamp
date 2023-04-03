@@ -88,7 +88,7 @@ const Trending = () => {
               <TrendingPlaylist id={trend.id} token={token} />
             </div>
           ))}
-      <div className=" h-[4.5rem]"></div>
+      <div className=" h-[3rem]"></div>
     </div>
   );
 };

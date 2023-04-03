@@ -2,15 +2,16 @@ import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { BsPlayFill } from "react-icons/bs";
 import { AppDispatchContext } from "../../App";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Mousewheel } from "swiper";
 import "swiper/css";
 import RecommendedIsLoading from "../../components/RecommendedIsLoading";
 
-function RecentPlayed() {
-  const recentlyPlayedReducer = useContext(AppDispatchContext);
-  const toggle = recentlyPlayedReducer.state.themeToggle;
+function HomeVideo() {
+  const homeVideoReducer = useContext(AppDispatchContext);
+  const toggle = homeVideoReducer.state.themeToggle;
+  const navigate = useNavigate();
 
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -27,7 +28,6 @@ function RecentPlayed() {
         }
       )
       .then((res) => {
-        console.log(res.data);
         const vid = res.data.items.map((e) => {
           return {
             id: e.id,
@@ -36,8 +36,12 @@ function RecentPlayed() {
             artist: e.snippet.channelTitle,
           };
         });
+
+        homeVideoReducer.dispatch({
+          type: "SET_VIDEOS",
+          payload: vid,
+        });
         setVideos(vid);
-        console.log(vid);
       })
       .catch((err) => console.log(err));
 
@@ -60,7 +64,13 @@ function RecentPlayed() {
             Videos
           </h3>
           <Link
-            to="/recently"
+            onClick={() =>
+              homeVideoReducer.dispatch({
+                type: "SET_SIDE_NAV_LINK",
+                payload: 2,
+              })
+            }
+            to="/videos"
             className=" ml-auto text-medium font-medium max-[550px]:text-base"
           >
             See all
@@ -86,17 +96,34 @@ function RecentPlayed() {
               {videos.slice(0, 10).map((vid) => (
                 <SwiperSlide
                   key={vid.id}
-                  className=" text-left cursor-pointer w-[30%]  max-[1000px]:w-[20%]  max-tablet:w-[25%] max-tablet:text-base max-[300px]:w-[40%]"
+                  className=" text-left cursor-pointer w-[30%] max-[1000px]:w-[20%] max-[550px]:w-[25%]  max-[480px]:w-[40%] max-[300px]:w-[50%] max-tablet:text-base"
                 >
-                  <div className=" relative">
+                  <div
+                    onClick={() => {
+                      homeVideoReducer.dispatch({
+                        type: "SET_VIDID",
+                        payload: vid.id,
+                      });
+                      homeVideoReducer.dispatch({
+                        type: "SET_VIDPLAY",
+                        payload: true,
+                      });
+                      homeVideoReducer.dispatch({
+                        type: "SET_VIDNAME",
+                        payload: vid.name,
+                      });
+                      navigate("/videos");
+                    }}
+                    className=" relative"
+                  >
                     <img
                       src={vid.image}
-                      className=" rounded-lg w-[11rem] h-[5.5rem] mb-2"
+                      className=" rounded-lg w-[100%] h-[5.5rem] mb-2"
                     />
                     <BsPlayFill className=" text-white text-xxl absolute top-1/2 left-1/2 ml-[-1.3125rem] mt-[-1.1125rem] " />
                   </div>
                   <p className=" text-base truncate ">{vid.name}</p>
-                  <p className=" text-sm">{vid.artist}</p>
+                  <p className=" text-sm max-tablet:text-xsm">{vid.artist}</p>
                 </SwiperSlide>
               ))}
             </Swiper>
@@ -107,4 +134,4 @@ function RecentPlayed() {
   );
 }
 
-export default RecentPlayed;
+export default HomeVideo;
