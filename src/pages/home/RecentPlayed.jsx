@@ -1,80 +1,63 @@
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
-import RecentlyPlayedIsLoading from "../../components/RecentlyPlayedIsLoading";
-import { AppDispatchContext, RefreshTokenContext } from "../../App";
+import { BsPlayFill } from "react-icons/bs";
+import { AppDispatchContext } from "../../App";
 import { Link } from "react-router-dom";
-import RecentlyPlayedSongs from "../../components/RecentlyPlayedSongs";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Mousewheel } from "swiper";
+import "swiper/css";
+import RecommendedIsLoading from "../../components/RecommendedIsLoading";
 
 function RecentPlayed() {
   const recentlyPlayedReducer = useContext(AppDispatchContext);
-  const token = useContext(RefreshTokenContext);
-
-  const [song, setSong] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [shuffleSong, setShuffleSong] = useState([]);
-
   const toggle = recentlyPlayedReducer.state.themeToggle;
+
+  const [videos, setVideos] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`https://api.spotify.com/v1/me/player/recently-played?limit=50`, {
-        headers: {
-          Authorization: "Bearer " + token,
-          "Content-Type": "application/json",
-        },
-      })
+      .get(
+        "https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&videoCategoryId=10&key=AIzaSyDg1A1tBfPOIL7OHMRFkw7KY3o0H68cDF8&maxResults=50",
+        {
+          headers: {
+            Accept: "application/json",
+          },
+        }
+      )
       .then((res) => {
-        const trackData = res.data.items.map((e) => {
+        console.log(res.data);
+        const vid = res.data.items.map((e) => {
           return {
             id: e.id,
-            name: e.track.name,
-            url: e.track.preview_url,
-            artist: e.track.artists[0].name,
-            image: e.track.album.images[0].url,
+            image: e.snippet.thumbnails.medium.url,
+            name: e.snippet.localized.title,
+            artist: e.snippet.channelTitle,
           };
         });
-        const jsonObject = trackData.map(JSON.stringify);
-        const uniqueSet = new Set(jsonObject);
-        const removeDuplicate = Array.from(uniqueSet).map(JSON.parse);
-
-        const uniqueData = [];
-        const shuffle = [];
-        removeDuplicate.forEach((e) => {
-          if (e.url === null) {
-            null;
-          } else {
-            uniqueData.push(e);
-            shuffle.push(e);
-          }
-        });
-
-        const shuffleData = shuffle.sort(() => Math.random() - 0.5);
-
-        setShuffleSong(shuffleData);
-        setSong(uniqueData);
-
-        recentlyPlayedReducer.dispatch({
-          type: "RECENTLY_PLAYED_DATA",
-          payload: uniqueData,
-        });
-
-        recentlyPlayedReducer.dispatch({
-          type: "RECENTLY_PLAYED_SHUFFLE",
-          payload: shuffleData,
-        });
-
-        setLoading(false);
+        setVideos(vid);
+        console.log(vid);
       })
       .catch((err) => console.log(err));
-  }, [token]);
+
+    setLoading(false);
+  }, []);
 
   return (
     <>
-      <div className={` font-nunito not-italic overflow-hidden ${toggle ? "bg-light_black" : "bg-[#F7F7F7]"} py-[.5rem] w-[60%] h-[12rem] rounded-2xl max-[1000px]:w-full max-lap:h-auto max-lap:mb-[2%]`}>
-        <section className={` flex justify-center items-center ${toggle ? " text-white" : " text-dark_black"} px-[5%] py-[1%] mb-[2%]`}>
+      <div
+        className={` h-[12rem] font-nunito not-italic overflow-hidden ${
+          toggle ? "bg-light_black text-white" : "bg-[#F7F7F7] text-dark_black"
+        } py-[.5rem] w-[60%] rounded-2xl max-[1000px]:w-full max-lap:h-auto max-lap:mb-[2%]`}
+      >
+        <section
+          className={` flex justify-center items-start ${
+            toggle ? " text-white" : " text-dark_black"
+          } px-[5%] py-[1%]`}
+        >
           <h3 className=" mr-auto text-lg font-bold max-[550px]:text-medium">
-            Recently played
+            Videos
           </h3>
           <Link
             to="/recently"
@@ -84,31 +67,41 @@ function RecentPlayed() {
           </Link>
         </section>
 
-        {loading ? (
-          <RecentlyPlayedIsLoading />
-        ) : (
-          <div>
-            <section>
-              <RecentlyPlayedSongs
-                action={recentlyPlayedReducer}
-                shuffleSong={shuffleSong}
-                song={song}
-                start={0}
-                end={2}
-              />
-            </section>
-
-            <section className=" hidden max-pad:block">
-              <RecentlyPlayedSongs
-                action={recentlyPlayedReducer}
-                shuffleSong={shuffleSong}
-                song={song}
-                start={2}
-                end={5}
-              />
-            </section>
-          </div>
-        )}
+        <section>
+          {loading ? (
+            <div className=" flex justify-center items-center">
+              {" "}
+              <RecommendedIsLoading />{" "}
+            </div>
+          ) : (
+            <Swiper
+              slidesPerView="auto"
+              spaceBetween={15}
+              mousewheel
+              centeredSlides
+              centeredSlidesBounds
+              modules={[Mousewheel]}
+              className="mySwiper px-[4%]"
+            >
+              {videos.slice(0, 10).map((vid) => (
+                <SwiperSlide
+                  key={vid.id}
+                  className=" text-left cursor-pointer w-[30%]  max-[1000px]:w-[20%]  max-tablet:w-[25%] max-tablet:text-base max-[300px]:w-[40%]"
+                >
+                  <div className=" relative">
+                    <img
+                      src={vid.image}
+                      className=" rounded-lg w-[11rem] h-[5.5rem] mb-2"
+                    />
+                    <BsPlayFill className=" text-white text-xxl absolute top-1/2 left-1/2 ml-[-1.3125rem] mt-[-1.1125rem] " />
+                  </div>
+                  <p className=" text-base truncate ">{vid.name}</p>
+                  <p className=" text-sm">{vid.artist}</p>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          )}
+        </section>
       </div>
     </>
   );
