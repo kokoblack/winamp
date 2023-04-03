@@ -91,7 +91,7 @@ const AudioPlayer = () => {
         className={
           `${!nowPlayingTogggle
             ? " px-[2%] py-[1%] w-screen max-w-[1440px] max-[550px]:py-[2%]"
-            : " h-screen w-screen bottom-0 py-[1%]" } ${toggle ? "bg-light_black" : "bg-white"}`
+            : " max-w-[1440px] h-screen w-screen bottom-0 py-[1%]" } ${toggle ? "bg-light_black" : "bg-white"}`
         }
       >
         <button

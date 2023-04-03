@@ -112,6 +112,14 @@ function HomeVideo() {
                         type: "SET_VIDNAME",
                         payload: vid.name,
                       });
+                      homeVideoReducer.dispatch({
+                        type: "SET_SIDE_NAV_LINK",
+                        payload: 2,
+                      })
+                      homeVideoReducer.dispatch({
+                        type: "SET_IS_PLAYING",
+                        payload: false,
+                      })
                       navigate("/videos");
                     }}
                     className=" relative"
