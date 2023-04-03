@@ -1,5 +1,5 @@
 import AllSongs from "./AllSongs";
-import RecentPlayed from "./RecentPlayed";
+import HomeVideo from "./HomeVideo";
 import Recommended from "./Recommended";
 import HomeArtist from "./HomeArtist";
 import { AppDispatchContext } from "../../App";
@@ -14,7 +14,7 @@ function Home() {
         <section className="w-full">
           <AllSongs />
           <div className={`${toggle ? "bg-dark_black" : "bg-white"} flex justify-center items-center gap-4 p-[2%] max-[1000px]:block`}>
-            <RecentPlayed />
+            <HomeVideo />
             <HomeArtist />
           </div>
           <div className={`${toggle ? "bg-dark_black" : "bg-white"} px-[2%] `}>

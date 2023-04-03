@@ -30,7 +30,11 @@ export const intialState = {
   trackData: [],
   trendingData: [],
   trendingPlaylistData: [],
-  updatePlayerSate: "false",
+  updatePlayerSate: false,
+  videos: [],
+  vidPlay: false,
+  vidID: "",
+  vidName: "",
 };
 
 export const reducer = (state, action) => {
@@ -225,6 +229,30 @@ export const reducer = (state, action) => {
       return {
         ...state,
         updatePlayerSate: action.payload,
+      };
+
+    case "SET_VIDEOS":
+      return {
+        ...state,
+        videos: action.payload,
+      };
+
+    case "SET_VIDID":
+      return {
+        ...state,
+        vidID: action.payload,
+      };
+
+    case "SET_VIDPLAY":
+      return {
+        ...state,
+        vidPlay: action.payload,
+      };
+
+    case "SET_VIDNAME":
+      return {
+        ...state,
+        vidName: action.payload,
       };
   }
 };

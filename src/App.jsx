@@ -9,7 +9,7 @@ import {
   Home,
   AllRecentlyPlayed,
   Artists,
-  Playlists,
+  Videos,
   Songs,
   Trending,
 } from "./pages";
@@ -82,7 +82,7 @@ function App() {
                     <Routes>
                       <Route path="/" element={<Home />} />
                       <Route path="artists" element={<Artists />} />
-                      <Route path="playlists" element={<Playlists />} />
+                      <Route path="videos" element={<Videos />} />
                       <Route path="songs" element={<Songs />} />
                       <Route path="recently" element={<AllRecentlyPlayed />} />
                       <Route path="trending" element={<Trending />} />

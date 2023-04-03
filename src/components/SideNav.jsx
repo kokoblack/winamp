@@ -12,7 +12,7 @@ const SideNav = () => {
   const FirstNav = [
     [<RiHomeLine />, "/", "Home"],
     [<MdOutlineLocalFireDepartment />, "/trending", "Trending"],
-    [<TfiVideoClapper />, "/playlists", "Playlists"],
+    [<TfiVideoClapper />, "/videos", "Videos"],
     [<GiGuitar />, "/artists", "Artists"],
   ];
 
