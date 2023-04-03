@@ -89,8 +89,8 @@ function Controls({
       <div
         className={
           `${!nowPlayingTogggle
-            ? " flex justify-center items-center gap-[15%]"
-            : " flex justify-center items-center flex-col h-screen gap-y-12 text-center max-[1000px]:h-[50vh]"} ${toggle ? " text-white" : " text-dark_black"}`
+            ? "max-w-[1440px] flex justify-center items-center gap-[15%]"
+            : "  max-w-[1440px] flex justify-center items-center flex-col h-screen gap-y-12 text-center max-[1000px]:h-[50vh]"} ${toggle ? " text-white" : " text-dark_black"}`
         }
       >
         <div

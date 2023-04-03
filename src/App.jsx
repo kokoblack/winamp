@@ -50,7 +50,7 @@ function App() {
   }, []);
 
   return (
-    <div>
+    <div className="max-w-[1440px]">
       <AppDispatchContext.Provider value={{ state, dispatch, setSideNavMenu }}>
         <RefreshTokenContext.Provider value={refreshToken}>
           <AudioRefContext.Provider value={audioRef}>
@@ -89,7 +89,7 @@ function App() {
                     </Routes>
                   </div>
                 </div>
-                <div className=" fixed bottom-0 z-50">
+                <div className=" max-w-[1440px] fixed bottom-0 z-50">
                   <AudioPlayer />
                 </div>
               </>

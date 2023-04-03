@@ -86,6 +86,10 @@ const Videos = () => {
                   type: "SET_VIDNAME",
                   payload: e.name,
                 })
+                videoReducer.dispatch({
+                  type: "SET_IS_PLAYING",
+                  payload: false,
+                })
               }}
               className=" relative cursor-pointer"
             >

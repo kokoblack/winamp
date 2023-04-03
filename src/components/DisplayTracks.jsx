@@ -41,8 +41,8 @@ function DisplayTracks({ setDuration, progressBarRef, repeat, handleNext }) {
       <div
         className={
           `${!nowPlayingTogggle
-            ? " flex justify-start gap-x-2 items-center text-white"
-            : " relative flex justify-center items-center text-center h-screen max-[1000px]:h-[50vh]"} ${toggle ? "text-white" : " text-dark_black"}`
+            ? "max-w-[1440px] flex justify-start gap-x-2 items-center text-white"
+            : "max-w-[1440px] relative flex justify-center items-center text-center h-screen max-[1000px]:h-[50vh]"} ${toggle ? "text-white" : " text-dark_black"}`
         }
       >
         <img

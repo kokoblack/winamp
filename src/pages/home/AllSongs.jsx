@@ -183,7 +183,7 @@ function AllSongs() {
       style={{ backgroundImage: `url(${images[count]})` }}
       className={`w-full bg-[image:var(--image-url)] bg-cover bg-center px-[2%] pt-3 pb-4 ${
         toggle ? " text-dark_black" : " text-white"
-      } transition-all ease-in duration-[3000]`}
+      } transition-all ease-in duration-[3000] max-w-[1440px]`}
     >
       <section className="w-full flex justify-end items-center max-tablet:mb-[5%] max-tablet:mt-[2%] max-[700px]:">
         <div
