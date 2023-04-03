@@ -10,7 +10,7 @@ function Home() {
   const toggle = homeReducer.state.themeToggle;
 
   return (
-    <div className={`max-w-full relative ${toggle ? "bg-dark_black" : "bg-white"} max-lap:h-screen`}>
+    <div className={`max-w-full relative ${toggle ? "bg-dark_black" : "bg-white"}  max-lap:h-screen`}>
         <section className="w-full">
           <AllSongs />
           <div className={`${toggle ? "bg-dark_black" : "bg-white"} flex justify-center items-center gap-4 p-[2%] max-[1000px]:block`}>

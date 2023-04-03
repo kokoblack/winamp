@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "../../../../todo"
+		},
+		{
+			"path": "../../.."
+		}
+	],
+	"settings": {
+		"typescript.tsdk": "node_modules\\typescript\\lib",
+		"liveServer.settings.multiRootWorkspaceName": "VISS-Shopping-NextJS-App"
+	}
+}

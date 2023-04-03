@@ -69,13 +69,20 @@ function Recommended() {
   }, [token]);
 
   return (
-    <div className={` font-nunito not-italic ${toggle ? " text-white" : " text-dark_black"} cursor-pointer`}>
+    <div
+      className={` font-nunito not-italic ${
+        toggle ? " text-white" : " text-dark_black"
+      } cursor-pointer`}
+    >
       <h3 className=" mr-auto text-lg font-bold max-[550px]:text-medium pb-[1%]">
         Recommended for you
       </h3>
 
       {loading ? (
-        <div className=" flex justify-center items-center"> <RecommendedIsLoading/> </div>
+        <div className=" flex justify-center items-center">
+          {" "}
+          <RecommendedIsLoading />{" "}
+        </div>
       ) : (
         <Swiper
           slidesPerView="auto"
@@ -86,62 +93,66 @@ function Recommended() {
           modules={[Mousewheel]}
           className="mySwiper"
         >
-          {recommendationReducer.state.recommendation.slice(0, 10).map((e) => (
-            <SwiperSlide
-              onClick={() => {
-                recommendationReducer.dispatch({
-                  type: "SET_SHUFFLE_URL",
-                  payload: shuffleSong.map((e) => e.url),
-                });
-                recommendationReducer.dispatch({
-                  type: "SET_SHUFFLE_DATA",
-                  payload: shuffleSong.map((e) => e),
-                });
-                recommendationReducer.dispatch({
-                  type: "SET_TRACK_LIST_URL",
-                  payload: song.map((e) => e.url),
-                });
-                recommendationReducer.dispatch({
-                  type: "SET_TRACK_DATA",
-                  payload: song.map((e) => e),
-                });
-                recommendationReducer.dispatch({
-                  type: "SET_PLAYER_STATE",
-                  payload: !recommendationReducer.state.updatePlayerSate,
-                });
-                recommendationReducer.dispatch({
-                  type: "SET_IS_PLAYING",
-                  payload: true,
-                });
-                recommendationReducer.dispatch({
-                  type: "GET_AUDIO_PLAYER_ARTIST",
-                  payload: e.artist,
-                });
-                recommendationReducer.dispatch({
-                  type: "GET_AUDIO_PLAYER_TITLE",
-                  payload: e.name,
-                });
-                recommendationReducer.dispatch({
-                  type: "GET_AUDIO_PLAYER_AUDIO",
-                  payload: e.url,
-                });
-                recommendationReducer.dispatch({
-                  type: "GET_AUDIO_PLAYER_IMAGE",
-                  payload: e.image,
-                });
-              }}
-              key={e.id}
-              className=" w-[15%] max-lap:w-[20%]  max-tablet:w-[30%]"
-            >
-              <img
-                src={e.image}
-                className=" rounded-lg w-[8rem] h-auto mb-[3%]"
-              />
-              <p className=" text-sm ">{e.name}</p>
-              <p className={` text-xsm ${toggle ? " text-grey" : " text-dark_black"}`}>
-                {e.artist}
-              </p>
-            </SwiperSlide>
+          {recommendationReducer.state.recommendation.map((e) => (
+              <SwiperSlide
+                onClick={() => {
+                  recommendationReducer.dispatch({
+                    type: "SET_SHUFFLE_URL",
+                    payload: shuffleSong.map((e) => e.url),
+                  });
+                  recommendationReducer.dispatch({
+                    type: "SET_SHUFFLE_DATA",
+                    payload: shuffleSong.map((e) => e),
+                  });
+                  recommendationReducer.dispatch({
+                    type: "SET_TRACK_LIST_URL",
+                    payload: song.map((e) => e.url),
+                  });
+                  recommendationReducer.dispatch({
+                    type: "SET_TRACK_DATA",
+                    payload: song.map((e) => e),
+                  });
+                  recommendationReducer.dispatch({
+                    type: "SET_PLAYER_STATE",
+                    payload: !recommendationReducer.state.updatePlayerSate,
+                  });
+                  recommendationReducer.dispatch({
+                    type: "SET_IS_PLAYING",
+                    payload: true,
+                  });
+                  recommendationReducer.dispatch({
+                    type: "GET_AUDIO_PLAYER_ARTIST",
+                    payload: e.artist,
+                  });
+                  recommendationReducer.dispatch({
+                    type: "GET_AUDIO_PLAYER_TITLE",
+                    payload: e.name,
+                  });
+                  recommendationReducer.dispatch({
+                    type: "GET_AUDIO_PLAYER_AUDIO",
+                    payload: e.url,
+                  });
+                  recommendationReducer.dispatch({
+                    type: "GET_AUDIO_PLAYER_IMAGE",
+                    payload: e.image,
+                  });
+                }}
+                key={e.id}
+                className=" w-[15%] max-lap:w-[20%]  max-tablet:w-[30%] overflow-hidden"
+              >
+                <img
+                  src={e.image}
+                  className=" rounded-lg w-full h-auto mb-[3%]"
+                />
+                <p className=" text-sm truncate">{e.name}</p>
+                <p
+                  className={` text-xsm ${
+                    toggle ? " text-grey" : " text-dark_black"
+                  }`}
+                >
+                  {e.artist}
+                </p>
+              </SwiperSlide>
           ))}
         </Swiper>
       )}

@@ -64,7 +64,7 @@ const Trending = () => {
   }, [token]);
 
   return (
-    <div className={`font-nunito not-italic text-xl p-[2%] ${toggle ? "bg-dark_black text-white" : "bg-white text-dark_black"}  max-[550px]:text-[5.2vw] max-lap:pt-[4%] max-lap:px-[2%]`}>
+    <div className={` min-h-screen font-nunito not-italic text-xl p-[2%] ${toggle ? "bg-dark_black text-white" : "bg-white text-dark_black"}  max-[550px]:text-[5.2vw] max-lap:pt-[4%] max-lap:px-[2%]`}>
       <div className=" flex justify-start items-center gap-[3%] mt-[1.5%] mb-[3%]">
         <div
           ref={ref}

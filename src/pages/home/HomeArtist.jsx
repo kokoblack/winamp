@@ -67,7 +67,7 @@ const HomeArtist = () => {
         toggle ? "bg-light_black text-white" : "bg-[#F7F7F7] text-dark_black"
       } py-[.5rem] px-[2%] w-[40%] h-[12rem] rounded-2xl max-[1000px]:w-full max-lap:h-auto`}
     >
-      <section className=" flex justify-center items-center py-[1%] px-[3%] mb-[2%]">
+      <section className=" flex justify-center items-center py-[1%] px-[3%]">
         <h3 className=" mr-auto text-lg font-bold max-[550px]:text-medium ">
           Artist
         </h3>
@@ -101,7 +101,7 @@ const HomeArtist = () => {
           {homeArtistReducer.state.artist.slice(0, 10).map((artist) => (
             <SwiperSlide
               key={artist.id}
-              className=" cursor-pointer w-[30%] text-base flex justify-start items-center flex-col text-center max-[1000px]:w-[20%]  max-tablet:w-[25%] max-tablet:text-base max-[300px]:w-[40%]"
+              className=" cursor-pointer w-[30%] text-base flex justify-center items-center flex-col text-center max-[1000px]:w-[20%]  max-tablet:w-[25%] max-tablet:text-base max-[300px]:w-[40%]"
             >
               <img
                 src={artist.image}
