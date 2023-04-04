@@ -18,6 +18,13 @@ const Videos = () => {
   const vidID = videoReducer.state.vidID
   const name = videoReducer.state.vidName
 
+  const opts = {
+    playerVars: {
+      // https://developers.google.com/youtube/player_parameters
+      autoplay: 1,
+    },
+  };
+
   const handleMenu = () => {
     return videoReducer.setSideNavMenu(true);
   };
@@ -29,7 +36,6 @@ const Videos = () => {
   const ref = CloseOutsideMenu(handleClickOutside);
 
   const onPlayerReady = (event) => {
-    // access to player in all event handlers via event.target
     event.target.playVideo();
   }
 
@@ -56,7 +62,7 @@ const Videos = () => {
 
         {play && (
           <div className={`${toggle ? "bg-light_black" : "bg-[#F7F7F7]"} `}>
-            <YouTube iframeClassName="h-[40vh] w-full my-[1%] max-lap:h-[30vh]" videoId={vidID} onReady={onPlayerReady}/>
+            <YouTube opts={opts} iframeClassName="h-[40vh] w-full my-[1%] max-lap:h-[30vh]" videoId={vidID} onReady={onPlayerReady}/>
             <p style={p} className=" text-medium max-tablet:text-sm py-[.5rem]">
               {name}
             </p>
