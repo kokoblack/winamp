@@ -3,6 +3,7 @@ import { BsPlayFill } from "react-icons/bs";
 import { AppDispatchContext } from "../../App";
 import CloseOutsideMenu from "../../components/CloseOutsideMenu";
 import { MdQueueMusic } from "react-icons/md";
+import YouTube from 'react-youtube';
 
 const Videos = () => {
   const p = {
@@ -27,6 +28,11 @@ const Videos = () => {
 
   const ref = CloseOutsideMenu(handleClickOutside);
 
+  const onPlayerReady = (event) => {
+    // access to player in all event handlers via event.target
+    event.target.playVideo();
+  }
+
   return (
     <div
       className={` min-h-screen font-nunito not-italic ${
@@ -50,11 +56,7 @@ const Videos = () => {
 
         {play && (
           <div className={`${toggle ? "bg-light_black" : "bg-[#F7F7F7]"} `}>
-            <iframe
-              allow="autoplay"
-              className=" h-[40vh] w-full my-[1%] max-lap:h-[30vh]"
-              src={`https://www.youtube.com/embed/${vidID}?autoplay=1`}
-            ></iframe>
+            <YouTube iframeClassName="h-[40vh] w-full my-[1%] max-lap:h-[30vh]" videoId={vidID} onReady={onPlayerReady}/>
             <p style={p} className=" text-medium max-tablet:text-sm py-[.5rem]">
               {name}
             </p>
