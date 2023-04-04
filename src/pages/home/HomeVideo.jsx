@@ -7,6 +7,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Mousewheel } from "swiper";
 import "swiper/css";
 import RecommendedIsLoading from "../../components/RecommendedIsLoading";
+import { convertTimeToSeconds, formatTime } from "../../components/GetDuration";
 
 function HomeVideo() {
   const homeVideoReducer = useContext(AppDispatchContext);
@@ -15,6 +16,11 @@ function HomeVideo() {
 
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const processDuration = (duration) => moment
+    .duration(duration).format()
+    .format('h:mm:ss').format()
+    .padStart(4, '0:0')
 
   useEffect(() => {
     setLoading(true);
@@ -29,14 +35,17 @@ function HomeVideo() {
       )
       .then((res) => {
         const vid = res.data.items.map((e) => {
+          const duration = convertTimeToSeconds(e.contentDetails.duration)
+          const time = formatTime(duration)
           return {
+            duration: time,
             id: e.id,
             image: e.snippet.thumbnails.medium.url,
             name: e.snippet.localized.title,
             artist: e.snippet.channelTitle,
           };
         });
-
+        console.log(vid);
         homeVideoReducer.dispatch({
           type: "SET_VIDEOS",
           payload: vid,
@@ -115,11 +124,11 @@ function HomeVideo() {
                       homeVideoReducer.dispatch({
                         type: "SET_SIDE_NAV_LINK",
                         payload: 2,
-                      })
+                      });
                       homeVideoReducer.dispatch({
                         type: "SET_IS_PLAYING",
                         payload: false,
-                      })
+                      });
                       navigate("/videos");
                     }}
                     className=" relative"
