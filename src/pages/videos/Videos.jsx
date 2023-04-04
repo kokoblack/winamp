@@ -106,6 +106,7 @@ const Videos = () => {
                 className=" rounded-lg w-[100%] h-auto mb-[3%]"
               />
               <BsPlayFill className=" text-white text-xxl absolute top-1/2 left-1/2 ml-[-1.3125rem] mt-[-1.1125rem] " />
+              <p className="text-white text-vsm max-tablet:text-vxsm max-tablet:px-1 max-tablet:py-2 max-tablet:rounded-[4px] px-2 py-3 absolute rounded-lg bottom-1 right-1 bg-dark_black">{e.duration}</p>
             </div>
             <p style={p} className=" text-medium max-tablet:text-sm mb-[.2rem]">
               {e.name}
