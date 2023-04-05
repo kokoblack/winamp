@@ -75,7 +75,7 @@ function Recommended() {
       } cursor-pointer`}
     >
       <h3 className=" mr-auto text-lg font-bold max-[550px]:text-medium pb-[1%]">
-        Recommended for you
+        Music for you
       </h3>
 
       {loading ? (
