@@ -98,7 +98,7 @@ const AllRecentlyPlayed = () => {
         />
       </section>
 
-      <section className=" h-[4.5rem]"></section>
+      <section className={`${toggle ? " bg-dark_black" : " bg-white"} h-[4.5rem]`}></section>
     </div>
   );
 };

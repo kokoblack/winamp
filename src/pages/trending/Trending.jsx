@@ -88,7 +88,7 @@ const Trending = () => {
               <TrendingPlaylist id={trend.id} token={token} />
             </div>
           ))}
-      <div className=" h-[3rem]"></div>
+      <div className={`${toggle ? " bg-dark_black" : " bg-white"} h-[3rem]`}></div>
     </div>
   );
 };
