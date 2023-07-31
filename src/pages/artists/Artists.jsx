@@ -133,7 +133,7 @@ const Artists = () => {
           album={album}
         />
       </section>
-      <div className=" h-[4.5rem]"></div>
+      <div className={`${toggle ? " bg-dark_black" : " bg-white"} h-[4.5rem]`}></div>
     </div>
   );
 };
