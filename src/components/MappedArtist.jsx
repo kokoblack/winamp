@@ -15,14 +15,14 @@ const MappedArtist = ({filteredArtist, count, setId, setCount, loading, album })
     <>
       {filteredArtist.map((artist, index) => (
         <div key={index}>
-          <div className={` text-base cursor-pointer flex justify-start items-center gap-[4%] ${toggle? "text-white" : "text-dark_black" } text-center max-tablet:text-base max-phone:text-sm `}>
+          <div className={`mb-2 text-base cursor-pointer flex justify-start items-center gap-[4%] ${toggle? "text-white" : "text-dark_black" } text-center max-tablet:text-base max-phone:text-sm `}>
             <img
               onClick={() => {
                 setId(artist.id);
                 setCount(index);
               }}
               src={artist.image}
-              className=" rounded-[100%] w-[5rem] h-[4rem] max-phone:w-[4.5rem] max-phone:h-[3.5rem] max-tablet:mb-1"
+              className=" rounded-[100%] w-[6rem] h-[5rem] max-phone:w-[4.5rem] max-phone:h-[3.5rem] max-tablet:mb-1"
             />
             <div className=" flex justify-start items-center gap-[4%] w-full">
               <p>{artist.name}</p>

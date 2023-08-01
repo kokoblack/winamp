@@ -7,7 +7,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Mousewheel } from "swiper";
 import "swiper/css";
 import RecommendedIsLoading from "../../components/RecommendedIsLoading";
-import { convertTimeToSeconds, formatTime } from "../../components/GetDuration";
+import GetVideoData from "../../components/GetVideoData";
 
 function HomeVideo() {
   const homeVideoReducer = useContext(AppDispatchContext);
@@ -17,44 +17,9 @@ function HomeVideo() {
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const processDuration = (duration) => moment
-    .duration(duration).format()
-    .format('h:mm:ss').format()
-    .padStart(4, '0:0')
-
   useEffect(() => {
     setLoading(true);
-    axios
-      .get(
-        "https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&videoCategoryId=10&key=AIzaSyDg1A1tBfPOIL7OHMRFkw7KY3o0H68cDF8&maxResults=50",
-        {
-          headers: {
-            Accept: "application/json",
-          },
-        }
-      )
-      .then((res) => {
-        const vid = res.data.items.map((e) => {
-          const duration = convertTimeToSeconds(e.contentDetails.duration)
-          const time = formatTime(duration)
-          return {
-            duration: time,
-            id: e.id,
-            image: e.snippet.thumbnails.medium.url,
-            name: e.snippet.localized.title,
-            artist: e.snippet.channelTitle,
-          };
-        });
-        console.log(vid);
-        homeVideoReducer.dispatch({
-          type: "SET_VIDEOS",
-          payload: vid,
-        });
-        setVideos(vid);
-      })
-      .catch((err) => console.log(err));
-
-    setLoading(false);
+    GetVideoData(setLoading, setVideos);
   }, []);
 
   return (
