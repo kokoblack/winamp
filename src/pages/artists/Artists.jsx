@@ -3,9 +3,11 @@ import axios from "axios";
 import { AiOutlineSearch } from "react-icons/ai";
 import { MdQueueMusic } from "react-icons/md";
 import { AppDispatchContext, RefreshTokenContext } from "../../App";
+import GetArtistData from "../../components/GetArtistData";
 import CloseOutsideMenu from "../../components/CloseOutsideMenu";
 import ArtistSearch from "../../components/ArtistSearch";
 import MappedArtist from "../../components/MappedArtist";
+import ArtistIsLoading from "../../components/ArtistIsLoading";
 
 const Artists = () => {
   const artistReducer = useContext(AppDispatchContext);
@@ -15,11 +17,13 @@ const Artists = () => {
   const [count, setCount] = useState(null);
   const [id, setId] = useState("3tVQdUvClmAT7URs9V3rsp");
   const [album, setAlbum] = useState([]);
+  const [artist, setArtist] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [loadingTwo, setLoadingTwo] = useState(false);
   const [searchToggle, setSearchToggle] = useState(false);
   const [searchArtist, setSearchArtist] = useState("");
 
-  const filteredArtistOne = artistReducer.state.artist.filter((artist) => {
+  const filteredArtistOne = artist.filter((artist) => {
     return artist.name.toLowerCase().includes(searchArtist.toLowerCase());
   });
 
@@ -36,6 +40,11 @@ const Artists = () => {
   };
 
   const ref = CloseOutsideMenu(handleClickOutside);
+
+  useEffect(() => {
+    setLoading(true);
+    GetArtistData(token, setLoading, setArtist);
+  }, [token]);
 
   useEffect(() => {
     setLoadingTwo(true);
@@ -119,21 +128,27 @@ const Artists = () => {
         </section>
       </section>
 
-      <section
-        className={` px-[2%] pt-[2%] ${
-          toggle ? " bg-dark_black" : " bg-white"
-        } max-tablet:px-[4%] max-tablet:pt-[4%]`}
-      >
-        <MappedArtist
-          filteredArtist={filteredArtistOne}
-          count={count}
-          setId={setId}
-          setCount={setCount}
-          loading={loadingTwo}
-          album={album}
-        />
-      </section>
-      <div className={`${toggle ? " bg-dark_black" : " bg-white"} h-[4.5rem]`}></div>
+      {loading && <ArtistIsLoading />}
+      {!loading && (
+        <section
+          className={` px-[2%] pt-[2%] ${
+            toggle ? " bg-dark_black" : " bg-white"
+          } max-tablet:px-[4%] max-tablet:pt-[4%]`}
+        >
+          <MappedArtist
+            filteredArtist={filteredArtistOne}
+            count={count}
+            setId={setId}
+            setCount={setCount}
+            loading={loadingTwo}
+            album={album}
+          />
+        </section>
+      )}
+
+      <div
+        className={`${toggle ? " bg-dark_black" : " bg-white"} h-[4.5rem]`}
+      ></div>
     </div>
   );
 };
